@@ -1,13 +1,14 @@
 package confighandler
 
-type ConfigApp struct {
-	Common    CfgCommon
+type Config struct {
+	Common    Common
 	NATS      CfgNats
+	Kafka     CfgKafka
 	LogDB     CfgWriteLogDB
 	StorageDB CfgStorageDB
 }
 
-type CfgCommon struct {
+type Common struct {
 	Logs      []*LogSet
 	Zabbix    ZabbixOptions
 	Profiling ProfilingOptions
@@ -59,12 +60,18 @@ type ProfilingOptions struct {
 }
 
 type CfgNats struct {
-	Subscriptions map[string]string `yaml:"subscriptions"`
-	Requests      map[string]string `yaml:"requests"`
-	Command       string            `validate:"required" yaml:"command"`
-	Host          string            `validate:"required" yaml:"host"`
-	Port          int               `validate:"gt=0,lte=65535" yaml:"port"`
-	CacheTTL      int               `validate:"gt=10,lte=86400" yaml:"cache_ttl"`
+	EnrichingQueries map[string]string `yaml:"enriching_queries"`
+	Subscriptions    map[string]string `yaml:"subscriptions"`
+	Host             string            `validate:"required" yaml:"host"`
+	Port             int               `validate:"gt=0,lte=65535" yaml:"port"`
+	CacheTTL         int               `validate:"gt=10,lte=86400" yaml:"cache_ttl"`
+}
+
+type CfgKafka struct {
+	Topics   map[string]string `yaml:"topics"`
+	Host     string            `validate:"required" yaml:"host"`
+	Port     int               `validate:"gt=0,lte=65535" yaml:"port"`
+	CacheTTL int               `validate:"gt=10,lte=86400" yaml:"cache_ttl"`
 }
 
 type CfgStorageDB struct {

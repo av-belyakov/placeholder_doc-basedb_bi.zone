@@ -16,7 +16,7 @@ import (
 
 func TestSendAlert(t *testing.T) {
 	var (
-		conf *confighandler.ConfigApp
+		conf *confighandler.Config
 		nc   *nats.Conn
 		b    []byte
 
