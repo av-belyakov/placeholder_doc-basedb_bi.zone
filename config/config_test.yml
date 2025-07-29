@@ -5,14 +5,20 @@ NATS:
   subscriptions:
     alert: object.alerttype.test
     case: object.casetype.test
-  command: object.commandstype.test
-  requests:
+  enriching_queries:
     get_geoip_info: object.geoip-request.test
     get_sensor_info: object.sensor-info-request.test
+KAFKA:
+  host: localhost
+  port: 9092
+  cache_ttl: 3600
+  topics:
+    alerts: object.topicalerttype.test
+    soar-alerts: object.topicsoaralertstype.test
 DATABASESTORAGE:
   host: 192.168.9.208
   port: 9200
-  user: placeholder-docbase-db
+  user: placeholder-docbasedb-bizone
   namedb: ""
   storage_name_db:
     alert: testtt.module_placeholderdb_alert
@@ -20,6 +26,6 @@ DATABASESTORAGE:
 DATABASEWRITELOG:
   host: 192.168.9.208
   port: 9200
-  user: placeholder-docbase-db
+  user: placeholder-docbasedb-bizone
   namedb: ""
-  storage_name_db: placeholder_doc-base-db
+  storage_name_db: placeholder_docbasedb-bizone

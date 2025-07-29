@@ -3,32 +3,37 @@ package confighandler
 import "errors"
 
 // GetCommon общие настройки
-func (c *ConfigApp) GetCommon() *CfgCommon {
+func (c *Config) GetCommon() *Common {
 	return &c.Common
 }
 
-// GetNATS настройки для NATS
-func (c *ConfigApp) GetNATS() *CfgNats {
+// GetNATS настройки брокера сообщений NATS
+func (c *Config) GetNATS() *CfgNats {
 	return &c.NATS
 }
 
+// GetKafka настройки для брокера сообщений Kafka
+func (c *Config) GetKafka() *CfgKafka {
+	return &c.Kafka
+}
+
 // GetStorageDB настройки для БД отвечающей за хранение данных
-func (c *ConfigApp) GetStorageDB() *CfgStorageDB {
+func (c *Config) GetStorageDB() *CfgStorageDB {
 	return &c.StorageDB
 }
 
 // GetLogDB настройки для БД обеспечивающей логирование данных
-func (c *ConfigApp) GetLogDB() *CfgWriteLogDB {
+func (c *Config) GetLogDB() *CfgWriteLogDB {
 	return &c.LogDB
 }
 
 // GetListLogs список типов логирования (error, info и т.д.)
-func (c *ConfigApp) GetListLogs() []*LogSet {
+func (c *Config) GetListLogs() []*LogSet {
 	return c.Common.Logs
 }
 
 // GetZabbix настройки взаимодействия с Zabbix
-func (c *ConfigApp) GetZabbix() *ZabbixOptions {
+func (c *Config) GetZabbix() *ZabbixOptions {
 	return &c.Common.Zabbix
 }
 

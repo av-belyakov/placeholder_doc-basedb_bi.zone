@@ -13,7 +13,7 @@ import (
 	"github.com/av-belyakov/placeholder_doc-base_db/internal/confighandler"
 )
 
-func getInformationMessage(conf *confighandler.ConfigApp) string {
+func getInformationMessage(conf *confighandler.Config) string {
 	version, err := appversion.GetAppVersion()
 	if err != nil {
 		log.Println(err)

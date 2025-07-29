@@ -117,8 +117,7 @@ func server(ctx context.Context) {
 		natsapi.WithHost(confNats.Host),
 		natsapi.WithPort(confNats.Port),
 		natsapi.WithCacheTTL(confNats.CacheTTL),
-		natsapi.WithRequests(confNats.Requests),
-		natsapi.WithSendCommand(confNats.Command),
+		natsapi.WithRequests(confNats.EnrichingQueries),
 		natsapi.WithSubscriptions(confNats.Subscriptions))
 	if err != nil {
 		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())

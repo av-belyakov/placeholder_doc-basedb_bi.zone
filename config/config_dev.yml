@@ -3,12 +3,16 @@ NATS:
   port: 4222
   cache_ttl: 3600
   subscriptions:
-    alert: object.alerttype.test
-    case: object.casetype.test
-  command: object.commandstype.test
-  requests:
+  enriching_queries:
     get_geoip_info: object.geoip-request.test
     get_sensor_info: object.sensor-info-request.test
+KAFKA:
+  host: localhost
+  port: 9092
+  cache_ttl: 3600
+  topics:
+    alerts: object.topicalerttype.test
+    soar-alerts: object.topicsoaralertstype.test
 DATABASESTORAGE:
   host: 192.168.9.208
   port: 9200
