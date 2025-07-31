@@ -22,6 +22,9 @@ var (
 func TestMain(m *testing.M) {
 	os.Unsetenv("GO_PHDOCBASEDBBZ_MAIN")
 
+	//настройка наименования регионального объекта
+	os.Unsetenv("GO_PHDOCBASEDBBZ_REGIONALOBJECT")
+
 	//настройки NATS
 	os.Unsetenv("GO_PHDOCBASEDBBZ_NHOST")
 	os.Unsetenv("GO_PHDOCBASEDBBZ_NPORT")
@@ -95,7 +98,11 @@ func TestConfigHandler(t *testing.T) {
 
 		})
 
-		t.Run("Тест 2. Проверка настройки KAFKA из файла config_test.yml", func(t *testing.T) {
+		t.Run("Тест 2. Проверка настройки имени регионального объекта, полученного из файла config_test.yml", func(t *testing.T) {
+			assert.Equal(t, conf.Common.RegionalObject, "gcm-test")
+		})
+
+		t.Run("Тест 3. Проверка настройки KAFKA из файла config_test.yml", func(t *testing.T) {
 			assert.Equal(t, conf.GetKafka().Host, "localhost")
 			assert.Equal(t, conf.GetKafka().Port, 9092)
 			assert.Equal(t, conf.GetKafka().CacheTTL, 3600)
@@ -111,7 +118,7 @@ func TestConfigHandler(t *testing.T) {
 			}
 		})
 
-		t.Run("Тест 3. Проверка настройки DATABASESTORAGE из файла config_test.yml", func(t *testing.T) {
+		t.Run("Тест 4. Проверка настройки DATABASESTORAGE из файла config_test.yml", func(t *testing.T) {
 			assert.Equal(t, conf.GetStorageDB().Host, "192.168.9.208")
 			assert.Equal(t, conf.GetStorageDB().Port, 9200)
 			assert.Equal(t, conf.GetStorageDB().User, "placeholder-docbasedb-bizone")
@@ -129,7 +136,7 @@ func TestConfigHandler(t *testing.T) {
 			}
 		})
 
-		t.Run("Тест 4. Проверка настройки DATABASEWRITELOG из файла config_test.yml", func(t *testing.T) {
+		t.Run("Тест 5. Проверка настройки DATABASEWRITELOG из файла config_test.yml", func(t *testing.T) {
 			assert.Equal(t, conf.GetLogDB().Host, "192.168.9.208")
 			assert.Equal(t, conf.GetLogDB().Port, 9200)
 			assert.Equal(t, conf.GetLogDB().User, "placeholder-docbasedb-bizone")

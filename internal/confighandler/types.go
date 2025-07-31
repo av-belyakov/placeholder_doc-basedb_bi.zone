@@ -9,9 +9,10 @@ type Config struct {
 }
 
 type Common struct {
-	Logs      []*LogSet
-	Zabbix    ZabbixOptions
-	Profiling ProfilingOptions
+	RegionalObject string
+	Logs           []*LogSet
+	Zabbix         ZabbixOptions
+	Profiling      ProfilingOptions
 }
 
 type Logs struct {

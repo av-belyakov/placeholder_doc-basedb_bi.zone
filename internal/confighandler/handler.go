@@ -21,7 +21,8 @@ func New(rootDir string) (*Config, error) {
 	var (
 		validate *validator.Validate
 		envList  map[string]string = map[string]string{
-			"GO_PHDOCBASEDBBZ_MAIN": "",
+			"GO_PHDOCBASEDBBZ_MAIN":           "",
+			"GO_PHDOCBASEDBBZ_REGIONALOBJECT": "",
 
 			//Подключение к NATS
 			"GO_PHDOCBASEDBBZ_NHOST":          "",
@@ -119,6 +120,11 @@ func New(rootDir string) (*Config, error) {
 		viper.SetConfigType("yml")
 		if err := viper.ReadInConfig(); err != nil {
 			return err
+		}
+
+		//Настройка наименования регионального объекта
+		if viper.IsSet("COMMONINFO.regional_object") {
+			conf.Common.RegionalObject = viper.GetString("COMMONINFO.regional_object")
 		}
 
 		//Настройки для модуля подключения к NATS
@@ -239,6 +245,11 @@ func New(rootDir string) (*Config, error) {
 
 	if err := setSpecial(fn); err != nil {
 		return conf, err
+	}
+
+	//Настройка наименования регионального объекта
+	if envList["GO_PHDOCBASEDBBZ_REGIONALOBJECT"] != "" {
+		conf.Common.RegionalObject = envList["GO_PHDOCBASEDBBZ_REGIONALOBJECT"]
 	}
 
 	//Настройки для модуля подключения к NATS

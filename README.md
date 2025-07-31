@@ -30,6 +30,16 @@
 export GO_PHDOCBASEDBBZ_MAIN=test
 ```
 
+#### Переменная окружения отвечающая за наименование регионального объекта
+
+- GO_PHDOCBASEDBBZ_REGIONALOBJECT
+
+Например:
+
+```bash
+export GO_PHDOCBASEDBBZ_REGIONALOBJECT=gcm
+```
+
 #### Переменные окружения отвечающие за подключение к Kafka
 
 - GO_PHDOCBASEDBBZ_NHOST - ip или доменное имя;
