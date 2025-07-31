@@ -1,9 +1,10 @@
 package databasestorageapi
 
 import (
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
 	"github.com/elastic/go-elasticsearch/v8"
+
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 )
 
 type DatabaseStorage struct {

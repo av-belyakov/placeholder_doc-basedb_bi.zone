@@ -3,7 +3,7 @@ package handlers
 import (
 	"strings"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 )
 
 // PostProcessingUserType выполняет постобработку некоторых пользовательских типов

@@ -12,7 +12,7 @@ import (
 
 	"github.com/elastic/go-elasticsearch/v8"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // NewElasticsearchConnect соединение с базой данных

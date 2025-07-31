@@ -3,7 +3,7 @@ package handlers
 import (
 	"strings"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // NewListHandlerAlertArtifacts обработчик событий 'alert.artifacts.*' типа для объекта 'alert'

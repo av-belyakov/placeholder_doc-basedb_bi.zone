@@ -10,8 +10,8 @@ import (
 	common "github.com/av-belyakov/objectsthehiveformat/common"
 	eventalert "github.com/av-belyakov/objectsthehiveformat/eventalert"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/handlers"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/handlers"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 )
 
 // AlertGenerator генерирует верифицированный объект типа 'alert'. Вернет первым элементом основной ID,

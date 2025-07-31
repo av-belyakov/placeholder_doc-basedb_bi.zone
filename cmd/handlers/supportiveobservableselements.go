@@ -6,7 +6,7 @@ import (
 	"slices"
 
 	caseobservables "github.com/av-belyakov/objectsthehiveformat/caseobservables"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // SupportiveObservables вспомогательный тип для для обработки observables

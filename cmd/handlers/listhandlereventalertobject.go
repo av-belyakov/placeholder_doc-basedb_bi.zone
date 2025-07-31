@@ -2,7 +2,7 @@ package handlers
 
 import (
 	alertobjecthf "github.com/av-belyakov/objectsthehiveformat/alertobject"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // NewListHandlerEventAlertObject обработчик событий типа 'event.object.*' для объекта 'alert'

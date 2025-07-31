@@ -13,8 +13,8 @@ import (
 	common "github.com/av-belyakov/objectsthehiveformat/common"
 	eventcase "github.com/av-belyakov/objectsthehiveformat/eventcase"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/handlers"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/handlers"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 )
 
 // CaseGenerator генерирует верифицированный объект типа 'case'. Вернет первым элементом основной ID,

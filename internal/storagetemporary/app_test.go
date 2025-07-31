@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/storagetemporary"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/storagetemporary"
 	"github.com/stretchr/testify/assert"
 )
 

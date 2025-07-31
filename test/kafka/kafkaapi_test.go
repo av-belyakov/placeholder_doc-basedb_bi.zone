@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/kafkaapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/kafkaapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // *** для счётчика ***
@@ -130,7 +130,7 @@ func TestKafkaApi(t *testing.T) {
 		}
 
 		//t.Logf("Received message:\n%s\n", str)
-		if _, err = fmt.Fprintf(f, "--- EVENT: %s\n%s\n\n", time.Now().Format(time.RFC3339), str); err != nil {
+		if _, err = fmt.Fprintf(f, "--- TOPIC - '%s' %s\n%s\n\n", msg.SubjectType, time.Now().Format(time.RFC3339), str); err != nil {
 			t.Logf("Error: %+v\n", err)
 		}
 	}

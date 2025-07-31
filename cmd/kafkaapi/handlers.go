@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // topicsHandler обработчик топиков (подписок)
@@ -27,10 +27,12 @@ func (api *kafkaApiModule) topicsHandler(ctx context.Context) {
 
 			topic := msg.TopicPartition.Topic
 
+			fmt.Println("func 'topicsHandler', Topic:", *topic)
+
 			subjectType := "undefined_type"
-			topicValue, ok := api.topics[*topic]
+			topicKey, ok := supportingfunctions.SearchValue(api.topics, *topic)
 			if ok {
-				subjectType = topicValue
+				subjectType = topicKey
 			}
 
 			api.chFromModule <- SettingsChanOutput{

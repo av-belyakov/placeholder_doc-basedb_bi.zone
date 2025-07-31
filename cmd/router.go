@@ -5,23 +5,25 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/decoderjsondocuments"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/natsapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/decoderjsondocuments"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/natsapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // NewRouter маршрутизатор сообщений внутри приложения
 func NewRouter(counter interfaces.Counter, logger interfaces.Logger, settings ApplicationRouterSettings) *ApplicationRouter {
 	return &ApplicationRouter{
-		counter:       counter,
-		logger:        logger,
-		chToNatsApi:   settings.ChanToNats,
-		chFromNatsApi: settings.ChanFromNats,
-		chToDBSApi:    settings.ChanToDBS,
-		chFromDBSApi:  settings.ChanFromDBS,
+		counter:        counter,
+		logger:         logger,
+		chToNatsApi:    settings.ChanToNats,
+		chFromNatsApi:  settings.ChanFromNats,
+		chToKafkaApi:   settings.ChanToKafka,
+		chFromKafkaApi: settings.ChanFromKafka,
+		chToDBSApi:     settings.ChanToDBS,
+		chFromDBSApi:   settings.ChanFromDBS,
 	}
 }
 
@@ -36,6 +38,7 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 
 			case msg := <-r.chFromNatsApi:
 				switch msg.SubjectType {
+				//**** это для NATS надо убрать ****
 				case "alert":
 					go func() {
 						rootId, verifyAlert, listRawFields := documentgenerator.AlertGenerator(decoder.Start(msg.Data, msg.TaskId))
@@ -53,6 +56,7 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 						}
 					}()
 
+				//**** это для NATS надо убрать ****
 				case "case":
 					go func() {
 						rootId, verifyCase, listRawFields := documentgenerator.CaseGenerator(decoder.Start(msg.Data, msg.TaskId))
@@ -90,6 +94,20 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 
 				default:
 					r.logger.Send("error", supportingfunctions.CustomError(errors.New("undefined subscription type")).Error())
+
+				}
+
+			case msg := <-r.chFromKafkaApi:
+				switch msg.SubjectType {
+				case "alerts":
+					// *************
+					// Здесь нужны разные обработчики
+					// *************
+
+				case "soar-alerts":
+					// *************
+					// Здесь нужны разные обработчики
+					// *************
 
 				}
 

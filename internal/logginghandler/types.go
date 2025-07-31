@@ -1,6 +1,6 @@
 package logginghandler
 
-import "github.com/av-belyakov/placeholder_doc-base_db/interfaces"
+import "github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 
 type LoggingChan struct {
 	dataWriter           interfaces.WriterLoggingData

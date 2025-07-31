@@ -11,7 +11,7 @@ import (
 	"github.com/nats-io/nats.go"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/confighandler"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/confighandler"
 )
 
 func TestSendAlert(t *testing.T) {

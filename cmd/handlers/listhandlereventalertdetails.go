@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	alertdetailshf "github.com/av-belyakov/objectsthehiveformat/alertdetails"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // NewListHandlerEventAlertDetails обработчик событий 'event.details.*' типа для объекта 'alert'

@@ -1,23 +1,30 @@
 package main
 
 import (
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/natsapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/kafkaapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/natsapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 )
 
+// ApplicationRouter модуль маршрутизации
 type ApplicationRouter struct {
-	logger        interfaces.Logger
-	counter       interfaces.Counter
-	chToNatsApi   chan<- natsapi.SettingsChanInput
-	chFromNatsApi <-chan natsapi.SettingsChanOutput
-	chToDBSApi    chan<- databasestorageapi.SettingsChanInput
-	chFromDBSApi  <-chan databasestorageapi.SettingsChanOutput
+	logger         interfaces.Logger
+	counter        interfaces.Counter
+	chToNatsApi    chan<- natsapi.SettingsChanInput
+	chFromNatsApi  <-chan natsapi.SettingsChanOutput
+	chToKafkaApi   chan<- kafkaapi.SettingsChanInput
+	chFromKafkaApi <-chan kafkaapi.SettingsChanOutput
+	chToDBSApi     chan<- databasestorageapi.SettingsChanInput
+	chFromDBSApi   <-chan databasestorageapi.SettingsChanOutput
 }
 
+// ApplicationRouterSettings настройки модуля маршрутизации
 type ApplicationRouterSettings struct {
-	ChanToNats   chan<- natsapi.SettingsChanInput
-	ChanFromNats <-chan natsapi.SettingsChanOutput
-	ChanToDBS    chan<- databasestorageapi.SettingsChanInput
-	ChanFromDBS  <-chan databasestorageapi.SettingsChanOutput
+	ChanToNats    chan<- natsapi.SettingsChanInput
+	ChanFromNats  <-chan natsapi.SettingsChanOutput
+	ChanToKafka   chan<- kafkaapi.SettingsChanInput
+	ChanFromKafka <-chan kafkaapi.SettingsChanOutput
+	ChanToDBS     chan<- databasestorageapi.SettingsChanInput
+	ChanFromDBS   <-chan databasestorageapi.SettingsChanOutput
 }

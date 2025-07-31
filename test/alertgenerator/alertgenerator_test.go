@@ -9,10 +9,10 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/decoderjsondocuments"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/countermessage"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/decoderjsondocuments"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/countermessage"
 )
 
 type ChMessage struct {

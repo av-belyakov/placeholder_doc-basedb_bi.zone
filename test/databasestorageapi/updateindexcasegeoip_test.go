@@ -12,10 +12,10 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/decoderjsondocuments"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/countermessage"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/decoderjsondocuments"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/countermessage"
 )
 
 const (

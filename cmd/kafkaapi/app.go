@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"maps"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
+
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 )
 
 // New настраивает модуль взаимодействия с API Kafka

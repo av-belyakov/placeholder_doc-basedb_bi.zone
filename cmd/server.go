@@ -10,16 +10,17 @@ import (
 
 	"github.com/av-belyakov/simplelogger"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/elasticsearchapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/natsapi"
-	"github.com/av-belyakov/placeholder_doc-base_db/cmd/wrappers"
-	"github.com/av-belyakov/placeholder_doc-base_db/constants"
-	"github.com/av-belyakov/placeholder_doc-base_db/interfaces"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/confighandler"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/countermessage"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/logginghandler"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/elasticsearchapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/kafkaapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/natsapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/wrappers"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/constants"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/confighandler"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/countermessage"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/logginghandler"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 func server(ctx context.Context) {
@@ -108,6 +109,30 @@ func server(ctx context.Context) {
 	counting := countermessage.New(chZabbix)
 	counting.Start(ctx)
 
+	// **********************************************************************
+	// ************ инициализация модуля взаимодействия с Kafka *************
+	confKafka := conf.Kafka
+	apiKafka, err := kafkaapi.New(
+		counting,
+		logging,
+		kafkaapi.WithNameRegionalObject(conf.Common.RegionalObject),
+		kafkaapi.WithHost(confKafka.Host),
+		kafkaapi.WithPort(confKafka.Port),
+		kafkaapi.WithCacheTTL(confKafka.CacheTTL),
+		kafkaapi.WithTopicsSubscription(confKafka.Topics),
+	)
+	if err != nil {
+		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
+
+		log.Fatal(err)
+	}
+	//--- старт модуля
+	if err := apiKafka.Start(ctx); err != nil {
+		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
+
+		log.Fatal(err)
+	}
+
 	// ***********************************************************************
 	// ************** инициализация модуля взаимодействия с NATS *************
 	confNats := conf.NATS
@@ -161,10 +186,12 @@ func server(ctx context.Context) {
 		counting,
 		logging,
 		ApplicationRouterSettings{
-			ChanToNats:   apiNats.GetChanDataToModule(),
-			ChanFromNats: apiNats.GetChanDataFromModule(),
-			ChanToDBS:    apiDBS.GetChanDataToModule(),
-			ChanFromDBS:  apiDBS.GetChanDataFromModule(),
+			ChanToNats:    apiNats.GetChanDataToModule(),
+			ChanFromNats:  apiNats.GetChanDataFromModule(),
+			ChanToKafka:   apiKafka.GetChanDataToModule(),
+			ChanFromKafka: apiKafka.GetChanDataFromModule(),
+			ChanToDBS:     apiDBS.GetChanDataToModule(),
+			ChanFromDBS:   apiDBS.GetChanDataFromModule(),
 		})
 	r.Router(ctx)
 

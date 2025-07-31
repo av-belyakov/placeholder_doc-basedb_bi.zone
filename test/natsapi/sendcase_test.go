@@ -7,10 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/confighandler"
 	"github.com/joho/godotenv"
 	"github.com/nats-io/nats.go"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/confighandler"
 )
 
 func TestSendCase(t *testing.T) {

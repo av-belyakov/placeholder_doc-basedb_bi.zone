@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/response"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/response"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // addGeoIPInformation дополнительная информация о географическом местоположении ip адресов

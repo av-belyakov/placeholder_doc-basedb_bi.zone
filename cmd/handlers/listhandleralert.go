@@ -2,7 +2,7 @@ package handlers
 
 import (
 	alerttemplate "github.com/av-belyakov/objectsthehiveformat/alert"
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // NewListHandlerAlert обработчик событий 'alert.*' типа для объекта 'alert'

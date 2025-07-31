@@ -12,7 +12,7 @@ import (
 	eventalert "github.com/av-belyakov/objectsthehiveformat/eventalert"
 	objectsthehiveformat "github.com/av-belyakov/objectsthehiveformat/eventcase"
 
-	"github.com/av-belyakov/placeholder_doc-base_db/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 //********** VerifiedAlert ************
