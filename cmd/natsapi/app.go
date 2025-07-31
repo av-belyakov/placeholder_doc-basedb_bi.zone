@@ -37,9 +37,9 @@ func New(counter interfaces.Counter, logger interfaces.Logger, opts ...NatsApiOp
 	return api, nil
 }
 
-// Start инициализирует новый модуль взаимодействия с API NATS
-// при инициализации возращается канал для взаимодействия с модулем, все
-// запросы к модулю выполняются через данный канал
+// Start инициализирует новый модуль взаимодействия с API NATS,
+// при инициализации возращается канал для взаимодействия с модулем,
+// все запросы к модулю выполняются через данный канал
 func (api *apiNatsModule) Start(ctx context.Context) error {
 	if ctx.Err() != nil {
 		return ctx.Err()

@@ -1,3 +1,4 @@
 app
 .env
 logs/
+test/kafka/*.log

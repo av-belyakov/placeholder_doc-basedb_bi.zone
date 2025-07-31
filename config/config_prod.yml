@@ -1,3 +1,6 @@
+COMMONINFO:
+  file_name: config_prod.yml
+  regional_objects: gcm
 NATS: # в основном используется для обогащения данных доп. информацией
   host: nats.cloud.gcm
   port: 4222
@@ -7,8 +10,8 @@ NATS: # в основном используется для обогащения
     get_geoip_info: object.geoip-request
     get_sensor_info: object.sensor-info-request
 KAFKA: # приём информации для её последующей обработки
-  host: localhost
-  port: 9092
+  host: 192.168.9.71
+  port: 31792
   cache_ttl: 3600
   topics:
     alerts: alertmgr-alerts

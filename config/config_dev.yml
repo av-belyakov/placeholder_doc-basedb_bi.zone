@@ -1,3 +1,6 @@
+COMMONINFO:
+  file_name: config_dev.yml
+  regional_objects: gcm
 NATS:
   host: 192.168.9.208
   port: 4222
