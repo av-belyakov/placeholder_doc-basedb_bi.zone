@@ -7,8 +7,8 @@ import (
 	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
 )
 
-// ************* Структура Tag *************
-// *****************************************
+// ************* Структура BiZoneTag *************
+// ***********************************************
 
 // NewBiZoneTag новый объект
 func NewBiZoneTag() *BiZoneTag {
@@ -106,18 +106,3 @@ func (t *BiZoneTag) SetAnyCreatedByID(i any) {
 		t.CreatedBy.ID = v
 	}
 }
-
-/*
-type verifiedTags []*BiZoneTag
-
-// BiZoneTag структура для тегов
-type BiZoneTag struct {
-	Created   string `json:"created"` //дата создания (формат RFC3339)
-	Name      string `json:"name"`
-	Color     string `json:"color"`
-	CreatedBy struct {
-		Username string `json:"username"`
-		ID       uint64 `json:"id"`
-	} `json:"created_by"`
-}
-*/
