@@ -1,6 +1,7 @@
 package documentgenerator
 
 import (
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/handlers"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
@@ -14,20 +15,31 @@ func BiZoneAlertsGenerator(chInput <-chan interfaces.CustomJsonDecoder) (string,
 		// список не обработанных полей
 		listRawFields map[string]string = make(map[string]string)
 
-		verifiedTags      []*datamodels.BiZoneTag      = []*datamodels.BiZoneTag(nil)
-		verifiedSnapshots []*datamodels.BiZoneSnapshot = []*datamodels.BiZoneSnapshot(nil)
+		//verifiedTags      []*datamodels.BiZoneTag      = []*datamodels.BiZoneTag(nil)
+		//verifiedSnapshots []*datamodels.BiZoneSnapshot = []*datamodels.BiZoneSnapshot(nil)
 	)
 
-	//финальный объект
-	verifiedAlert := datamodels.NewVerifiedBiZoneAlert()
-
+	verifiedMainObject := datamodels.NewVerifiedBiZoneAlert()
 	verifiedData := datamodels.NewBiZoneData()
 
 	//********* основные обработчики **********
+	//--- alerts ---
+	listHandlerAlerts := handlers.NewListBiZoneHandlerAlerts(verifiedMainObject)
+
+	//--- data ---
+	listHandlerData := handlers.NewListBiZoneHandlerData(verifiedData)
+
+	//******** вспомогательные объекты ********
+	supportObjectTags := datamodels.NewSupportingStructureForTags()
+	supportObjectSnapshot := datamodels.NewSupportingStructureForSnapshots()
+
+	// ********* обработчики для вспомогательных объектов ***********
+	listHandlerTags := handlers.NewListBiZoneHandlerTags(supportObjectTags)
+	listHandlerSnapshots := handlers.NewListBiZoneHandlerSnapshots(supportObjectSnapshot)
 
 	for msg := range chInput {
 
 	}
 
-	return externalId, verifiedAlert, listRawFields
+	return externalId, verifiedMainObject, listRawFields
 }

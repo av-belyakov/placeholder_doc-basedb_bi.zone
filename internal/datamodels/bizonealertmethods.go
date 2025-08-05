@@ -29,8 +29,8 @@ func (e *VerifiedBiZoneAlert) SetSeverity(severity string) {
 }
 
 // SetAnySeverity для поля Severity
-func (e *VerifiedBiZoneAlert) SetAnySeverity(i any) {
-	e.Severity = fmt.Sprint(i)
+func (e *VerifiedBiZoneAlert) SetAnySeverity(a any) {
+	e.Severity = fmt.Sprint(a)
 }
 
 // GetUpdatedTime для поля UpdatedTime (формат RFC3339)
@@ -44,8 +44,8 @@ func (e *VerifiedBiZoneAlert) SetUpdatedTime(updatedTime string) {
 }
 
 // SetAnyUpdatedTime для поля UpdatedTime (строка)
-func (e *VerifiedBiZoneAlert) SetAnyUpdatedTime(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
+func (e *VerifiedBiZoneAlert) SetAnyUpdatedTime(a any) {
+	tmp := supportingfunctions.ConversionAnyToInt(a)
 	e.UpdatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
 }
 
@@ -60,8 +60,8 @@ func (e *VerifiedBiZoneAlert) SetEventEndTime(eventEndTime string) {
 }
 
 // SetAnyEventEndTime для поля EventEndTime (строка)
-func (e *VerifiedBiZoneAlert) SetAnyEventEndTime(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
+func (e *VerifiedBiZoneAlert) SetAnyEventEndTime(a any) {
+	tmp := supportingfunctions.ConversionAnyToInt(a)
 	e.EventEndTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
 }
 
@@ -76,8 +76,8 @@ func (e *VerifiedBiZoneAlert) SetPlatformHostname(platformHostname string) {
 }
 
 // SetAnyPlatformHostname для поля PlatformHostname
-func (e *VerifiedBiZoneAlert) SetAnyPlatformHostname(i any) {
-	e.PlatformHostname = fmt.Sprint(i)
+func (e *VerifiedBiZoneAlert) SetAnyPlatformHostname(a any) {
+	e.PlatformHostname = fmt.Sprint(a)
 }
 
 // GetTitle для поля Title
@@ -91,8 +91,8 @@ func (e *VerifiedBiZoneAlert) SetTitle(title string) {
 }
 
 // SetAnyTitle для поля Title
-func (e *VerifiedBiZoneAlert) SetAnyTitle(i any) {
-	e.Title = fmt.Sprint(i)
+func (e *VerifiedBiZoneAlert) SetAnyTitle(a any) {
+	e.Title = fmt.Sprint(a)
 }
 
 // GetRecommendations для поля Recommendations
@@ -106,8 +106,8 @@ func (e *VerifiedBiZoneAlert) SetRecommendations(recommendations string) {
 }
 
 // SetAnyRecommendations для поля Recommendations
-func (e *VerifiedBiZoneAlert) SetAnyRecommendations(i any) {
-	e.Recommendations = fmt.Sprint(i)
+func (e *VerifiedBiZoneAlert) SetAnyRecommendations(a any) {
+	e.Recommendations = fmt.Sprint(a)
 }
 
 // GetData для поля Data

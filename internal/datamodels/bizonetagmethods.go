@@ -44,8 +44,8 @@ func (t *BiZoneTag) SetName(name string) {
 }
 
 // SetAnyName для поля Name
-func (t *BiZoneTag) SetAnyName(i any) {
-	t.Name = fmt.Sprint(i)
+func (t *BiZoneTag) SetAnyName(a any) {
+	t.Name = fmt.Sprint(a)
 }
 
 // GetColor для поля Color
@@ -59,23 +59,8 @@ func (t *BiZoneTag) SetColor(color string) {
 }
 
 // SetAnyColor для поля Color
-func (t *BiZoneTag) SetAnyColor(i any) {
-	t.Color = fmt.Sprint(i)
-}
-
-// GetCreatedByUsername для поля CreatedBy.Username
-func (t *BiZoneTag) GetCreatedByUsername() string {
-	return t.CreatedBy.Username
-}
-
-// SetCreatedByUsername для поля CreatedBy.Username
-func (t *BiZoneTag) SetCreatedByUsername(username string) {
-	t.CreatedBy.Username = username
-}
-
-// SetAnyCreatedByUsername для поля CreatedBy.Username
-func (t *BiZoneTag) SetAnyCreatedByUsername(i any) {
-	t.CreatedBy.Username = fmt.Sprint(i)
+func (t *BiZoneTag) SetAnyColor(a any) {
+	t.Color = fmt.Sprint(a)
 }
 
 // GetCreatedByID для поля CreatedBy.ID
@@ -89,20 +74,35 @@ func (t *BiZoneTag) SetCreatedByID(id uint64) {
 }
 
 // SetAnyCreatedByID для поля CreatedBy.ID
-func (t *BiZoneTag) SetAnyCreatedByID(i any) {
-	if v, ok := i.(float32); ok {
+func (t *BiZoneTag) SetAnyCreatedByID(a any) {
+	if v, ok := a.(float32); ok {
 		t.CreatedBy.ID = uint64(v)
 
 		return
 	}
 
-	if v, ok := i.(float64); ok {
+	if v, ok := a.(float64); ok {
 		t.CreatedBy.ID = uint64(v)
 
 		return
 	}
 
-	if v, ok := i.(uint64); ok {
+	if v, ok := a.(uint64); ok {
 		t.CreatedBy.ID = v
 	}
+}
+
+// GetCreatedByUsername для поля CreatedBy.Username
+func (t *BiZoneTag) GetCreatedByUsername() string {
+	return t.CreatedBy.Username
+}
+
+// SetCreatedByUsername для поля CreatedBy.Username
+func (t *BiZoneTag) SetCreatedByUsername(username string) {
+	t.CreatedBy.Username = username
+}
+
+// SetAnyCreatedByUsername для поля CreatedBy.Username
+func (t *BiZoneTag) SetAnyCreatedByUsername(a any) {
+	t.CreatedBy.Username = fmt.Sprint(a)
 }

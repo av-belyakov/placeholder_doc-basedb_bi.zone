@@ -19,6 +19,7 @@ type BiZoneData struct {
 	SnortSid           []uint64         `json:"snort_sid"`
 	AllSensors         []uint64         `json:"all_sensors"`
 	ID                 string           `json:"_id"`
+	UUID               string           `json:"uuid"`
 	Title              string           `json:"title"`
 	IPHome             string           `json:"ip_home"`
 	URLFTP             string           `json:"url____ftp"`
@@ -26,18 +27,17 @@ type BiZoneData struct {
 	URLHTTP            string           `json:"url___http"`
 	EventType          string           `json:"event_type"`
 	URLArkime          string           `json:"url_arkime"`
-	CreatedTime        string           `json:"created_time"`         //дата создания (формат RFC3339)
+	ExternalID         string           `json:"external_id"`
+	Confidence         string           `json:"confidence"`
+	Description        string           `json:"description"`
+	CreatedTime        string           `json:"created_time"` //дата создания (формат RFC3339)
+	PlatformType       string           `json:"platform_type"`
+	DetectionRule      string           `json:"detection_rule"`
+	CustomerSystem     string           `json:"customer_system"`
 	EventStartTime     string           `json:"event_start_time"`     //дата начала события (формат RFC3339)
 	LastDetectionTime  string           `json:"last_detection_time"`  //дата последнего обнаружения (формат RFC3339)
 	FirstDetectionTime string           `json:"first_detection_time"` //дата первого обнаружения (формат RFC3339)
 	AffectedLogSources string           `json:"affected_log_sources"`
-	Confidence         string           `json:"confidence"`
-	Description        string           `json:"description"`
-	DetectionRule      string           `json:"detection_rule"`
-	CustomerSystem     string           `json:"customer_system"`
-	UUID               string           `json:"uuid"`
-	ExternalID         string           `json:"external_id"`
-	PlatformType       string           `json:"platform_type"`
 	IDNum              uint64           `json:"id"`
 	Sensor             uint64           `json:"sensor"`
 	AllIPExt           uint64           `json:"all____ip_ext"`

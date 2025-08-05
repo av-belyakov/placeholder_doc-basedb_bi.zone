@@ -5,13 +5,6 @@ import "github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodel
 // NewListBiZoneHandlerData начальный обработчик событий топика 'data.*'
 func NewListBiZoneHandlerData(data *datamodels.BiZoneData) map[string][]func(any) {
 	return map[string][]func(any){
-		/*
-			Snapshots          []BiZoneSnapshot `json:"snapshots"`
-			Tags               []BiZoneTag      `json:"tags"`
-			AllIPHome          []string         `json:"all__ip_home"`
-			SnortSid           []uint64         `json:"snort_sid"`
-			AllSensors         []uint64         `json:"all_sensors"`
-		*/
 		"data.id":                   {data.SetAnyIDNum},
 		"data._id":                  {data.SetAnyID},
 		"data.uuid":                 {data.SetAnyUUID},
@@ -26,15 +19,19 @@ func NewListBiZoneHandlerData(data *datamodels.BiZoneData) map[string][]func(any
 		"data.confidence":           {data.SetAnyConfidence},
 		"data.description":          {data.SetAnyDescription},
 		"data.external_id":          {data.SetAnyExternalID},
+		"data.created_time":         {data.SetAnyCreatedTime},
 		"data.platform_type":        {data.SetAnyPlatformType},
 		"data.all____ip_ext":        {data.SetAnyAllIPExt},
 		"data.response_team":        {data.SetAnyResponseTeam},
 		"data.detection_rule":       {data.SetAnyDetectionRule},
 		"data.customer_system":      {data.SetAnyCustomerSystem},
-		"data.affected_log_sources": {data.SetAnyAffectedLogSources},
-		"data.created_time":         {data.SetAnyCreatedTime},
 		"data.event_start_time":     {data.SetAnyEventStartTime},
 		"data.last_detection_time":  {data.SetAnyLastDetectionTime},
+		"data.affected_log_sources": {data.SetAnyAffectedLogSources},
 		"data.first_detection_time": {data.SetAnyFirstDetectionTime},
+		//ниже работа со срезам содержащими простые типы
+		"data.snort_sid":    {data.SetAnySnortSid},
+		"data.all_sensors":  {data.SetAnyAllSensor},
+		"data.all__ip_home": {data.SetAnyAllIPHome},
 	}
 }

@@ -22,6 +22,24 @@ func (s *BiZoneSnapshot) SetIPAddresses(ipAddress []string) {
 	s.IPAddresses = ipAddress
 }
 
+// SetIPAddresse добавляет ip адрес в поле IPAddresses
+func (s *BiZoneSnapshot) SetIPAddresse(ipAddress string) {
+	if s.IPAddresses == nil {
+		s.IPAddresses = []string(nil)
+	}
+
+	s.IPAddresses = append(s.IPAddresses, ipAddress)
+}
+
+// SetAnyIPAddresse добавляет ip адрес в поле IPAddresses
+func (s *BiZoneSnapshot) SetAnyIPAddresse(a any) {
+	if s.IPAddresses == nil {
+		s.IPAddresses = []string(nil)
+	}
+
+	s.IPAddresses = append(s.IPAddresses, fmt.Sprint(a))
+}
+
 // GetMACAddresses для поля MACAddresses
 func (s *BiZoneSnapshot) GetMACAddresses() []string {
 	return s.IPAddresses
@@ -30,6 +48,24 @@ func (s *BiZoneSnapshot) GetMACAddresses() []string {
 // SetMACAddresses для поля MACAddresses
 func (s *BiZoneSnapshot) SetMACAddresses(macAddress []string) {
 	s.MACAddresses = macAddress
+}
+
+// SetMACAddresse добавляет mac адрес в поле MACAddresses
+func (s *BiZoneSnapshot) SetMACAddresse(macAddress string) {
+	if s.MACAddresses == nil {
+		s.MACAddresses = []string(nil)
+	}
+
+	s.MACAddresses = append(s.MACAddresses, macAddress)
+}
+
+// SetAnyMACAddresse добавляет mac адрес в поле MACAddresses
+func (s *BiZoneSnapshot) SetAnyMACAddresse(a any) {
+	if s.MACAddresses == nil {
+		s.MACAddresses = []string(nil)
+	}
+
+	s.MACAddresses = append(s.MACAddresses, fmt.Sprint(a))
 }
 
 // GetDomain для поля Domain
@@ -43,8 +79,8 @@ func (s *BiZoneSnapshot) SetDomain(domain string) {
 }
 
 // SetAnyDomain для поля Domain
-func (s *BiZoneSnapshot) SetAnyDomain(i any) {
-	s.Domain = fmt.Sprint(i)
+func (s *BiZoneSnapshot) SetAnyDomain(a any) {
+	s.Domain = fmt.Sprint(a)
 }
 
 // GetFqdn для поля Fqdn
@@ -58,8 +94,8 @@ func (s *BiZoneSnapshot) SetFqdn(fqdn string) {
 }
 
 // SetAnyFqdn для поля Fqdn
-func (s *BiZoneSnapshot) SetAnyFqdn(i any) {
-	s.Fqdn = fmt.Sprint(i)
+func (s *BiZoneSnapshot) SetAnyFqdn(a any) {
+	s.Fqdn = fmt.Sprint(a)
 }
 
 // GetOS для поля OS
@@ -73,8 +109,8 @@ func (s *BiZoneSnapshot) SetOS(value string) {
 }
 
 // SetAnyOS для поля OS
-func (s *BiZoneSnapshot) SetAnyOS(i any) {
-	s.OS = fmt.Sprint(i)
+func (s *BiZoneSnapshot) SetAnyOS(a any) {
+	s.OS = fmt.Sprint(a)
 }
 
 // GetUserCMDBName для поля UserCMDBName
@@ -88,8 +124,8 @@ func (s *BiZoneSnapshot) SetUserCMDBName(value string) {
 }
 
 // SetAnyUserCMDBName для поля UserCMDBName
-func (s *BiZoneSnapshot) SetAnyUserCMDBName(i any) {
-	s.UserCMDBName = fmt.Sprint(i)
+func (s *BiZoneSnapshot) SetAnyUserCMDBName(a any) {
+	s.UserCMDBName = fmt.Sprint(a)
 }
 
 // GetCMDBID для поля CMDBID
@@ -103,8 +139,8 @@ func (s *BiZoneSnapshot) SetCMDBID(value string) {
 }
 
 // SetAnyCMDBID для поля CMDBID
-func (s *BiZoneSnapshot) SetAnyCMDBID(i any) {
-	s.CMDBID = fmt.Sprint(i)
+func (s *BiZoneSnapshot) SetAnyCMDBID(a any) {
+	s.CMDBID = fmt.Sprint(a)
 }
 
 // GetHostname для поля Hostname
@@ -118,8 +154,8 @@ func (s *BiZoneSnapshot) SetHostname(hostname string) {
 }
 
 // SetAnyHostname для поля Hostname
-func (s *BiZoneSnapshot) SetAnyHostname(i any) {
-	s.Hostname = fmt.Sprint(i)
+func (s *BiZoneSnapshot) SetAnyHostname(a any) {
+	s.Hostname = fmt.Sprint(a)
 }
 
 // GetOSType для поля OSType
@@ -133,6 +169,6 @@ func (s *BiZoneSnapshot) SetOSType(osType string) {
 }
 
 // SetAnyOSType для поля OSType
-func (s *BiZoneSnapshot) SetAnyOSType(i any) {
-	s.OSType = fmt.Sprint(i)
+func (s *BiZoneSnapshot) SetAnyOSType(a any) {
+	s.OSType = fmt.Sprint(a)
 }

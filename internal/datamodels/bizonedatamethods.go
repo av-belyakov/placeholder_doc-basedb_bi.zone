@@ -17,6 +17,11 @@ func NewBiZoneData() *BiZoneData {
 		EventStartTime:     time.Now().Format(time.RFC3339),
 		LastDetectionTime:  time.Now().Format(time.RFC3339),
 		FirstDetectionTime: time.Now().Format(time.RFC3339),
+		SnortSid:           []uint64(nil),
+		AllIPHome:          []string(nil),
+		AllSensors:         []uint64(nil),
+		Tags:               []BiZoneTag(nil),
+		Snapshots:          []BiZoneSnapshot(nil),
 	}
 }
 
@@ -31,8 +36,8 @@ func (d *BiZoneData) SetID(id string) {
 }
 
 // SetAnyID для поля ID
-func (d *BiZoneData) SetAnyID(i any) {
-	d.ID = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyID(a any) {
+	d.ID = fmt.Sprint(a)
 }
 
 // GetTitle для поля Title
@@ -46,37 +51,53 @@ func (d *BiZoneData) SetTitle(title string) {
 }
 
 // SetAnyTitle для поля Title
-func (d *BiZoneData) SetAnyTitle(i any) {
-	d.Title = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyTitle(a any) {
+	d.Title = fmt.Sprint(a)
 }
 
-// GetSensor для поля Sensor
-func (d *BiZoneData) GetSensor() uint64 {
-	return d.Sensor
+// GetCustomerSystem для поля CustomerSystem
+func (d *BiZoneData) GetCustomerSystem() string {
+	return d.CustomerSystem
 }
 
-// SetSensor для поля Sensor
-func (d *BiZoneData) SetSensor(sensor uint64) {
-	d.Sensor = sensor
+// SetCustomerSystem для поля CustomerSystem
+func (d *BiZoneData) SetCustomerSystem(customerSystem string) {
+	d.CustomerSystem = customerSystem
 }
 
-// SetAnySensor для поля Sensor
-func (d *BiZoneData) SetAnySensor(i any) {
-	if v, ok := i.(float32); ok {
-		d.Sensor = uint64(v)
+// SetAnyCustomerSystem для поля CustomerSystem
+func (d *BiZoneData) SetAnyCustomerSystem(a any) {
+	d.CustomerSystem = fmt.Sprint(a)
+}
 
-		return
-	}
+// GetExternalID для поля ExternalID
+func (d *BiZoneData) GetExternalID() string {
+	return d.ExternalID
+}
 
-	if v, ok := i.(float64); ok {
-		d.Sensor = uint64(v)
+// SetExternalID для поля ExternalID
+func (d *BiZoneData) SetExternalID(externalID string) {
+	d.ExternalID = externalID
+}
 
-		return
-	}
+// SetAnyExternalID для поля ExternalID
+func (d *BiZoneData) SetAnyExternalID(a any) {
+	d.ExternalID = fmt.Sprint(a)
+}
 
-	if v, ok := i.(uint64); ok {
-		d.Sensor = v
-	}
+// GetPlatformType для поля PlatformType
+func (d *BiZoneData) GetPlatformType() string {
+	return d.PlatformType
+}
+
+// SetPlatformType для поля PlatformType
+func (d *BiZoneData) SetPlatformType(platformType string) {
+	d.PlatformType = platformType
+}
+
+// SetAnyPlatformType для поля PlatformType
+func (d *BiZoneData) SetAnyPlatformType(a any) {
+	d.PlatformType = fmt.Sprint(a)
 }
 
 // GetIPHome для поля IPHome
@@ -90,8 +111,8 @@ func (d *BiZoneData) SetIPHome(ipHome string) {
 }
 
 // SetAnyIPHome для поля IPHome
-func (d *BiZoneData) SetAnyIPHome(i any) {
-	d.IPHome = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyIPHome(a any) {
+	d.IPHome = fmt.Sprint(a)
 }
 
 // GetIPExter для поля IPExter
@@ -105,8 +126,8 @@ func (d *BiZoneData) SetIPExter(ipExter string) {
 }
 
 // SetAnyIPExter для поля IPExter
-func (d *BiZoneData) SetAnyIPExter(i any) {
-	d.IPExter = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyIPExter(a any) {
+	d.IPExter = fmt.Sprint(a)
 }
 
 // GetURLHTTP для поля URLHTTP
@@ -120,8 +141,8 @@ func (d *BiZoneData) SetURLHTTP(urlHTTP string) {
 }
 
 // SetAnyURLHTTP для поля URLHTTP
-func (d *BiZoneData) SetAnyURLHTTP(i any) {
-	d.URLHTTP = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyURLHTTP(a any) {
+	d.URLHTTP = fmt.Sprint(a)
 }
 
 // GetEventType для поля EventType
@@ -135,8 +156,8 @@ func (d *BiZoneData) SetEventType(eventType string) {
 }
 
 // SetAnyEventType для поля EventType
-func (d *BiZoneData) SetAnyEventType(i any) {
-	d.EventType = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyEventType(a any) {
+	d.EventType = fmt.Sprint(a)
 }
 
 // GetURLArkime для поля URLArkime
@@ -150,8 +171,8 @@ func (d *BiZoneData) SetURLArkime(urlArkime string) {
 }
 
 // SetAnyURLArkime для поля URLArkime
-func (d *BiZoneData) SetAnyURLArkime(i any) {
-	d.URLArkime = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyURLArkime(a any) {
+	d.URLArkime = fmt.Sprint(a)
 }
 
 // GetURLFTP для поля URLFTP
@@ -165,37 +186,8 @@ func (d *BiZoneData) SetURLFTP(urlFTP string) {
 }
 
 // SetAnyURLFTP для поля URLFTP
-func (d *BiZoneData) SetAnyURLFTP(i any) {
-	d.URLFTP = fmt.Sprint(i)
-}
-
-// GetAllIPExt для поля AllIPExt
-func (d *BiZoneData) GetAllIPExt() uint64 {
-	return d.AllIPExt
-}
-
-// SetAllIPExt для поля AllIPExt
-func (d *BiZoneData) SetAllIPExt(allIPExt uint64) {
-	d.AllIPExt = allIPExt
-}
-
-// SetAnyAllIPExt для поля AllIPExt
-func (d *BiZoneData) SetAnyAllIPExt(i any) {
-	if v, ok := i.(float32); ok {
-		d.AllIPExt = uint64(v)
-
-		return
-	}
-
-	if v, ok := i.(float64); ok {
-		d.AllIPExt = uint64(v)
-
-		return
-	}
-
-	if v, ok := i.(uint64); ok {
-		d.AllIPExt = v
-	}
+func (d *BiZoneData) SetAnyURLFTP(a any) {
+	d.URLFTP = fmt.Sprint(a)
 }
 
 // GetAffectedLogSources для поля AffectedLogSources
@@ -209,8 +201,8 @@ func (d *BiZoneData) SetAffectedLogSources(affectedLogSources string) {
 }
 
 // SetAnyAffectedLogSources для поля AffectedLogSources
-func (d *BiZoneData) SetAnyAffectedLogSources(i any) {
-	d.AffectedLogSources = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyAffectedLogSources(a any) {
+	d.AffectedLogSources = fmt.Sprint(a)
 }
 
 // GetConfidence для поля Confidence
@@ -224,8 +216,8 @@ func (d *BiZoneData) SetConfidence(confidence string) {
 }
 
 // SetAnyConfidence для поля Confidence
-func (d *BiZoneData) SetAnyConfidence(i any) {
-	d.Confidence = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyConfidence(a any) {
+	d.Confidence = fmt.Sprint(a)
 }
 
 // GetDescription для поля Description
@@ -239,8 +231,38 @@ func (d *BiZoneData) SetDescription(description string) {
 }
 
 // SetAnyDescription для поля Description
-func (d *BiZoneData) SetAnyDescription(i any) {
-	d.Description = fmt.Sprint(i)
+func (d *BiZoneData) SetAnyDescription(a any) {
+	d.Description = fmt.Sprint(a)
+}
+
+// GetUUID для поля UUID
+func (d *BiZoneData) GetUUID() string {
+	return d.UUID
+}
+
+// SetUUID для поля UUID
+func (d *BiZoneData) SetUUID(UUID string) {
+	d.UUID = UUID
+}
+
+// SetAnyUUID для поля UUID
+func (d *BiZoneData) SetAnyUUID(a any) {
+	d.UUID = fmt.Sprint(a)
+}
+
+// GetDetectionRule для поля DetectionRule
+func (d *BiZoneData) GetDetectionRule() string {
+	return d.DetectionRule
+}
+
+// SetDetectionRule для поля DetectionRule
+func (d *BiZoneData) SetDetectionRule(detectionRule string) {
+	d.DetectionRule = detectionRule
+}
+
+// SetAnyDetectionRule для поля DetectionRule
+func (d *BiZoneData) SetAnyDetectionRule(a any) {
+	d.DetectionRule = fmt.Sprint(a)
 }
 
 // GetCreatedTime для поля CreatedTime (формат RFC3339)
@@ -254,8 +276,8 @@ func (d *BiZoneData) SetCreatedTime(createdTime string) {
 }
 
 // SetAnyCreatedTime для поля CreatedTime (формат RFC3339)
-func (d *BiZoneData) SetAnyCreatedTime(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
+func (d *BiZoneData) SetAnyCreatedTime(a any) {
+	tmp := supportingfunctions.ConversionAnyToInt(a)
 	d.CreatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
 }
 
@@ -270,8 +292,8 @@ func (d *BiZoneData) SetEventStartTime(eventStartTime string) {
 }
 
 // SetAnyEventStartTime для поля EventStartTime (формат RFC3339)
-func (d *BiZoneData) SetAnyEventStartTime(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
+func (d *BiZoneData) SetAnyEventStartTime(a any) {
+	tmp := supportingfunctions.ConversionAnyToInt(a)
 	d.EventStartTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
 }
 
@@ -286,8 +308,8 @@ func (d *BiZoneData) SetLastDetectionTime(lastDetectionTime string) {
 }
 
 // SetAnyLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (d *BiZoneData) SetAnyLastDetectionTime(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
+func (d *BiZoneData) SetAnyLastDetectionTime(a any) {
+	tmp := supportingfunctions.ConversionAnyToInt(a)
 	d.LastDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
 }
 
@@ -302,9 +324,79 @@ func (d *BiZoneData) SetFirstDetectionTime(firstDetectionTime string) {
 }
 
 // SetAnyFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (d *BiZoneData) SetAnyFirstDetectionTime(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
+func (d *BiZoneData) SetAnyFirstDetectionTime(a any) {
+	tmp := supportingfunctions.ConversionAnyToInt(a)
 	d.FirstDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+}
+
+// GetSensor для поля Sensor
+func (d *BiZoneData) GetSensor() uint64 {
+	return d.Sensor
+}
+
+// SetSensor для поля Sensor
+func (d *BiZoneData) SetSensor(sensor uint64) {
+	d.Sensor = sensor
+}
+
+// SetAnySensor для поля Sensor
+func (d *BiZoneData) SetAnySensor(a any) {
+	if v, ok := a.(int); ok {
+		d.Sensor = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(float32); ok {
+		d.Sensor = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(float64); ok {
+		d.Sensor = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(uint64); ok {
+		d.Sensor = v
+	}
+}
+
+// GetAllIPExt для поля AllIPExt
+func (d *BiZoneData) GetAllIPExt() uint64 {
+	return d.AllIPExt
+}
+
+// SetAllIPExt для поля AllIPExt
+func (d *BiZoneData) SetAllIPExt(allIPExt uint64) {
+	d.AllIPExt = allIPExt
+}
+
+// SetAnyAllIPExt для поля AllIPExt
+func (d *BiZoneData) SetAnyAllIPExt(a any) {
+	if v, ok := a.(int); ok {
+		d.AllIPExt = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(float32); ok {
+		d.AllIPExt = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(float64); ok {
+		d.AllIPExt = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(uint64); ok {
+		d.AllIPExt = v
+	}
 }
 
 // GetIDNum для поля IDNum
@@ -318,52 +410,28 @@ func (d *BiZoneData) SetIDNum(idNum uint64) {
 }
 
 // SetAnyIDNum для поля IDNum
-func (d *BiZoneData) SetAnyIDNum(i any) {
-	if v, ok := i.(float32); ok {
+func (d *BiZoneData) SetAnyIDNum(a any) {
+	if v, ok := a.(int); ok {
 		d.IDNum = uint64(v)
 
 		return
 	}
 
-	if v, ok := i.(float64); ok {
+	if v, ok := a.(float32); ok {
 		d.IDNum = uint64(v)
 
 		return
 	}
 
-	if v, ok := i.(uint64); ok {
+	if v, ok := a.(float64); ok {
+		d.IDNum = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(uint64); ok {
 		d.IDNum = v
 	}
-}
-
-// GetDetectionRule для поля DetectionRule
-func (d *BiZoneData) GetDetectionRule() string {
-	return d.DetectionRule
-}
-
-// SetDetectionRule для поля DetectionRule
-func (d *BiZoneData) SetDetectionRule(detectionRule string) {
-	d.DetectionRule = detectionRule
-}
-
-// SetAnyDetectionRule для поля DetectionRule
-func (d *BiZoneData) SetAnyDetectionRule(i any) {
-	d.DetectionRule = fmt.Sprint(i)
-}
-
-// GetUUID для поля UUID
-func (d *BiZoneData) GetUUID() string {
-	return d.UUID
-}
-
-// SetUUID для поля UUID
-func (d *BiZoneData) SetUUID(uuid string) {
-	d.UUID = uuid
-}
-
-// SetAnyUUID для поля UUID
-func (d *BiZoneData) SetAnyUUID(i any) {
-	d.UUID = fmt.Sprint(i)
 }
 
 // GetResponseTeam для поля ResponseTeam
@@ -377,67 +445,28 @@ func (d *BiZoneData) SetResponseTeam(responseTeam uint64) {
 }
 
 // SetAnyResponseTeam для поля ResponseTeam
-func (d *BiZoneData) SetAnyResponseTeam(i any) {
-	if v, ok := i.(float32); ok {
+func (d *BiZoneData) SetAnyResponseTeam(a any) {
+	if v, ok := a.(int); ok {
 		d.ResponseTeam = uint64(v)
 
 		return
 	}
 
-	if v, ok := i.(float64); ok {
+	if v, ok := a.(float32); ok {
 		d.ResponseTeam = uint64(v)
 
 		return
 	}
 
-	if v, ok := i.(uint64); ok {
+	if v, ok := a.(float64); ok {
+		d.ResponseTeam = uint64(v)
+
+		return
+	}
+
+	if v, ok := a.(uint64); ok {
 		d.ResponseTeam = v
 	}
-}
-
-// GetCustomerSystem для поля CustomerSystem
-func (d *BiZoneData) GetCustomerSystem() string {
-	return d.CustomerSystem
-}
-
-// SetCustomerSystem для поля CustomerSystem
-func (d *BiZoneData) SetCustomerSystem(customerSystem string) {
-	d.CustomerSystem = customerSystem
-}
-
-// SetAnyCustomerSystem для поля CustomerSystem
-func (d *BiZoneData) SetAnyCustomerSystem(i any) {
-	d.CustomerSystem = fmt.Sprint(i)
-}
-
-// GetExternalID для поля ExternalID
-func (d *BiZoneData) GetExternalID() string {
-	return d.ExternalID
-}
-
-// SetExternalID для поля ExternalID
-func (d *BiZoneData) SetExternalID(externalID string) {
-	d.ExternalID = externalID
-}
-
-// SetAnyExternalID для поля ExternalID
-func (d *BiZoneData) SetAnyExternalID(i any) {
-	d.ExternalID = fmt.Sprint(i)
-}
-
-// GetPlatformType для поля PlatformType
-func (d *BiZoneData) GetPlatformType() string {
-	return d.PlatformType
-}
-
-// SetPlatformType для поля PlatformType
-func (d *BiZoneData) SetPlatformType(platformType string) {
-	d.PlatformType = platformType
-}
-
-// SetAnyPlatformType для поля PlatformType
-func (d *BiZoneData) SetAnyPlatformType(i any) {
-	d.PlatformType = fmt.Sprint(i)
 }
 
 // GetSnapshots для поля Snapshots
@@ -460,14 +489,49 @@ func (d *BiZoneData) SetTags(tags []BiZoneTag) {
 	d.Tags = tags
 }
 
-// GetSnortSid для поля SnortSid
-func (d *BiZoneData) GetSnortSid() []uint64 {
+// GetSnortSids список sid snort
+func (d *BiZoneData) GetSnortSids() []uint64 {
 	return d.SnortSid
 }
 
-// SetSnortSid для поля SnortSid
-func (d *BiZoneData) SetSnortSid(snortSid []uint64) {
-	d.SnortSid = snortSid
+// SetSnortSid список sid snort
+func (d *BiZoneData) SetSnortSids(sids []uint64) {
+	d.SnortSid = sids
+}
+
+// SetSnortSid записывает значение в список SnortSid
+func (d *BiZoneData) SetSnortSid(sid uint64) {
+	if d.SnortSid == nil {
+		d.SnortSid = []uint64(nil)
+	}
+
+	d.SnortSid = append(d.SnortSid, sid)
+}
+
+// SetAnySnortSid записывает значение в список SnortSid
+func (d *BiZoneData) SetAnySnortSid(a any) {
+	var sid uint64
+	if d.SnortSid == nil {
+		d.SnortSid = []uint64(nil)
+	}
+
+	if v, ok := a.(int); ok {
+		sid = uint64(v)
+	}
+
+	if v, ok := a.(float32); ok {
+		sid = uint64(v)
+	}
+
+	if v, ok := a.(float64); ok {
+		sid = uint64(v)
+	}
+
+	if v, ok := a.(uint64); ok {
+		sid = v
+	}
+
+	d.SnortSid = append(d.SnortSid, sid)
 }
 
 // GetAllSensors для поля AllSensors
@@ -480,12 +544,65 @@ func (d *BiZoneData) SetAllSensors(allSensors []uint64) {
 	d.AllSensors = allSensors
 }
 
-// GetAllSensors для поля AllIPHome
-func (d *BiZoneData) GetAllIPHome() []string {
+// SetAllSensor записывает значение в список AllSensors
+func (d *BiZoneData) SetAllSensor(sensor uint64) {
+	if d.AllSensors == nil {
+		d.AllSensors = []uint64(nil)
+	}
+
+	d.SnortSid = append(d.SnortSid, sensor)
+}
+
+// SetAnyAllSensor записывает значение в список AllSensors
+func (d *BiZoneData) SetAnyAllSensor(a any) {
+	var sensor uint64
+	if d.AllSensors == nil {
+		d.AllSensors = []uint64(nil)
+	}
+
+	if v, ok := a.(int); ok {
+		sensor = uint64(v)
+	}
+
+	if v, ok := a.(float32); ok {
+		sensor = uint64(v)
+	}
+
+	if v, ok := a.(float64); ok {
+		sensor = uint64(v)
+	}
+
+	if v, ok := a.(uint64); ok {
+		sensor = v
+	}
+
+	d.AllSensors = append(d.AllSensors, sensor)
+}
+
+// GetAllIPHomes для поля AllIPHome
+func (d *BiZoneData) GetAllIPHomes() []string {
 	return d.AllIPHome
 }
 
-// SetAllSensors для поля AllIPHome
-func (d *BiZoneData) SetAllIPHome(allIPHome []string) {
+// SetAllIPHomes для поля AllIPHomes
+func (d *BiZoneData) SetAllIPHomes(allIPHome []string) {
 	d.AllIPHome = allIPHome
+}
+
+// SetAllIPHome добавляет значение AllIPHome в список
+func (d *BiZoneData) SetAllIPHome(ipHome string) {
+	if d.AllIPHome == nil {
+		d.AllIPHome = []string(nil)
+	}
+
+	d.AllIPHome = append(d.AllIPHome, ipHome)
+}
+
+// SetAnyAllIPHome добавляет значение AllIPHome  в список
+func (d *BiZoneData) SetAnyAllIPHome(i any) {
+	if d.AllIPHome == nil {
+		d.AllIPHome = []string(nil)
+	}
+
+	d.AllIPHome = append(d.AllIPHome, fmt.Sprint(i))
 }
