@@ -25,6 +25,10 @@ func NewBiZoneData() *BiZoneData {
 	}
 }
 
+func (d *BiZoneData) Get() *BiZoneData {
+	return d
+}
+
 // GetID для поля ID
 func (d *BiZoneData) GetID() string {
 	return d.ID

@@ -18,104 +18,138 @@ func NewVerifiedBiZoneAlert() *VerifiedBiZoneAlert {
 	}
 }
 
+func (va *VerifiedBiZoneAlert) Get() *VerifiedBiZoneAlert {
+	return va
+}
+
+// GetID для дополнительного поля @id
+func (va *VerifiedBiZoneAlert) GetID() string {
+	return va.ID
+}
+
+// SetID для дополнительного поля @id
+func (va *VerifiedBiZoneAlert) SetID(id string) {
+	va.ID = id
+}
+
+// SetAnyID для дополнительного поля @id
+func (va *VerifiedBiZoneAlert) SetAnyID(a any) {
+	va.ID = fmt.Sprint(a)
+}
+
+// GetUUID для дополнительного поля @uuid
+func (va *VerifiedBiZoneAlert) GetUUID() string {
+	return va.UUID
+}
+
+// SetUUID для дополнительного поля @uuid
+func (va *VerifiedBiZoneAlert) SetUUID(uuid string) {
+	va.UUID = uuid
+}
+
+// SetAnyUUID для дополнительного поля @uuid
+func (va *VerifiedBiZoneAlert) SetAnyUUID(a any) {
+	va.UUID = fmt.Sprint(a)
+}
+
 // GetSeverity для поля Severity
-func (e *VerifiedBiZoneAlert) GetSeverity() string {
-	return e.Severity
+func (va *VerifiedBiZoneAlert) GetSeverity() string {
+	return va.Severity
 }
 
 // SetSeverity для поля Severity
-func (e *VerifiedBiZoneAlert) SetSeverity(severity string) {
-	e.Severity = severity
+func (va *VerifiedBiZoneAlert) SetSeverity(severity string) {
+	va.Severity = severity
 }
 
 // SetAnySeverity для поля Severity
-func (e *VerifiedBiZoneAlert) SetAnySeverity(a any) {
-	e.Severity = fmt.Sprint(a)
+func (va *VerifiedBiZoneAlert) SetAnySeverity(a any) {
+	va.Severity = fmt.Sprint(a)
 }
 
 // GetUpdatedTime для поля UpdatedTime (формат RFC3339)
-func (e *VerifiedBiZoneAlert) GetUpdatedTime() string {
-	return e.UpdatedTime
+func (va *VerifiedBiZoneAlert) GetUpdatedTime() string {
+	return va.UpdatedTime
 }
 
 // SetUpdatedTime для поля UpdatedTime (формат RFC3339)
-func (e *VerifiedBiZoneAlert) SetUpdatedTime(updatedTime string) {
-	e.UpdatedTime = updatedTime
+func (va *VerifiedBiZoneAlert) SetUpdatedTime(updatedTime string) {
+	va.UpdatedTime = updatedTime
 }
 
 // SetAnyUpdatedTime для поля UpdatedTime (строка)
-func (e *VerifiedBiZoneAlert) SetAnyUpdatedTime(a any) {
+func (va *VerifiedBiZoneAlert) SetAnyUpdatedTime(a any) {
 	tmp := supportingfunctions.ConversionAnyToInt(a)
-	e.UpdatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.UpdatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
 }
 
 // GetVerifiedBiZoneAlertEndTime для поля EventEndTime (формат RFC3339)
-func (e *VerifiedBiZoneAlert) GetEventEndTime() string {
-	return e.EventEndTime
+func (va *VerifiedBiZoneAlert) GetEventEndTime() string {
+	return va.EventEndTime
 }
 
 // SetEventEndTime для поля EventEndTime (формат RFC3339)
-func (e *VerifiedBiZoneAlert) SetEventEndTime(eventEndTime string) {
-	e.EventEndTime = eventEndTime
+func (va *VerifiedBiZoneAlert) SetEventEndTime(eventEndTime string) {
+	va.EventEndTime = eventEndTime
 }
 
 // SetAnyEventEndTime для поля EventEndTime (строка)
-func (e *VerifiedBiZoneAlert) SetAnyEventEndTime(a any) {
+func (va *VerifiedBiZoneAlert) SetAnyEventEndTime(a any) {
 	tmp := supportingfunctions.ConversionAnyToInt(a)
-	e.EventEndTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.EventEndTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
 }
 
 // GetPlatformHostname для поля PlatformHostname
-func (e *VerifiedBiZoneAlert) GetPlatformHostname() string {
-	return e.PlatformHostname
+func (va *VerifiedBiZoneAlert) GetPlatformHostname() string {
+	return va.PlatformHostname
 }
 
 // SetPlatformHostname для поля PlatformHostname
-func (e *VerifiedBiZoneAlert) SetPlatformHostname(platformHostname string) {
-	e.PlatformHostname = platformHostname
+func (va *VerifiedBiZoneAlert) SetPlatformHostname(platformHostname string) {
+	va.PlatformHostname = platformHostname
 }
 
 // SetAnyPlatformHostname для поля PlatformHostname
-func (e *VerifiedBiZoneAlert) SetAnyPlatformHostname(a any) {
-	e.PlatformHostname = fmt.Sprint(a)
+func (va *VerifiedBiZoneAlert) SetAnyPlatformHostname(a any) {
+	va.PlatformHostname = fmt.Sprint(a)
 }
 
 // GetTitle для поля Title
-func (e *VerifiedBiZoneAlert) GetTitle() string {
-	return e.Title
+func (va *VerifiedBiZoneAlert) GetTitle() string {
+	return va.Title
 }
 
 // SetTitle для поля Title
-func (e *VerifiedBiZoneAlert) SetTitle(title string) {
-	e.Title = title
+func (va *VerifiedBiZoneAlert) SetTitle(title string) {
+	va.Title = title
 }
 
 // SetAnyTitle для поля Title
-func (e *VerifiedBiZoneAlert) SetAnyTitle(a any) {
-	e.Title = fmt.Sprint(a)
+func (va *VerifiedBiZoneAlert) SetAnyTitle(a any) {
+	va.Title = fmt.Sprint(a)
 }
 
 // GetRecommendations для поля Recommendations
-func (e *VerifiedBiZoneAlert) GetRecommendations() string {
-	return e.Recommendations
+func (va *VerifiedBiZoneAlert) GetRecommendations() string {
+	return va.Recommendations
 }
 
 // SetRecommendations для поля Recommendations
-func (e *VerifiedBiZoneAlert) SetRecommendations(recommendations string) {
-	e.Recommendations = recommendations
+func (va *VerifiedBiZoneAlert) SetRecommendations(recommendations string) {
+	va.Recommendations = recommendations
 }
 
 // SetAnyRecommendations для поля Recommendations
-func (e *VerifiedBiZoneAlert) SetAnyRecommendations(a any) {
-	e.Recommendations = fmt.Sprint(a)
+func (va *VerifiedBiZoneAlert) SetAnyRecommendations(a any) {
+	va.Recommendations = fmt.Sprint(a)
 }
 
 // GetData для поля Data
-func (e *VerifiedBiZoneAlert) GetData() BiZoneData {
-	return e.Data
+func (va *VerifiedBiZoneAlert) GetData() BiZoneData {
+	return va.Data
 }
 
 // SetData для поля Data
-func (e *VerifiedBiZoneAlert) SetData(data BiZoneData) {
-	e.Data = data
+func (va *VerifiedBiZoneAlert) SetData(data BiZoneData) {
+	va.Data = data
 }
