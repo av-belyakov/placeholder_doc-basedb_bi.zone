@@ -2,6 +2,7 @@ package datamodels
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
@@ -28,9 +29,10 @@ func (t *BiZoneTag) SetCreated(created string) {
 }
 
 // SetAnyCreated для поля Created (формат RFC3339)
-func (t *BiZoneTag) SetAnyCreated(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
-	t.Created = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+func (t *BiZoneTag) SetAnyCreated(a any) {
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//t.Created = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	t.Created = fmt.Sprint(a)
 }
 
 // GetName для поля Name
@@ -105,4 +107,19 @@ func (t *BiZoneTag) SetCreatedByUsername(username string) {
 // SetAnyCreatedByUsername для поля CreatedBy.Username
 func (t *BiZoneTag) SetAnyCreatedByUsername(a any) {
 	t.CreatedBy.Username = fmt.Sprint(a)
+}
+
+// ToStringBeautiful форматированный вывод
+func (t *BiZoneTag) ToStringBeautiful(num int) string {
+	str := strings.Builder{}
+
+	ws := supportingfunctions.GetWhitespace(num)
+
+	str.WriteString(fmt.Sprintf("%s'name': '%s'\n", ws, t.Name))
+	str.WriteString(fmt.Sprintf("%s'color': '%s'\n", ws, t.Color))
+	str.WriteString(fmt.Sprintf("%s'created': '%s'\n", ws, t.Created))
+	str.WriteString(fmt.Sprintf("%s'created_by.id': '%d'\n", ws, t.CreatedBy.ID))
+	str.WriteString(fmt.Sprintf("%s'created_by.username': '%s'\n", ws, t.CreatedBy.Username))
+
+	return str.String()
 }

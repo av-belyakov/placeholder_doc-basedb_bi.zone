@@ -10,12 +10,12 @@ NATS:
     get_geoip_info: object.geoip-request.test
     get_sensor_info: object.sensor-info-request.test
 KAFKA:
-  host: localhost
-  port: 9092
+  host: 192.168.9.71
+  port: 31792
   cache_ttl: 3600
   topics:
-    alerts: object.topicalerttype.test
-    soar-alerts: object.topicsoaralertstype.test
+    alerts: alertmgr-alerts
+    soar-alerts: soar-alertmgr-alerts-default-topic
 DATABASESTORAGE:
   host: 192.168.9.208
   port: 9200

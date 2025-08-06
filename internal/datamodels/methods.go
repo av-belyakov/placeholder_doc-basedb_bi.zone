@@ -1,6 +1,12 @@
 package datamodels
 
-import "slices"
+import (
+	"fmt"
+	"slices"
+	"strings"
+
+	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
+)
 
 var (
 	fieldsFroTagsRepresentedAsList []string = []string{
@@ -135,4 +141,88 @@ func (ssnap *SupportingStructureForSnapshots) isExistFieldBranch(v string) bool 
 
 func isExistFieldsRepresentedAsList(field string, list []string) bool {
 	return slices.Contains(list, field)
+}
+
+// ************* Различная дополнительная информация ***************
+// *****************************************************************
+
+// GetSensorsInformation объекты с информацией о сенсоре
+func (ai *AdditionalInformation) GetSensorsInformation() []SensorInformation {
+	return ai.Sensors
+}
+
+// AddSensorInformation добавляет информацию о сенсоре
+func (ai *AdditionalInformation) AddSensorInformation(v SensorInformation) {
+	if len(ai.Sensors) == 0 || !slices.ContainsFunc(ai.Sensors, func(obj SensorInformation) bool {
+		return obj.SensorId == v.SensorId
+	}) {
+		ai.Sensors = append(ai.Sensors, v)
+	}
+}
+
+// GetIpAddressesInformation объекты с информацией об ip адресах
+func (ai *AdditionalInformation) GetIpAddressesInformation() []IpAddressInformation {
+	return ai.IpAddresses
+}
+
+// AddIpAddressInformation добавляет информацию об ip адресе
+func (ai *AdditionalInformation) AddIpAddressInformation(v IpAddressInformation) {
+	if len(ai.IpAddresses) == 0 || !slices.ContainsFunc(ai.IpAddresses, func(obj IpAddressInformation) bool {
+		return obj.Ip == v.Ip
+	}) {
+		ai.IpAddresses = append(ai.IpAddresses, v)
+	}
+}
+
+// GetIpAddrString ip адрес в виде строки
+func (i IpAddressInformation) GetIpAddrString() string {
+	return i.Ip
+}
+
+// ToStringBeautiful дополнительная информация по сенсорам и ip адресам
+func (ai *AdditionalInformation) ToStringBeautiful(num int) string {
+	var str strings.Builder = strings.Builder{}
+	str.WriteString(fmt.Sprintf("%s'@sensor_additional_information':\n", supportingfunctions.GetWhitespace(num)))
+	for k, v := range ai.Sensors {
+		str.WriteString(fmt.Sprintf("%s%d.\n", supportingfunctions.GetWhitespace(num+1), k+1))
+		str.WriteString(v.ToStringBeautiful(num + 2))
+	}
+	str.WriteString(fmt.Sprintf("%s'@ip_addressAdditional_information':\n", supportingfunctions.GetWhitespace(num)))
+	for k, v := range ai.IpAddresses {
+		str.WriteString(fmt.Sprintf("%s%d.\n", supportingfunctions.GetWhitespace(num+1), k+1))
+		str.WriteString(v.ToStringBeautiful(num + 2))
+	}
+
+	return str.String()
+}
+
+// ToStringBeautiful для информации по сенсору
+func (si *SensorInformation) ToStringBeautiful(num int) string {
+	ws := supportingfunctions.GetWhitespace(num)
+
+	str := strings.Builder{}
+	str.WriteString(fmt.Sprintf("%s'sensor_id': '%s'\n", ws, si.SensorId))
+	str.WriteString(fmt.Sprintf("%s'host_id': '%s'\n", ws, si.HostId))
+	str.WriteString(fmt.Sprintf("%s'geo_code': '%s'\n", ws, si.GeoCode))
+	str.WriteString(fmt.Sprintf("%s'object_area': '%s'\n", ws, si.ObjectArea))
+	str.WriteString(fmt.Sprintf("%s'subject_rf': '%s'\n", ws, si.SubjectRF))
+	str.WriteString(fmt.Sprintf("%s'inn': '%s'\n", ws, si.INN))
+	str.WriteString(fmt.Sprintf("%s'home_net': '%s'\n", ws, si.HomeNet))
+	str.WriteString(fmt.Sprintf("%s'org_name': '%s'\n", ws, si.OrgName))
+	str.WriteString(fmt.Sprintf("%s'full_org_name': '%s'\n", ws, si.FullOrgName))
+
+	return str.String()
+}
+
+// ToStringBeautiful для информации по ip адресу
+func (i *IpAddressInformation) ToStringBeautiful(num int) string {
+	ws := supportingfunctions.GetWhitespace(num)
+
+	str := strings.Builder{}
+	str.WriteString(fmt.Sprintf("%s'ip': '%s'\n", ws, i.Ip))
+	str.WriteString(fmt.Sprintf("%s'city': '%s'\n", ws, i.City))
+	str.WriteString(fmt.Sprintf("%s'country': '%s'\n", ws, i.Country))
+	str.WriteString(fmt.Sprintf("%s'country_code': '%s'\n", ws, i.CountryCode))
+
+	return str.String()
 }

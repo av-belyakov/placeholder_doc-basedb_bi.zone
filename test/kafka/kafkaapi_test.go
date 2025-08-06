@@ -11,10 +11,11 @@ import (
 	"time"
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/kafkaapi"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supporting"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
+/*
 // *** для счётчика ***
 type Counting struct{}
 
@@ -59,6 +60,7 @@ func (l *Logging) GetChan() <-chan interfaces.Messager {
 func (l *Logging) Send(msgType, msgData string) {
 	l.ch <- &Message{Type: msgType, Message: msgData}
 }
+*/
 
 func TestKafkaApi(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill, syscall.SIGINT)
@@ -71,10 +73,10 @@ func TestKafkaApi(t *testing.T) {
 		stop()
 	}()
 
-	logging := NewLogging()
-	counting := &Counting{}
+	logging := supporting.NewLogging()
+	counting := &supporting.Counting{}
 
-	go func(ctx context.Context, l *Logging) {
+	go func(ctx context.Context, l *supporting.Logging) {
 		for {
 			select {
 			case <-ctx.Done():

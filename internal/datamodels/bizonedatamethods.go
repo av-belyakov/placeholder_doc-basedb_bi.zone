@@ -2,7 +2,7 @@ package datamodels
 
 import (
 	"fmt"
-	"time"
+	"strings"
 
 	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
 )
@@ -13,15 +13,9 @@ import (
 // NewBiZoneData новый объект
 func NewBiZoneData() *BiZoneData {
 	return &BiZoneData{
-		CreatedTime:        time.Now().Format(time.RFC3339),
-		EventStartTime:     time.Now().Format(time.RFC3339),
-		LastDetectionTime:  time.Now().Format(time.RFC3339),
-		FirstDetectionTime: time.Now().Format(time.RFC3339),
-		SnortSid:           []uint64(nil),
-		AllIPHome:          []string(nil),
-		AllSensors:         []uint64(nil),
-		Tags:               []BiZoneTag(nil),
-		Snapshots:          []BiZoneSnapshot(nil),
+		SnortSid:   []uint64(nil),
+		AllIPHome:  []string(nil),
+		AllSensors: []uint64(nil),
 	}
 }
 
@@ -57,51 +51,6 @@ func (d *BiZoneData) SetTitle(title string) {
 // SetAnyTitle для поля Title
 func (d *BiZoneData) SetAnyTitle(a any) {
 	d.Title = fmt.Sprint(a)
-}
-
-// GetCustomerSystem для поля CustomerSystem
-func (d *BiZoneData) GetCustomerSystem() string {
-	return d.CustomerSystem
-}
-
-// SetCustomerSystem для поля CustomerSystem
-func (d *BiZoneData) SetCustomerSystem(customerSystem string) {
-	d.CustomerSystem = customerSystem
-}
-
-// SetAnyCustomerSystem для поля CustomerSystem
-func (d *BiZoneData) SetAnyCustomerSystem(a any) {
-	d.CustomerSystem = fmt.Sprint(a)
-}
-
-// GetExternalID для поля ExternalID
-func (d *BiZoneData) GetExternalID() string {
-	return d.ExternalID
-}
-
-// SetExternalID для поля ExternalID
-func (d *BiZoneData) SetExternalID(externalID string) {
-	d.ExternalID = externalID
-}
-
-// SetAnyExternalID для поля ExternalID
-func (d *BiZoneData) SetAnyExternalID(a any) {
-	d.ExternalID = fmt.Sprint(a)
-}
-
-// GetPlatformType для поля PlatformType
-func (d *BiZoneData) GetPlatformType() string {
-	return d.PlatformType
-}
-
-// SetPlatformType для поля PlatformType
-func (d *BiZoneData) SetPlatformType(platformType string) {
-	d.PlatformType = platformType
-}
-
-// SetAnyPlatformType для поля PlatformType
-func (d *BiZoneData) SetAnyPlatformType(a any) {
-	d.PlatformType = fmt.Sprint(a)
 }
 
 // GetIPHome для поля IPHome
@@ -194,145 +143,6 @@ func (d *BiZoneData) SetAnyURLFTP(a any) {
 	d.URLFTP = fmt.Sprint(a)
 }
 
-// GetAffectedLogSources для поля AffectedLogSources
-func (d *BiZoneData) GetAffectedLogSources() string {
-	return d.AffectedLogSources
-}
-
-// SetAffectedLogSources для поля AffectedLogSources
-func (d *BiZoneData) SetAffectedLogSources(affectedLogSources string) {
-	d.AffectedLogSources = affectedLogSources
-}
-
-// SetAnyAffectedLogSources для поля AffectedLogSources
-func (d *BiZoneData) SetAnyAffectedLogSources(a any) {
-	d.AffectedLogSources = fmt.Sprint(a)
-}
-
-// GetConfidence для поля Confidence
-func (d *BiZoneData) GetConfidence() string {
-	return d.Confidence
-}
-
-// SetConfidence для поля Confidence
-func (d *BiZoneData) SetConfidence(confidence string) {
-	d.Confidence = confidence
-}
-
-// SetAnyConfidence для поля Confidence
-func (d *BiZoneData) SetAnyConfidence(a any) {
-	d.Confidence = fmt.Sprint(a)
-}
-
-// GetDescription для поля Description
-func (d *BiZoneData) GetDescription() string {
-	return d.Description
-}
-
-// SetDescription для поля Description
-func (d *BiZoneData) SetDescription(description string) {
-	d.Description = description
-}
-
-// SetAnyDescription для поля Description
-func (d *BiZoneData) SetAnyDescription(a any) {
-	d.Description = fmt.Sprint(a)
-}
-
-// GetUUID для поля UUID
-func (d *BiZoneData) GetUUID() string {
-	return d.UUID
-}
-
-// SetUUID для поля UUID
-func (d *BiZoneData) SetUUID(UUID string) {
-	d.UUID = UUID
-}
-
-// SetAnyUUID для поля UUID
-func (d *BiZoneData) SetAnyUUID(a any) {
-	d.UUID = fmt.Sprint(a)
-}
-
-// GetDetectionRule для поля DetectionRule
-func (d *BiZoneData) GetDetectionRule() string {
-	return d.DetectionRule
-}
-
-// SetDetectionRule для поля DetectionRule
-func (d *BiZoneData) SetDetectionRule(detectionRule string) {
-	d.DetectionRule = detectionRule
-}
-
-// SetAnyDetectionRule для поля DetectionRule
-func (d *BiZoneData) SetAnyDetectionRule(a any) {
-	d.DetectionRule = fmt.Sprint(a)
-}
-
-// GetCreatedTime для поля CreatedTime (формат RFC3339)
-func (d *BiZoneData) GetCreatedTime() string {
-	return d.CreatedTime
-}
-
-// SetCreatedTime для поля CreatedTime (формат RFC3339)
-func (d *BiZoneData) SetCreatedTime(createdTime string) {
-	d.CreatedTime = createdTime
-}
-
-// SetAnyCreatedTime для поля CreatedTime (формат RFC3339)
-func (d *BiZoneData) SetAnyCreatedTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	d.CreatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-}
-
-// GetEventStartTime для поля EventStartTime (формат RFC3339)
-func (d *BiZoneData) GetEventStartTime() string {
-	return d.EventStartTime
-}
-
-// SetEventStartTime для поля EventStartTime (формат RFC3339)
-func (d *BiZoneData) SetEventStartTime(eventStartTime string) {
-	d.EventStartTime = eventStartTime
-}
-
-// SetAnyEventStartTime для поля EventStartTime (формат RFC3339)
-func (d *BiZoneData) SetAnyEventStartTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	d.EventStartTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-}
-
-// GetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (d *BiZoneData) GetLastDetectionTime() string {
-	return d.LastDetectionTime
-}
-
-// SetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (d *BiZoneData) SetLastDetectionTime(lastDetectionTime string) {
-	d.LastDetectionTime = lastDetectionTime
-}
-
-// SetAnyLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (d *BiZoneData) SetAnyLastDetectionTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	d.LastDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-}
-
-// GetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (d *BiZoneData) GetFirstDetectionTime() string {
-	return d.FirstDetectionTime
-}
-
-// SetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (d *BiZoneData) SetFirstDetectionTime(firstDetectionTime string) {
-	d.FirstDetectionTime = firstDetectionTime
-}
-
-// SetAnyFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (d *BiZoneData) SetAnyFirstDetectionTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	d.FirstDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-}
-
 // GetSensor для поля Sensor
 func (d *BiZoneData) GetSensor() uint64 {
 	return d.Sensor
@@ -403,41 +213,6 @@ func (d *BiZoneData) SetAnyAllIPExt(a any) {
 	}
 }
 
-// GetIDNum для поля IDNum
-func (d *BiZoneData) GetIDNum() uint64 {
-	return d.IDNum
-}
-
-// SetIDNum для поля IDNum
-func (d *BiZoneData) SetIDNum(idNum uint64) {
-	d.IDNum = idNum
-}
-
-// SetAnyIDNum для поля IDNum
-func (d *BiZoneData) SetAnyIDNum(a any) {
-	if v, ok := a.(int); ok {
-		d.IDNum = uint64(v)
-
-		return
-	}
-
-	if v, ok := a.(float32); ok {
-		d.IDNum = uint64(v)
-
-		return
-	}
-
-	if v, ok := a.(float64); ok {
-		d.IDNum = uint64(v)
-
-		return
-	}
-
-	if v, ok := a.(uint64); ok {
-		d.IDNum = v
-	}
-}
-
 // GetResponseTeam для поля ResponseTeam
 func (d *BiZoneData) GetResponseTeam() uint64 {
 	return d.ResponseTeam
@@ -471,26 +246,6 @@ func (d *BiZoneData) SetAnyResponseTeam(a any) {
 	if v, ok := a.(uint64); ok {
 		d.ResponseTeam = v
 	}
-}
-
-// GetSnapshots для поля Snapshots
-func (d *BiZoneData) GetSnapshots() []BiZoneSnapshot {
-	return d.Snapshots
-}
-
-// SetSnapshots для поля Snapshots
-func (d *BiZoneData) SetSnapshots(snapshots []BiZoneSnapshot) {
-	d.Snapshots = snapshots
-}
-
-// GetTags для поля Tags
-func (d *BiZoneData) GetTags() []BiZoneTag {
-	return d.Tags
-}
-
-// SetTags для поля Tags
-func (d *BiZoneData) SetTags(tags []BiZoneTag) {
-	d.Tags = tags
 }
 
 // GetSnortSids список sid snort
@@ -609,4 +364,28 @@ func (d *BiZoneData) SetAnyAllIPHome(i any) {
 	}
 
 	d.AllIPHome = append(d.AllIPHome, fmt.Sprint(i))
+}
+
+// ToStringBeautiful форматированный вывод
+func (d *BiZoneData) ToStringBeautiful(num int) string {
+	str := strings.Builder{}
+
+	ws := supportingfunctions.GetWhitespace(num)
+
+	str.WriteString(fmt.Sprintf("%s'_id': '%s'\n", ws, d.ID))
+	str.WriteString(fmt.Sprintf("%s'title': '%s'\n", ws, d.Title))
+	str.WriteString(fmt.Sprintf("%s'sensor': '%d'\n", ws, d.Sensor))
+	str.WriteString(fmt.Sprintf("%s'ip_home': '%s'\n", ws, d.IPHome))
+	str.WriteString(fmt.Sprintf("%s'ip_exter': '%s'\n", ws, d.IPExter))
+	str.WriteString(fmt.Sprintf("%s'url____ftp': '%s'\n", ws, d.URLFTP))
+	str.WriteString(fmt.Sprintf("%s'url___http': '%s'\n", ws, d.URLHTTP))
+	str.WriteString(fmt.Sprintf("%s'event_type': '%s'\n", ws, d.EventType))
+	str.WriteString(fmt.Sprintf("%s'url_arkime': '%s'\n", ws, d.URLArkime))
+	str.WriteString(fmt.Sprintf("%s'all____ip_ext': '%d'\n", ws, d.AllIPExt))
+	str.WriteString(fmt.Sprintf("%s'response_team': '%d'\n", ws, d.ResponseTeam))
+	str.WriteString(fmt.Sprintf("%s'snort_sid': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num, d.SnortSid)))
+	str.WriteString(fmt.Sprintf("%s'all_sensors': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num, d.AllSensors)))
+	str.WriteString(fmt.Sprintf("%s'all__ip_home': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num, d.AllIPHome)))
+
+	return str.String()
 }
