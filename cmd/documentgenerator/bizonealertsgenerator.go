@@ -2,6 +2,7 @@ package documentgenerator
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/handlers"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
@@ -11,12 +12,8 @@ import (
 // BiZoneAlertsGenerator генерирует верифицированный объект типа 'alerts'. Вернет первым элементом основной ID,
 // вторым проверенный объект типа 'alerts', третьим список полей которые не были обработаны
 func BiZoneAlertsGenerator(chInput <-chan interfaces.CustomJsonDecoder) (string, *datamodels.VerifiedBiZoneAlert, map[string]string) {
-	var (
-		externalId string
-
-		// список не обработанных полей
-		listRawFields map[string]string = make(map[string]string)
-	)
+	// список не обработанных полей
+	var listRawFields map[string]string = make(map[string]string)
 
 	verifiedMainObject := datamodels.NewVerifiedBiZoneAlert()
 	verifiedData := datamodels.NewBiZoneData()
@@ -36,17 +33,14 @@ func BiZoneAlertsGenerator(chInput <-chan interfaces.CustomJsonDecoder) (string,
 	listHandlerTags := handlers.NewListBiZoneHandlerTags(supportObjectTags)
 	listHandlerSnapshots := handlers.NewListBiZoneHandlerSnapshots(supportObjectSnapshot)
 
+	//объект с дополнительной информацией по сенсорам и ip адресам
+	additionalInformation := datamodels.AdditionalInformation{
+		Sensors:     []datamodels.SensorInformation(nil),
+		IpAddresses: []datamodels.IpAddressInformation(nil),
+	}
+
 	for msg := range chInput {
 		var handlerIsExist bool
-
-		if msg.GetFieldBranch() == "data.id" {
-			verifiedMainObject.SetAnyID(msg.GetValue())
-		}
-
-		if msg.GetFieldBranch() == "data.uuid" {
-			verifiedMainObject.SetAnyUUID(msg.GetValue())
-			externalId = verifiedMainObject.GetUUID()
-		}
 
 		//*** обработчик для объекта alerts ***
 		if lf, ok := listHandlerAlerts[msg.GetFieldBranch()]; ok {
@@ -99,10 +93,38 @@ func BiZoneAlertsGenerator(chInput <-chan interfaces.CustomJsonDecoder) (string,
 		}
 	}
 
-	//собираем все объекты в один
-	verifiedData.SetTags(supportObjectTags.GetTags())
-	verifiedData.SetSnapshots(supportObjectSnapshot.GetSnapshots())
-	verifiedMainObject.SetData(*verifiedData.Get())
+	//формируем дополнительную информацию со списком ip адресов
+	snapshots := verifiedMainObject.GetSnapshots()
+	for _, v := range snapshots {
+		if len(v.IPAddresses) > 0 {
+			for _, ip := range v.IPAddresses {
+				if strings.Contains(ip, "[.]") {
+					ip = strings.ReplaceAll(ip, "[.]", ".")
+				}
 
-	return externalId, verifiedMainObject, listRawFields
+				additionalInformation.AddIpAddressInformation(datamodels.IpAddressInformation{
+					Ip: ip,
+				})
+			}
+		}
+	}
+	additionalInformation.AddIpAddressInformation(datamodels.IpAddressInformation{
+		Ip: verifiedData.GetIPExter(),
+	})
+
+	// формируем дополнительную информацию с идентификаторами сенсоров
+	for _, sensor := range verifiedData.AllSensors {
+		additionalInformation.AddSensorInformation(datamodels.SensorInformation{
+			SensorId: fmt.Sprint(sensor),
+		})
+	}
+
+	verifiedMainObject.SetAdditionalInformation(additionalInformation)
+
+	//собираем все объекты в один
+	verifiedMainObject.SetData(*verifiedData.Get())
+	verifiedMainObject.SetTags(supportObjectTags.GetTags())
+	verifiedMainObject.SetSnapshots(supportObjectSnapshot.GetSnapshots())
+
+	return verifiedMainObject.GetUUID(), verifiedMainObject, listRawFields
 }

@@ -2,6 +2,9 @@ package datamodels
 
 import (
 	"fmt"
+	"strings"
+
+	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
 )
 
 // ********** Структура Snapshot ***********
@@ -171,4 +174,23 @@ func (s *BiZoneSnapshot) SetOSType(osType string) {
 // SetAnyOSType для поля OSType
 func (s *BiZoneSnapshot) SetAnyOSType(a any) {
 	s.OSType = fmt.Sprint(a)
+}
+
+// ToStringBeautiful форматированный вывод
+func (s *BiZoneSnapshot) ToStringBeautiful(num int) string {
+	str := strings.Builder{}
+
+	ws := supportingfunctions.GetWhitespace(num)
+
+	str.WriteString(fmt.Sprintf("%s'os': '%s'\n", ws, s.OS))
+	str.WriteString(fmt.Sprintf("%s'fqdn': '%s'\n", ws, s.Fqdn))
+	str.WriteString(fmt.Sprintf("%s'domain': '%s'\n", ws, s.Domain))
+	str.WriteString(fmt.Sprintf("%s'cmdb_id': '%s'\n", ws, s.CMDBID))
+	str.WriteString(fmt.Sprintf("%s'os_type': '%s'\n", ws, s.OSType))
+	str.WriteString(fmt.Sprintf("%s'hostname': '%s'\n", ws, s.Hostname))
+	str.WriteString(fmt.Sprintf("%s'user_cmdb_name': '%s'\n", ws, s.UserCMDBName))
+	str.WriteString(fmt.Sprintf("%s'ip_addressess': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num, s.IPAddresses)))
+	str.WriteString(fmt.Sprintf("%s'mac_addressess': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num, s.MACAddresses)))
+
+	return str.String()
 }
