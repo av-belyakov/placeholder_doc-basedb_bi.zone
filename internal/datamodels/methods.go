@@ -182,12 +182,12 @@ func (i IpAddressInformation) GetIpAddrString() string {
 // ToStringBeautiful дополнительная информация по сенсорам и ip адресам
 func (ai *AdditionalInformation) ToStringBeautiful(num int) string {
 	var str strings.Builder = strings.Builder{}
-	str.WriteString(fmt.Sprintf("%s'@sensorAdditionalInformation':\n", supportingfunctions.GetWhitespace(num)))
+	str.WriteString(fmt.Sprintf("%s'@sensor_additional_information':\n", supportingfunctions.GetWhitespace(num)))
 	for k, v := range ai.Sensors {
 		str.WriteString(fmt.Sprintf("%s%d.\n", supportingfunctions.GetWhitespace(num+1), k+1))
 		str.WriteString(v.ToStringBeautiful(num + 2))
 	}
-	str.WriteString(fmt.Sprintf("%s'@ipAddressAdditionalInformation':\n", supportingfunctions.GetWhitespace(num)))
+	str.WriteString(fmt.Sprintf("%s'@ip_addressAdditional_information':\n", supportingfunctions.GetWhitespace(num)))
 	for k, v := range ai.IpAddresses {
 		str.WriteString(fmt.Sprintf("%s%d.\n", supportingfunctions.GetWhitespace(num+1), k+1))
 		str.WriteString(v.ToStringBeautiful(num + 2))
@@ -201,15 +201,15 @@ func (si *SensorInformation) ToStringBeautiful(num int) string {
 	ws := supportingfunctions.GetWhitespace(num)
 
 	str := strings.Builder{}
-	str.WriteString(fmt.Sprintf("%s'sensorId': '%s'\n", ws, si.SensorId))
-	str.WriteString(fmt.Sprintf("%s'hostId': '%s'\n", ws, si.HostId))
-	str.WriteString(fmt.Sprintf("%s'geoCode': '%s'\n", ws, si.GeoCode))
-	str.WriteString(fmt.Sprintf("%s'objectArea': '%s'\n", ws, si.ObjectArea))
-	str.WriteString(fmt.Sprintf("%s'subjectRF': '%s'\n", ws, si.SubjectRF))
+	str.WriteString(fmt.Sprintf("%s'sensor_id': '%s'\n", ws, si.SensorId))
+	str.WriteString(fmt.Sprintf("%s'host_id': '%s'\n", ws, si.HostId))
+	str.WriteString(fmt.Sprintf("%s'geo_code': '%s'\n", ws, si.GeoCode))
+	str.WriteString(fmt.Sprintf("%s'object_area': '%s'\n", ws, si.ObjectArea))
+	str.WriteString(fmt.Sprintf("%s'subject_rf': '%s'\n", ws, si.SubjectRF))
 	str.WriteString(fmt.Sprintf("%s'inn': '%s'\n", ws, si.INN))
-	str.WriteString(fmt.Sprintf("%s'homeNet': '%s'\n", ws, si.HomeNet))
-	str.WriteString(fmt.Sprintf("%s'orgName': '%s'\n", ws, si.OrgName))
-	str.WriteString(fmt.Sprintf("%s'fullOrgName': '%s'\n", ws, si.FullOrgName))
+	str.WriteString(fmt.Sprintf("%s'home_net': '%s'\n", ws, si.HomeNet))
+	str.WriteString(fmt.Sprintf("%s'org_name': '%s'\n", ws, si.OrgName))
+	str.WriteString(fmt.Sprintf("%s'full_org_name': '%s'\n", ws, si.FullOrgName))
 
 	return str.String()
 }
@@ -219,10 +219,10 @@ func (i *IpAddressInformation) ToStringBeautiful(num int) string {
 	ws := supportingfunctions.GetWhitespace(num)
 
 	str := strings.Builder{}
-	str.WriteString(fmt.Sprintf("%s'Ip': '%s'\n", ws, i.Ip))
-	str.WriteString(fmt.Sprintf("%s'City': '%s'\n", ws, i.City))
-	str.WriteString(fmt.Sprintf("%s'Country': '%s'\n", ws, i.Country))
-	str.WriteString(fmt.Sprintf("%s'CountryCode': '%s'\n", ws, i.CountryCode))
+	str.WriteString(fmt.Sprintf("%s'ip': '%s'\n", ws, i.Ip))
+	str.WriteString(fmt.Sprintf("%s'city': '%s'\n", ws, i.City))
+	str.WriteString(fmt.Sprintf("%s'country': '%s'\n", ws, i.Country))
+	str.WriteString(fmt.Sprintf("%s'country_code': '%s'\n", ws, i.CountryCode))
 
 	return str.String()
 }

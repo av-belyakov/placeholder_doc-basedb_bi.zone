@@ -196,56 +196,10 @@ func (va *VerifiedBiZoneAlert) SetCreatedTime(createdTime string) {
 
 // SetAnyCreatedTime для поля CreatedTime (формат RFC3339)
 func (va *VerifiedBiZoneAlert) SetAnyCreatedTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	va.CreatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-}
-
-// GetEventStartTime для поля EventStartTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) GetEventStartTime() string {
-	return va.EventStartTime
-}
-
-// SetEventStartTime для поля EventStartTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) SetEventStartTime(eventStartTime string) {
-	va.EventStartTime = eventStartTime
-}
-
-// SetAnyEventStartTime для поля EventStartTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) SetAnyEventStartTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	va.EventStartTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-}
-
-// GetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) GetLastDetectionTime() string {
-	return va.LastDetectionTime
-}
-
-// SetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) SetLastDetectionTime(lastDetectionTime string) {
-	va.LastDetectionTime = lastDetectionTime
-}
-
-// SetAnyLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) SetAnyLastDetectionTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	va.LastDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-}
-
-// GetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) GetFirstDetectionTime() string {
-	return va.FirstDetectionTime
-}
-
-// SetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) SetFirstDetectionTime(firstDetectionTime string) {
-	va.FirstDetectionTime = firstDetectionTime
-}
-
-// SetAnyFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneAlert) SetAnyFirstDetectionTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	va.FirstDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	//это только когда время в типе unixtime
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//va.CreatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.CreatedTime = fmt.Sprint(a)
 }
 
 // GetUpdatedTime для поля UpdatedTime (формат RFC3339)
@@ -260,8 +214,28 @@ func (va *VerifiedBiZoneAlert) SetUpdatedTime(updatedTime string) {
 
 // SetAnyUpdatedTime для поля UpdatedTime (строка)
 func (va *VerifiedBiZoneAlert) SetAnyUpdatedTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	va.UpdatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	//это только когда время в типе unixtime
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//va.UpdatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.UpdatedTime = fmt.Sprint(a)
+}
+
+// GetEventStartTime для поля EventStartTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) GetEventStartTime() string {
+	return va.EventStartTime
+}
+
+// SetEventStartTime для поля EventStartTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) SetEventStartTime(eventStartTime string) {
+	va.EventStartTime = eventStartTime
+}
+
+// SetAnyEventStartTime для поля EventStartTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) SetAnyEventStartTime(a any) {
+	//это только когда время в типе unixtime
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//va.EventStartTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.EventStartTime = fmt.Sprint(a)
 }
 
 // GetVerifiedBiZoneAlertEndTime для поля EventEndTime (формат RFC3339)
@@ -276,8 +250,46 @@ func (va *VerifiedBiZoneAlert) SetEventEndTime(eventEndTime string) {
 
 // SetAnyEventEndTime для поля EventEndTime (строка)
 func (va *VerifiedBiZoneAlert) SetAnyEventEndTime(a any) {
-	tmp := supportingfunctions.ConversionAnyToInt(a)
-	va.EventEndTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	//это только когда время в типе unixtime
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//va.EventEndTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.EventEndTime = fmt.Sprint(a)
+}
+
+// GetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) GetFirstDetectionTime() string {
+	return va.FirstDetectionTime
+}
+
+// SetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) SetFirstDetectionTime(firstDetectionTime string) {
+	va.FirstDetectionTime = firstDetectionTime
+}
+
+// SetAnyFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) SetAnyFirstDetectionTime(a any) {
+	//это только когда время в типе unixtime
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//va.FirstDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.FirstDetectionTime = fmt.Sprint(a)
+}
+
+// GetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) GetLastDetectionTime() string {
+	return va.LastDetectionTime
+}
+
+// SetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) SetLastDetectionTime(lastDetectionTime string) {
+	va.LastDetectionTime = lastDetectionTime
+}
+
+// SetAnyLastDetectionTime для поля LastDetectionTime (формат RFC3339)
+func (va *VerifiedBiZoneAlert) SetAnyLastDetectionTime(a any) {
+	//это только когда время в типе unixtime
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//va.LastDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	va.LastDetectionTime = fmt.Sprint(a)
 }
 
 // GetPlatformHostname для поля PlatformHostname
@@ -385,6 +397,7 @@ func (va *VerifiedBiZoneAlert) ToStringBeautiful(num int) string {
 	str := strings.Builder{}
 
 	ws := supportingfunctions.GetWhitespace(num)
+	wsInc := supportingfunctions.GetWhitespace(num + 1)
 
 	str.WriteString(fmt.Sprintf("%s'id': '%d'\n", ws, va.IDNum))
 	str.WriteString(fmt.Sprintf("%s'uuid': '%s'\n", ws, va.UUID))
@@ -405,10 +418,16 @@ func (va *VerifiedBiZoneAlert) ToStringBeautiful(num int) string {
 	str.WriteString(fmt.Sprintf("%s'platform_type': '%s'\n", ws, va.PlatformType))
 	str.WriteString(fmt.Sprintf("%s'platform_hostname': '%s'\n", ws, va.PlatformHostname))
 	str.WriteString(fmt.Sprintf("%s'affected_log_sources': '%s'\n", ws, va.AffectedLogSources))
-	str.WriteString(fmt.Sprintf("%s'data': \n%s", ws, va.Data.ToStringBeautiful(num+1)))
-	str.WriteString(fmt.Sprintf("%s'tags': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, va.Tags)))
-	str.WriteString(fmt.Sprintf("%s'snapshots': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, va.Snapshots)))
-	str.WriteString(fmt.Sprintf("%s'@AdditionalInformation': \n%s", ws, va.AdditionalInformation.ToStringBeautiful(num+1)))
+	str.WriteString(fmt.Sprintf("%s'data':\n%s", ws, va.Data.ToStringBeautiful(num+1)))
+	str.WriteString(fmt.Sprintf("%s'tags':\n", ws))
+	for k, v := range va.Tags {
+		str.WriteString(fmt.Sprintf("%s%d.\n%s", wsInc, k, v.ToStringBeautiful(num+2)))
+	}
+	str.WriteString(fmt.Sprintf("%s'snapshots':\n", ws))
+	for k, v := range va.Tags {
+		str.WriteString(fmt.Sprintf("%s%d.\n%s", wsInc, k, v.ToStringBeautiful(num+2)))
+	}
+	str.WriteString(fmt.Sprintf("%s'@additional_information':\n%s", ws, va.AdditionalInformation.ToStringBeautiful(num+1)))
 
 	return str.String()
 }

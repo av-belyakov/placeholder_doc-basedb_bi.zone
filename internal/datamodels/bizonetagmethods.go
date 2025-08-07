@@ -29,9 +29,10 @@ func (t *BiZoneTag) SetCreated(created string) {
 }
 
 // SetAnyCreated для поля Created (формат RFC3339)
-func (t *BiZoneTag) SetAnyCreated(i any) {
-	tmp := supportingfunctions.ConversionAnyToInt(i)
-	t.Created = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+func (t *BiZoneTag) SetAnyCreated(a any) {
+	//tmp := supportingfunctions.ConversionAnyToInt(a)
+	//t.Created = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
+	t.Created = fmt.Sprint(a)
 }
 
 // GetName для поля Name
