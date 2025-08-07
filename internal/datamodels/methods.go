@@ -151,6 +151,11 @@ func (ai *AdditionalInformation) GetSensorsInformation() []SensorInformation {
 	return ai.Sensors
 }
 
+// GetSensorId идентификатор сенсора
+func (si *SensorInformation) GetSensorId() string {
+	return si.SensorId
+}
+
 // AddSensorInformation добавляет информацию о сенсоре
 func (ai *AdditionalInformation) AddSensorInformation(v SensorInformation) {
 	if len(ai.Sensors) == 0 || !slices.ContainsFunc(ai.Sensors, func(obj SensorInformation) bool {
@@ -165,6 +170,11 @@ func (ai *AdditionalInformation) GetIpAddressesInformation() []IpAddressInformat
 	return ai.IpAddresses
 }
 
+// GetIpAddrString ip адрес в виде строки
+func (i IpAddressInformation) GetIpAddrString() string {
+	return i.Ip
+}
+
 // AddIpAddressInformation добавляет информацию об ip адресе
 func (ai *AdditionalInformation) AddIpAddressInformation(v IpAddressInformation) {
 	if len(ai.IpAddresses) == 0 || !slices.ContainsFunc(ai.IpAddresses, func(obj IpAddressInformation) bool {
@@ -172,11 +182,6 @@ func (ai *AdditionalInformation) AddIpAddressInformation(v IpAddressInformation)
 	}) {
 		ai.IpAddresses = append(ai.IpAddresses, v)
 	}
-}
-
-// GetIpAddrString ip адрес в виде строки
-func (i IpAddressInformation) GetIpAddrString() string {
-	return i.Ip
 }
 
 // ToStringBeautiful дополнительная информация по сенсорам и ip адресам
@@ -187,7 +192,7 @@ func (ai *AdditionalInformation) ToStringBeautiful(num int) string {
 		str.WriteString(fmt.Sprintf("%s%d.\n", supportingfunctions.GetWhitespace(num+1), k+1))
 		str.WriteString(v.ToStringBeautiful(num + 2))
 	}
-	str.WriteString(fmt.Sprintf("%s'@ip_addressAdditional_information':\n", supportingfunctions.GetWhitespace(num)))
+	str.WriteString(fmt.Sprintf("%s'@ip_address_additional_information':\n", supportingfunctions.GetWhitespace(num)))
 	for k, v := range ai.IpAddresses {
 		str.WriteString(fmt.Sprintf("%s%d.\n", supportingfunctions.GetWhitespace(num+1), k+1))
 		str.WriteString(v.ToStringBeautiful(num + 2))

@@ -17,7 +17,7 @@ func sendGeoIpRequest(
 	}
 
 	reqGeoIP, err := json.Marshal(request.RequestGeoIP{
-		Source:          "placeholder_doc-base_db",
+		Source:          "placeholder_doc-basedb-bi-zone",
 		TaskId:          id,
 		ListIpAddresses: list,
 	})
@@ -45,7 +45,7 @@ func sendSensorInformationRequest(
 	}
 
 	reqSensorId, err := json.Marshal(request.RequestSensorInformation{
-		Source:      "placeholder_doc-base_db",
+		Source:      "placeholder_doc-basedb-bi-zone",
 		TaskId:      id,
 		ListSensors: list,
 	})

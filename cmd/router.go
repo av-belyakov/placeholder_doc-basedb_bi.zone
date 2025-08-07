@@ -100,14 +100,31 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 			case msg := <-r.chFromKafkaApi:
 				switch msg.SubjectType {
 				case "alerts":
-					// *************
-					// Здесь нужны разные обработчики
-					// *************
+					go func() {
+						id, verifedBiZoneAlert, listRawFields := documentgenerator.BiZoneAlertsGenerator(decoder.Start(msg.Data, "uniq_task_id_1"))
+
+						r.logger.Send("info", fmt.Sprintf("an 'alerts' document has been generated, and the document has been transferred to the database (id document '%s')", id))
+
+						if len(listRawFields) > 0 {
+							r.logger.Send("alerts_raw_fields", supportingfunctions.JoinRawFieldsToString(listRawFields, "id", id))
+						}
+
+						//передача объекта в модуль взаимодействия с базой данных для
+						//дальнейшей загрузки данных в базу
+						r.chToDBSApi <- databasestorageapi.SettingsChanInput{
+							Section: "handling bz_alerts",
+							Command: "add alerts",
+							Data:    verifedBiZoneAlert,
+						}
+					}()
 
 				case "soar-alerts":
 					// *************
 					// Здесь нужны разные обработчики
 					// *************
+
+					//для этого типа событий пока нет обработчиков, потому что я
+					// пока что не видел события этого типа
 
 				}
 

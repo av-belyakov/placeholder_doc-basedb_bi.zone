@@ -9,8 +9,10 @@ import (
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
 
-// BiZoneAlertsGenerator генерирует верифицированный объект типа 'alerts'. Вернет первым элементом основной ID,
-// вторым проверенный объект типа 'alerts', третьим список полей которые не были обработаны
+// BiZoneAlertsGenerator генерирует верифицированный объект типа 'alerts'.
+// Вернет первым элементом основной уникальный идентификатор события (UUID).
+// Вторым, проверенный объект типа 'alerts'. Третьим список полей которые не были
+// обработаны
 func BiZoneAlertsGenerator(chInput <-chan interfaces.CustomJsonDecoder) (string, *datamodels.VerifiedBiZoneAlert, map[string]string) {
 	// список не обработанных полей
 	var listRawFields map[string]string = make(map[string]string)

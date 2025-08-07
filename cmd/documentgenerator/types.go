@@ -30,33 +30,6 @@ type VerifiedCase struct {
 	Source          string `json:"source" bson:"source"`
 }
 
-// AdditionalInformation дополнительная информация добавляемая к информации по кейсам
-type AdditionalInformation struct {
-	Sensors     []SensorInformation    `json:"@sensorAdditionalInformation"`
-	IpAddresses []IpAddressInformation `json:"@ipAddressAdditionalInformation"`
-}
-
-// SensorInformation содержит дополнительную информацию о сенсоре
-type SensorInformation struct {
-	SensorId    string `json:"sensorId" bson:"sensorId"`       //идентификатор сенсора
-	HostId      string `json:"hostId" bson:"hostId"`           //идентификатор сенсора, специальный, для поиска информации в НКЦКИ
-	GeoCode     string `json:"geoCode" bson:"geoCode"`         //географический код страны
-	ObjectArea  string `json:"objectArea" bson:"objectArea"`   //сфера деятельности объекта
-	SubjectRF   string `json:"subjectRF" bson:"subjectRF"`     //субъект Российской Федерации
-	INN         string `json:"inn" bson:"inn"`                 //налоговый идентификатор
-	HomeNet     string `json:"homeNet" bson:"homeNet"`         //перечень домашних сетей
-	OrgName     string `json:"orgName" bson:"orgName"`         //наименование организации
-	FullOrgName string `json:"fullOrgName" bson:"fullOrgName"` //полное наименование организации
-}
-
-// IpAddressesInformation дополнительная информация об ip адресе
-type IpAddressInformation struct {
-	Ip          string `json:"ip"`          //ip адрес по которому выполнялся поиск
-	City        string `json:"city"`        //город
-	Country     string `json:"country"`     //страна
-	CountryCode string `json:"countryCode"` //код страны
-}
-
 type listSensorId struct {
 	sensors []string
 }

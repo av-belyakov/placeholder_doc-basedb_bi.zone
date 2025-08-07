@@ -51,8 +51,8 @@ func (c *CounterMessage) Start(ctx context.Context) {
 				case "update count insert subject case to db":
 					msg = fmt.Sprintf("подписка-'subject_case', добавлено в базу данных: %d, %s", count, patternTime)
 
-				case "update count insert subject alert to db":
-					msg = fmt.Sprintf("подписка-'subject_alert', добавлено в базу данных: %d, %s", count, patternTime)
+				case "update count insert ыubject alerts to db":
+					msg = fmt.Sprintf("подписка-'subject_alerts', добавлено в базу данных: %d, %s", count, patternTime)
 
 				}
 

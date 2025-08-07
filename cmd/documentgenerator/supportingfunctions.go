@@ -4,6 +4,8 @@ import (
 	"errors"
 	"regexp"
 	"slices"
+
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
 
 // searchEventSource выполняет поиск источника события
@@ -32,7 +34,7 @@ func getSensorIdFromDescription(v string) (string, error) {
 }
 
 // GetListIPAddr список ip адресов из элементов объекта
-func GetListIPAddr(objects []IpAddressInformation) []string {
+func GetListIPAddr(objects []datamodels.IpAddressInformation) []string {
 	newList := make([]string, 0, len(objects))
 
 	for _, v := range objects {
@@ -49,7 +51,7 @@ func GetListIPAddr(objects []IpAddressInformation) []string {
 }
 
 // GetListSensorId список идентификаторов сенсоров
-func GetListSensorId(objects []SensorInformation) []string {
+func GetListSensorId(objects []datamodels.SensorInformation) []string {
 	newList := make([]string, 0, len(objects))
 
 	for _, v := range objects {
