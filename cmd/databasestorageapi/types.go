@@ -5,6 +5,7 @@ import (
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
 
 type DatabaseStorage struct {
@@ -42,6 +43,44 @@ type SettingsChanOutput struct {
 
 type DatabaseStorageOptions func(*DatabaseStorage) error
 
+//****** для объектов типа VerifiedBiZoneAlerts *******
+
+// ResponseVerifiedBiZoneAlerts ответ от базы данных
+type ResponseVerifiedBiZoneAlerts struct {
+	Options ResponseVerifiedBiZoneAlertsOptions `json:"hits"`
+}
+
+// ResponseVerifiedBiZoneAlertsOptions опции ответа
+type ResponseVerifiedBiZoneAlertsOptions struct {
+	Total    OptionsTotal                 `json:"total"`
+	Hits     []PatternVerifiedBiZoneAlert `json:"hits"`
+	MaxScore float64                      `json:"max_score"`
+}
+
+// PatternVerifiedBiZoneAlert шаблон
+type PatternVerifiedBiZoneAlert struct {
+	Source datamodels.VerifiedBiZoneAlert `json:"_source"`
+	ServiseOption
+}
+
+// OptionsTotal опции в результате поиска
+type OptionsTotal struct {
+	Relation string `json:"relation"` //отношение (==, >, <)
+	Value    int    `json:"value"`    //количество найденных значений
+}
+
+// ServiseOption сервисные опции
+type ServiseOption struct {
+	ID    string `json:"_id"`
+	Index string `json:"_index"`
+}
+
+/*
+* 		!!!!!!
+* всё что ниже можно удалять
+* !!!!!!
+ */
+
 // ******* для объектов типа 'alert' *******
 // AlertDBResponse информация о кейсах
 type AlertDBResponse struct {
@@ -78,18 +117,6 @@ type CaseDBResponseOptions struct {
 type PatternVerifiedCase struct {
 	Source documentgenerator.VerifiedCase `json:"_source"`
 	ServiseOption
-}
-
-// OptionsTotal опции в результате поиска
-type OptionsTotal struct {
-	Relation string `json:"relation"` //отношение (==, >, <)
-	Value    int    `json:"value"`    //количество найденных значений
-}
-
-// ServiseOption сервисные опции
-type ServiseOption struct {
-	ID    string `json:"_id"`
-	Index string `json:"_index"`
 }
 
 // AdditionalInformationIpAddress дополнительная информация добавляемая к информации по кейсам

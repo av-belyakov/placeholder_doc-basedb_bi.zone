@@ -15,10 +15,10 @@ import (
 )
 
 // addBiZoneAlerts добавление объекта типа 'alerts'
-func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, data any) {
+func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	t := time.Now()
 
-	newDocument, ok := data.(*datamodels.VerifiedBiZoneAlert)
+	newDocument, ok := a.(*datamodels.VerifiedBiZoneAlert)
 	if !ok {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("type conversion error")).Error())
 
@@ -49,11 +49,11 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, data any) {
 	}
 
 	defer func(document *datamodels.VerifiedBiZoneAlert, getChan func() chan SettingsChanOutput, logger interfaces.Logger) {
-		rootId := newDocument.GetUUID()
+		id := newDocument.GetUUID()
 
 		//обогащение кейса дополнительной информацией о локальном место положении ip адресов
 		listIp := documentgenerator.GetListIPAddr(document.GetAdditionalInformation().GetIpAddressesInformation())
-		ok, err := sendGeoIpRequest(rootId, listIp, getChan)
+		ok, err := sendGeoIpRequest(id, listIp, getChan)
 		if err != nil {
 			logger.Send("error", supportingfunctions.CustomError(err).Error())
 		}
@@ -63,7 +63,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, data any) {
 
 		//обогащение кейса дополнительной информацией по расположению сенсоров
 		listSensor := documentgenerator.GetListSensorId(newDocument.GetAdditionalInformation().GetSensorsInformation())
-		ok, err = sendSensorInformationRequest(rootId, listSensor, getChan)
+		ok, err = sendSensorInformationRequest(id, listSensor, getChan)
 		if err != nil {
 			logger.Send("error", supportingfunctions.CustomError(err).Error())
 		}
@@ -143,6 +143,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, data any) {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 	}
 
+	//ищем объект с таким же идентификатором как и принятый в обработку объект
 	currentQuery := strings.NewReader(
 		fmt.Sprintf(
 			"{\"query\": {\"bool\": {\"must\": [{\"match\": {\"uuid\": \"%s\"}}]}}}",
@@ -159,7 +160,8 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, data any) {
 	}
 	defer res.Body.Close()
 
-	response := CaseDBResponse{}
+	//обрабатываем принятую от базы данных информацию
+	response := ResponseVerifiedBiZoneAlerts{}
 	err = json.NewDecoder(res.Body).Decode(&response)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
@@ -201,42 +203,24 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, data any) {
 	//***********************************************************
 	var countReplacingFields int
 	listDeleting := []ServiseOption(nil)
-	updateVerified := documentgenerator.NewVerifiedCase()
+	updateVerified := datamodels.NewVerifiedBiZoneAlert()
+	//заполняем новый объект информацией из базы данных
 	for _, v := range response.Options.Hits {
-		count, err := updateVerified.Event.ReplacingOldValues(*v.Source.GetEvent())
-		if err != nil {
-			dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
-		} else {
-			countReplacingFields += count
-		}
-
-		countReplacingFields += updateVerified.GetObservables().ReplacingOldValues(v.Source.Observables)
-		countReplacingFields += updateVerified.GetTtps().ReplacingOldValues(v.Source.Ttps)
-
+		countReplacingFields += updateVerified.RepalcingOldBiZoneAlert(*v.Source.Get())
 		listDeleting = append(listDeleting, ServiseOption{
 			ID:    v.ID,
 			Index: v.Index,
 		})
 
-		//устанавливаем время создания первой записи о кейсе
-		updateVerified.SetCreateTimestamp(v.Source.CreateTimestamp)
-
-		//заполняем новый объект информацией о сенсорах и геопринадлежности ip адресов
+		//заполняем новый объект дополнительной информацией о сенсорах и
+		// месторасположении ip адресов
 		updateVerified.SetAdditionalInformation(*v.Source.GetAdditionalInformation())
 	}
 
-	//выполняем обновление объекта типа Event
-	updateVerified.SetSource(newDocument.GetSource())
-	num, err := updateVerified.Event.ReplacingOldValues(*newDocument.GetEvent())
-	if err != nil {
-		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
-	} else {
-		countReplacingFields += num
-	}
+	//выполняем обновление нового объекта данными полученными от брокера сообщений
+	updateVerified.RepalcingOldBiZoneAlert(*newDocument.Get())
 
-	countReplacingFields += updateVerified.GetObservables().ReplacingOldValues(*newDocument.GetObservables())
-	countReplacingFields += updateVerified.GetTtps().ReplacingOldValues(*newDocument.GetTtps())
-
+	//готовим обновлённый объект к загрузке в базу данных
 	nvbyte, err := json.Marshal(updateVerified)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
@@ -244,7 +228,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, data any) {
 		return
 	}
 
-	//обновление уже существующего документа
+	//обновление в базе данных уже существующего документа
 	statusCode, countDel, err := dbs.UpdateDocument(ctx, currentIndex, listDeleting, nvbyte)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("uuid '%s' '%s'", newDocument.GetUUID(), err.Error())).Error())

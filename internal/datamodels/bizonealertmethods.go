@@ -424,7 +424,7 @@ func (va *VerifiedBiZoneAlert) ToStringBeautiful(num int) string {
 		str.WriteString(fmt.Sprintf("%s%d.\n%s", wsInc, k, v.ToStringBeautiful(num+2)))
 	}
 	str.WriteString(fmt.Sprintf("%s'snapshots':\n", ws))
-	for k, v := range va.Tags {
+	for k, v := range va.Snapshots {
 		str.WriteString(fmt.Sprintf("%s%d.\n%s", wsInc, k, v.ToStringBeautiful(num+2)))
 	}
 	str.WriteString(fmt.Sprintf("%s'@additional_information':\n%s", ws, va.AdditionalInformation.ToStringBeautiful(num+1)))
