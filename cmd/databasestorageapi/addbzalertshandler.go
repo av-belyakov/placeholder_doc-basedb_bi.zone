@@ -49,7 +49,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	}
 
 	defer func(document *datamodels.VerifiedBiZoneAlert, getChan func() chan SettingsChanOutput, logger interfaces.Logger) {
-		id := newDocument.GetUUID()
+		id := fmt.Sprintf("alerts:%s", newDocument.GetSpecialUUID())
 
 		//обогащение кейса дополнительной информацией о локальном место положении ip адресов
 		listIp := documentgenerator.GetListIPAddr(document.GetAdditionalInformation().GetIpAddressesInformation())
