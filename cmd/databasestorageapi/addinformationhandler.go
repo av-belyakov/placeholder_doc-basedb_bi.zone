@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/response"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
@@ -69,19 +70,19 @@ func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, a any) {
 	//***************************************************************
 
 	//формируется список с информацией по ip адресам
-	var ipInfoList []IpAddressesInformation
+	var ipInfoList []datamodels.IpAddressInformation
 	for _, ipAddress := range newDocument.Informations {
 		if ipAddress.Error != "" {
 			dbs.logger.Send("error", supportingfunctions.CustomError(errors.New(ipAddress.Error)).Error())
 
-			ipInfoList = append(ipInfoList, IpAddressesInformation{
+			ipInfoList = append(ipInfoList, datamodels.IpAddressInformation{
 				Ip: ipAddress.IpAddr,
 			})
 
 			continue
 		}
 
-		ipInfoList = append(ipInfoList, IpAddressesInformation{
+		ipInfoList = append(ipInfoList, datamodels.IpAddressInformation{
 			Ip:          ipAddress.IpAddr,
 			City:        ipAddress.City,
 			Country:     ipAddress.Country,
@@ -121,7 +122,7 @@ func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, a any) {
 		}
 	}
 
-	request, err := json.MarshalIndent(AdditionalInformationIpAddress{IpAddresses: geoIpInfo}, "", " ")
+	request, err := json.MarshalIndent(datamodels.AdditionalInformationIpAddress{IpAddresses: geoIpInfo}, "", " ")
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("@special_uuid:'%s', '%w'", specialUuid, err)).Error())
 
@@ -210,13 +211,13 @@ func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, a any) {
 	}
 
 	//формируется список с информацией по сенсорам
-	var sensorInfoList []SensorInformation
+	var sensorInfoList []datamodels.SensorInformation
 	for _, sensor := range newDocument.Informations {
 		if sensor.Error != "" {
 			dbs.logger.Send("error", supportingfunctions.CustomError(errors.New(sensor.Error)).Error())
 		}
 
-		sensorInfoList = append(sensorInfoList, SensorInformation{
+		sensorInfoList = append(sensorInfoList, datamodels.SensorInformation{
 			SensorId:    sensor.SensorID,
 			GeoCode:     sensor.GeoCode,
 			ObjectArea:  sensor.ObjectArea,
@@ -236,7 +237,7 @@ func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, a any) {
 		return
 	}
 
-	request, err := json.MarshalIndent(AdditionalInformationSensors{Sensors: sensorInfoList}, "", " ")
+	request, err := json.MarshalIndent(datamodels.AdditionalInformationSensors{Sensors: sensorInfoList}, "", " ")
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("'rootId:'%s', '%w'", newDocument.TaskId, err)).Error())
 

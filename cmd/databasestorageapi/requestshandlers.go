@@ -14,6 +14,7 @@ import (
 
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
@@ -243,73 +244,6 @@ func (dbs *DatabaseStorage) SetMaxTotalFieldsLimit(ctx context.Context, indexes 
 	return errList
 }
 
-// SearchUnderlineIdAlert поиск объекта типа 'alert' по его rootId
-// возвращает _id объекта под которым он находится в БД
-func (dbs *DatabaseStorage) SearchUnderlineIdAlert(ctx context.Context, indexName, rootId, source string) (string, error) {
-	query := strings.NewReader(fmt.Sprintf("{\"query\": {\"bool\": {\"must\": [{\"match\": {\"source\": \"%s\"}}, {\"match\": {\"event.rootId\": \"%s\"}}]}}}", source, rootId))
-
-	//выполняем поиск _id индекса
-	res, err := dbs.client.Search(
-		dbs.client.Search.WithContext(ctx),
-		dbs.client.Search.WithIndex(indexName),
-		dbs.client.Search.WithBody(query),
-	)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-
-	if res.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("%s", res.Status())
-	}
-
-	tmp := AlertDBResponse{}
-	if err = json.NewDecoder(res.Body).Decode(&tmp); err != nil {
-		return "", err
-	}
-
-	for _, v := range tmp.Options.Hits {
-		return v.ID, nil
-	}
-
-	return "", nil
-}
-
-// SearchUnderlineIdCase поиск объекта типа 'case' по его rootId
-// возвращает _id объекта под которым он находится в БД
-func (dbs *DatabaseStorage) SearchUnderlineIdCase(ctx context.Context, indexName, rootId string) (string, error) {
-	query := strings.NewReader(fmt.Sprintf("{\"query\": {\"bool\": {\"must\": [{\"match\": {\"event.rootId\": \"%s\"}}]}}}", rootId))
-
-	//выполняем поиск _id индекса
-	res, err := dbs.client.Search(
-		dbs.client.Search.WithContext(ctx),
-		dbs.client.Search.WithIndex(indexName),
-		dbs.client.Search.WithBody(query),
-	)
-	if err != nil {
-		return "", err
-	}
-	defer res.Body.Close()
-
-	bodyRes, err := io.ReadAll(res.Body)
-	if err != nil {
-		return "", err
-	}
-
-	result, err := supportingfunctions.GetElementsFromJSON(ctx, bodyRes)
-	if err != nil {
-		return "", err
-	}
-
-	for k, v := range result {
-		if k == "hits.hits._id" {
-			return fmt.Sprint(v.Value), nil
-		}
-	}
-
-	return "", nil
-}
-
 // GetUnderlineId поиск объекта по его '@special_uuid'
 func (dbs *DatabaseStorage) GetUnderlineId(ctx context.Context, indexName, specialUuid string) (string, error) {
 	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*5)
@@ -348,12 +282,12 @@ func (dbs *DatabaseStorage) GetUnderlineId(ctx context.Context, indexName, speci
 }
 
 // SearchGeoIPInformation поиск объекта по его '@special_uuid'
-// возвращает _id объекта под которым он находится в БД и объект типа IpAddressesInformation
-func (dbs *DatabaseStorage) SearchGeoIPInformation(ctx context.Context, indexName, specialUuid string) (string, []IpAddressesInformation, error) {
+// возвращает _id объекта под которым он находится в БД и объект типа []IpAddressInformation
+func (dbs *DatabaseStorage) SearchGeoIPInformation(ctx context.Context, indexName, specialUuid string) (string, []datamodels.IpAddressInformation, error) {
 	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*5)
 	defer ctxCancel()
 
-	geoIpInformation := make([]IpAddressesInformation, 0)
+	geoIpInformation := make([]datamodels.IpAddressInformation, 0)
 	query := strings.NewReader(fmt.Sprintf("{\"query\": {\"bool\": {\"must\": [{\"match\": {\"@special_uuid\": \"%s\"}}]}}}", specialUuid))
 
 	//выполняем поиск _id индекса
@@ -389,59 +323,8 @@ func (dbs *DatabaseStorage) SearchGeoIPInformation(ctx context.Context, indexNam
 		}
 	}
 
-	for _, v := range resTmp.Options.Hits[0].Source.AdditionalInformation.IpAddresses {
-		geoIpInformation = append(geoIpInformation, IpAddressesInformation{
-			Ip:          v.Ip,
-			City:        v.City,
-			Country:     v.Country,
-			CountryCode: v.CountryCode,
-		})
-	}
-
-	return underlineId, geoIpInformation, nil
-}
-
-// SearchGeoIPInformationCase поиск объекта типа 'case' по его rootId
-// возвращает _id объекта под которым он находится в БД и объект типа
-func (dbs *DatabaseStorage) SearchGeoIPInformationCase(ctx context.Context, indexName, rootId string) (string, []IpAddressesInformation, error) {
-	geoIpInformation := make([]IpAddressesInformation, 0)
-	query := strings.NewReader(fmt.Sprintf("{\"query\": {\"bool\": {\"must\": [{\"match\": {\"event.rootId\": \"%s\"}}]}}}", rootId))
-
-	//выполняем поиск _id индекса
-	res, err := dbs.client.Search(
-		dbs.client.Search.WithContext(ctx),
-		dbs.client.Search.WithIndex(indexName),
-		dbs.client.Search.WithBody(query),
-	)
-	if err != nil {
-		return "", geoIpInformation, err
-	}
-	defer res.Body.Close()
-
-	bodyRes, err := io.ReadAll(res.Body)
-	if err != nil {
-		return "", geoIpInformation, err
-	}
-
-	result, err := supportingfunctions.GetElementsFromJSON(ctx, bodyRes)
-	if err != nil {
-		return "", geoIpInformation, err
-	}
-
-	resTmp := CaseDBResponse{}
-	if err = json.Unmarshal(bodyRes, &resTmp); err != nil {
-		return "", geoIpInformation, err
-	}
-
-	var underlineId string
-	for k, v := range result {
-		if k == "hits.hits._id" {
-			underlineId = fmt.Sprint(v.Value)
-		}
-	}
-
-	for _, v := range resTmp.Options.Hits[0].Source.AdditionalInformation.IpAddresses {
-		geoIpInformation = append(geoIpInformation, IpAddressesInformation{
+	for _, v := range resTmp.Options.Hits[0].Source.IpAddresses {
+		geoIpInformation = append(geoIpInformation, datamodels.IpAddressInformation{
 			Ip:          v.Ip,
 			City:        v.City,
 			Country:     v.Country,

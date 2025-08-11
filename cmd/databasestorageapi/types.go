@@ -3,7 +3,6 @@ package databasestorageapi
 import (
 	"github.com/elastic/go-elasticsearch/v8"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
@@ -72,9 +71,9 @@ type ResponseTemplateAdditionalInformation struct {
 
 // TemplateAdditionalInformationOptions шаблон опций
 type TemplateAdditionalInformationOptions struct {
-	Total    OptionsTotal          `json:"total"`
-	Hits     []PatternVerifiedCase `json:"hits"`
-	MaxScore float64               `json:"max_score"`
+	Total    OptionsTotal                    `json:"total"`
+	Hits     []TemplateAdditionalInformation `json:"hits"`
+	MaxScore float64                         `json:"max_score"`
 }
 
 // TemplateAdditionalInformation шаблон документа
@@ -108,7 +107,7 @@ type ServiseOption struct {
 
 // ******* для объектов типа 'alert' *******
 // AlertDBResponse информация о кейсах
-type AlertDBResponse struct {
+/*type AlertDBResponse struct {
 	Options AlertDBResponseOptions `json:"hits"`
 }
 
@@ -178,3 +177,4 @@ type IpAddressesInformation struct {
 type listSensorId struct {
 	sensors []string
 }
+*/

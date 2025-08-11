@@ -38,44 +38,6 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 
 			case msg := <-r.chFromNatsApi:
 				switch msg.SubjectType {
-				//**** это для NATS надо убрать ****
-				case "alert":
-					go func() {
-						rootId, verifyAlert, listRawFields := documentgenerator.AlertGenerator(decoder.Start(msg.Data, msg.TaskId))
-
-						r.logger.Send("info", fmt.Sprintf("an 'alert' document has been generated, and the document has been transferred to the database (root id document '%s')", rootId))
-
-						if len(listRawFields) > 0 {
-							r.logger.Send("alert_raw_fields", supportingfunctions.JoinRawFieldsToString(listRawFields, "rootId", rootId))
-						}
-
-						r.chToDBSApi <- databasestorageapi.SettingsChanInput{
-							Section: "handling alert",
-							Command: "add alert",
-							Data:    verifyAlert,
-						}
-					}()
-
-				//**** это для NATS надо убрать ****
-				case "case":
-					go func() {
-						rootId, verifyCase, listRawFields := documentgenerator.CaseGenerator(decoder.Start(msg.Data, msg.TaskId))
-
-						r.logger.Send("info", fmt.Sprintf("an 'case' document has been generated, and the document has been transferred to the database (root id document '%s')", rootId))
-
-						if len(listRawFields) > 0 {
-							r.logger.Send("case_raw_fields", supportingfunctions.JoinRawFieldsToString(listRawFields, "rootId", rootId))
-						}
-
-						//передача объекта в модуль взаимодействия с базой данных для
-						//дальнейшей загрузки данных в базу
-						r.chToDBSApi <- databasestorageapi.SettingsChanInput{
-							Section: "handling case",
-							Command: "add case",
-							Data:    verifyCase,
-						}
-					}()
-
 				case "geoip information":
 					//передача информации о географическом местоположении ip адресов
 					r.chToDBSApi <- databasestorageapi.SettingsChanInput{

@@ -22,6 +22,11 @@ type AdditionalInformation struct {
 	IpAddresses []IpAddressInformation `json:"@ip_address_additional_information"`
 }
 
+// AdditionalInformationSensors дополнительная информация добавляемая к информации по кейсам
+type AdditionalInformationSensors struct {
+	Sensors []SensorInformation `json:"@sensorAdditionalInformation"`
+}
+
 // SensorInformation содержит дополнительную информацию о сенсоре
 type SensorInformation struct {
 	INN         string `json:"inn"`           //налоговый идентификатор
@@ -33,6 +38,11 @@ type SensorInformation struct {
 	SubjectRF   string `json:"subject_rf"`    //субъект Российской Федерации
 	ObjectArea  string `json:"object_area"`   //сфера деятельности объекта
 	FullOrgName string `json:"full_org_name"` //полное наименование организации
+}
+
+// AdditionalInformationIpAddress дополнительная информация добавляемая к информации по кейсам
+type AdditionalInformationIpAddress struct {
+	IpAddresses []IpAddressInformation `json:"@ipAddressAdditionalInformation"`
 }
 
 // IpAddressesInformation дополнительная информация об ip адресе
