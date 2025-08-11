@@ -14,8 +14,8 @@ import (
 )
 
 // addGeoIPInformation дополнительная информация о географическом местоположении ip адресов
-func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, data any) {
-	newData, ok := data.([]byte)
+func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, a any) {
+	newData, ok := a.([]byte)
 	if !ok {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("type conversion error")).Error())
 
@@ -40,13 +40,24 @@ func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, data any) {
 	}
 
 	//получаем наименование хранилища
-	indexName, isExist := dbs.settings.storages["case"]
+	// так как id для выполяемой задачи по поиску информации о месторасположении ip адресов
+	// был сформирован по следующему шаблону id := fmt.Sprintf("alerts:%s", newDocument.GetUUID())
+	tmp := strings.Split(newDocument.TaskId, ":")
+	if len(tmp) <= 1 {
+		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("no value was found to determine the index name")).Error())
+
+		return
+	}
+
+	//получаем имя индекса из настроек конфигурации
+	indexName, isExist := dbs.settings.storages[tmp[0]]
 	if !isExist {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 
 		return
 	}
 
+	specialUuid := tmp[1]
 	t := time.Now()
 	month := int(t.Month())
 	//текущий индекс
@@ -78,17 +89,15 @@ func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, data any) {
 		})
 	}
 
-	//обновляемый список не должен быть пустым, а то получается что пустой
-	//список с ip адресами затирается вообще пустым списком
+	//обновляемый список не должен быть пустым, а то получается что полу пустой
+	//список в котором есть хотя бы ip адреса затирается вообще пустым списком
 	if len(ipInfoList) == 0 {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the list with information on ip addresses should not be empty")).Error())
 
 		return
 	}
 
-	//поиск _id объекта типа 'case' по его rootId (что передается в newDocument.TaskId)
-	underlineId, geoIpInfo, err := dbs.SearchGeoIPInformationCase(ctx, indexCurrent, newDocument.TaskId)
-	//underlineId, err := dbs.SearchUnderlineIdCase(ctx, indexCurrent, newDocument.TaskId)
+	underlineId, geoIpInfo, err := dbs.SearchGeoIPInformation(ctx, indexCurrent, specialUuid)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 
@@ -114,33 +123,33 @@ func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, data any) {
 
 	request, err := json.MarshalIndent(AdditionalInformationIpAddress{IpAddresses: geoIpInfo}, "", " ")
 	if err != nil {
-		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("'rootId:'%s', '%w'", newDocument.TaskId, err)).Error())
+		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("@special_uuid:'%s', '%w'", specialUuid, err)).Error())
 
 		return
 	}
 
-	//выплняется обновление информации в БД
+	//выполняется обновление информации в БД
 	bodyUpdate := strings.NewReader(fmt.Sprintf("{\"doc\": %s}", string(request)))
 	res, err := dbs.client.Update(indexCurrent, underlineId, bodyUpdate)
 	if err != nil {
-		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("'rootId:'%s', '%w'", newDocument.TaskId, err)).Error())
+		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("@specail_uuid:'%s', '%w'", specialUuid, err)).Error())
 
 		return
 	}
 	defer res.Body.Close()
 
 	if res != nil && res.StatusCode != http.StatusOK {
-		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("'rootId:'%s', '%w'", newDocument.TaskId, err)).Error())
+		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("@special_uuid:'%s', '%w'", specialUuid, err)).Error())
 
 		return
 	}
 
-	dbs.logger.Send("info", fmt.Sprintf("the geoip information for root id:'%s' it was added successfully", newDocument.TaskId))
+	dbs.logger.Send("info", fmt.Sprintf("the geoip information for @special_uuid:'%s' it was added successfully", newDocument.TaskId))
 }
 
 // addSensorInformation дополнительная информация о местоположении и принадлежности сенсоров
-func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, data any) {
-	newData, ok := data.([]byte)
+func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, a any) {
+	newData, ok := a.([]byte)
 	if !ok {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("type conversion error")).Error())
 
@@ -164,13 +173,24 @@ func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, data any) 
 	}
 
 	//получаем наименование хранилища
-	indexName, isExist := dbs.settings.storages["case"]
+	// так как id для выполяемой задачи по поиску информации о месторасположении ip адресов
+	// был сформирован по следующему шаблону id := fmt.Sprintf("alerts:%s", newDocument.GetUUID())
+	tmp := strings.Split(newDocument.TaskId, ":")
+	if len(tmp) <= 1 {
+		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("no value was found to determine the index name")).Error())
+
+		return
+	}
+
+	//получаем имя индекса из настроек конфигурации
+	indexName, isExist := dbs.settings.storages[tmp[0]]
 	if !isExist {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 
 		return
 	}
 
+	specialUuid := tmp[1]
 	t := time.Now()
 	month := int(t.Month())
 	//текущий индекс
@@ -181,8 +201,8 @@ func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, data any) 
 	time.Sleep(3 * time.Second)
 	//***************************************************************
 
-	//поиск _id объекта типа 'case' по его rootId (что в передается в newDocument.TaskId)
-	underlineId, err := dbs.SearchUnderlineIdCase(ctx, indexCurrent, newDocument.TaskId)
+	//поиск _id объекта по его '@special_uuid'
+	underlineId, err := dbs.GetUnderlineId(ctx, indexCurrent, specialUuid)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 

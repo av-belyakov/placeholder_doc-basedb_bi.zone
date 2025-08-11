@@ -63,6 +63,26 @@ type PatternVerifiedBiZoneAlert struct {
 	ServiseOption
 }
 
+//****** для объектов типа AdditionalInformation *******
+
+// ResponseTemplateAdditionalInformation шаблон для дополнительной информации
+type ResponseTemplateAdditionalInformation struct {
+	Options TemplateAdditionalInformationOptions `json:"hits"`
+}
+
+// TemplateAdditionalInformationOptions шаблон опций
+type TemplateAdditionalInformationOptions struct {
+	Total    OptionsTotal          `json:"total"`
+	Hits     []PatternVerifiedCase `json:"hits"`
+	MaxScore float64               `json:"max_score"`
+}
+
+// TemplateAdditionalInformation шаблон документа
+type TemplateAdditionalInformation struct {
+	Source datamodels.AdditionalInformation `json:"_source"`
+	ServiseOption
+}
+
 // OptionsTotal опции в результате поиска
 type OptionsTotal struct {
 	Relation string `json:"relation"` //отношение (==, >, <)
@@ -77,7 +97,12 @@ type ServiseOption struct {
 
 /*
 * 		!!!!!!
+
+
 * всё что ниже можно удалять
+
+
+
 * !!!!!!
  */
 

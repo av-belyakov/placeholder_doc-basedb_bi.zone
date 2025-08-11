@@ -5,6 +5,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
+
 	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
 )
 
@@ -14,6 +16,7 @@ import (
 // NewVerifiedBiZoneAlert новый объект
 func NewVerifiedBiZoneAlert() *VerifiedBiZoneAlert {
 	return &VerifiedBiZoneAlert{
+		SpecialUUID:        uuid.NewString(),
 		CreatedTime:        time.Now().Format(time.RFC3339),
 		UpdatedTime:        time.Now().Format(time.RFC3339),
 		EventEndTime:       time.Now().Format(time.RFC3339),
@@ -27,6 +30,11 @@ func NewVerifiedBiZoneAlert() *VerifiedBiZoneAlert {
 
 func (va *VerifiedBiZoneAlert) Get() *VerifiedBiZoneAlert {
 	return va
+}
+
+// GetSpecialUUID униакальное значение поля SpecialUUID
+func (va *VerifiedBiZoneAlert) GetSpecialUUID() string {
+	return va.SpecialUUID
 }
 
 // GetIDNum для поля IDNum

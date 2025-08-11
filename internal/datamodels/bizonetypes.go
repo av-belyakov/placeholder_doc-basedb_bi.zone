@@ -5,6 +5,7 @@ type VerifiedBiZoneAlert struct {
 	AdditionalInformation
 	Snapshots          []BiZoneSnapshot `json:"snapshots"`
 	Tags               []BiZoneTag      `json:"tags"`
+	SpecialUUID        string           `json:"@special_uuid"`
 	UUID               string           `json:"uuid"`
 	Title              string           `json:"title"`
 	Severity           string           `json:"severity"`
