@@ -173,13 +173,24 @@ func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, a any) {
 	}
 
 	//получаем наименование хранилища
-	indexName, isExist := dbs.settings.storages["case"]
+	// так как id для выполяемой задачи по поиску информации о месторасположении ip адресов
+	// был сформирован по следующему шаблону id := fmt.Sprintf("alerts:%s", newDocument.GetUUID())
+	tmp := strings.Split(newDocument.TaskId, ":")
+	if len(tmp) <= 1 {
+		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("no value was found to determine the index name")).Error())
+
+		return
+	}
+
+	//получаем имя индекса из настроек конфигурации
+	indexName, isExist := dbs.settings.storages[tmp[0]]
 	if !isExist {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 
 		return
 	}
 
+	specialUuid := tmp[1]
 	t := time.Now()
 	month := int(t.Month())
 	//текущий индекс
@@ -190,8 +201,8 @@ func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, a any) {
 	time.Sleep(3 * time.Second)
 	//***************************************************************
 
-	//поиск _id объекта типа 'case' по его rootId (что в передается в newDocument.TaskId)
-	underlineId, err := dbs.SearchUnderlineIdCase(ctx, indexCurrent, newDocument.TaskId)
+	//поиск _id объекта по его '@special_uuid'
+	underlineId, err := dbs.GetUnderlineId(ctx, indexCurrent, specialUuid)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 

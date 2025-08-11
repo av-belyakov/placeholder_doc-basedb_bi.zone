@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"runtime"
 	"strings"
+	"time"
 
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 
@@ -309,15 +310,55 @@ func (dbs *DatabaseStorage) SearchUnderlineIdCase(ctx context.Context, indexName
 	return "", nil
 }
 
+// GetUnderlineId поиск объекта по его '@special_uuid'
+func (dbs *DatabaseStorage) GetUnderlineId(ctx context.Context, indexName, specialUuid string) (string, error) {
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*5)
+	defer ctxCancel()
+
+	query := strings.NewReader(fmt.Sprintf("{\"query\": {\"bool\": {\"must\": [{\"match\": {\"@special_uuid\": \"%s\"}}]}}}", specialUuid))
+
+	//выполняем поиск _id индекса
+	res, err := dbs.client.Search(
+		dbs.client.Search.WithContext(ctxTimeout),
+		dbs.client.Search.WithIndex(indexName),
+		dbs.client.Search.WithBody(query),
+	)
+	if err != nil {
+		return "", err
+	}
+	defer res.Body.Close()
+
+	bodyRes, err := io.ReadAll(res.Body)
+	if err != nil {
+		return "", err
+	}
+
+	result, err := supportingfunctions.GetElementsFromJSON(ctx, bodyRes)
+	if err != nil {
+		return "", err
+	}
+
+	for k, v := range result {
+		if k == "hits.hits._id" {
+			return fmt.Sprint(v.Value), nil
+		}
+	}
+
+	return "", nil
+}
+
 // SearchGeoIPInformation поиск объекта по его '@special_uuid'
 // возвращает _id объекта под которым он находится в БД и объект типа IpAddressesInformation
 func (dbs *DatabaseStorage) SearchGeoIPInformation(ctx context.Context, indexName, specialUuid string) (string, []IpAddressesInformation, error) {
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*5)
+	defer ctxCancel()
+
 	geoIpInformation := make([]IpAddressesInformation, 0)
 	query := strings.NewReader(fmt.Sprintf("{\"query\": {\"bool\": {\"must\": [{\"match\": {\"@special_uuid\": \"%s\"}}]}}}", specialUuid))
 
 	//выполняем поиск _id индекса
 	res, err := dbs.client.Search(
-		dbs.client.Search.WithContext(ctx),
+		dbs.client.Search.WithContext(ctxTimeout),
 		dbs.client.Search.WithIndex(indexName),
 		dbs.client.Search.WithBody(query),
 	)
