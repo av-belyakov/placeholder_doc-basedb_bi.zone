@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"testing"
@@ -15,7 +16,9 @@ import (
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/decoderjsondocuments"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/countermessage"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/test/helpers"
 )
 
 const (
@@ -23,64 +26,77 @@ const (
 	Filepath_Test_Case = "../test_json/case_39100.json"
 )
 
-var listIPAddress []databasestorageapi.IpAddressesInformation = []databasestorageapi.IpAddressesInformation{
-	{
-		Ip:          "96.136.64.9",
-		City:        "Havana",
-		Country:     "Kuba",
-		CountryCode: "CU",
-	},
-	{
-		Ip:          "72.31.66.61",
-		City:        "Sidney",
-		Country:     "Australia",
-		CountryCode: "AU",
-	},
-	{
-		Ip:          "13.22.63.6",
-		City:        "Lida",
-		Country:     "Livia",
-		CountryCode: "LI",
-	},
-}
+var (
+	listIPAddress []datamodels.IpAddressInformation = []datamodels.IpAddressInformation{
+		{
+			Ip:          "96.136.64.9",
+			City:        "Havana",
+			Country:     "Kuba",
+			CountryCode: "CU",
+		},
+		{
+			Ip:          "72.31.66.61",
+			City:        "Sidney",
+			Country:     "Australia",
+			CountryCode: "AU",
+		},
+		{
+			Ip:          "13.22.63.6",
+			City:        "Lida",
+			Country:     "Livia",
+			CountryCode: "LI",
+		},
+	}
 
-func CreateTestCase(ctx context.Context, filePath string) (string, *documentgenerator.VerifiedCase, error) {
+	logging  *helpers.Logging
+	counting *helpers.Counting
+)
+
+func CreateTestCase(ctx context.Context, filePath string) (string, *datamodels.VerifiedBiZoneAlert, error) {
 	var (
-		rootId     string
-		verifyCase *documentgenerator.VerifiedCase
+		rootId        string
+		verifiedAlert *datamodels.VerifiedBiZoneAlert
 	)
 
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	logging := NewLogging()
-	counting := countermessage.New(logging.ch)
-	counting.Start(ctx)
-
 	b, err := os.ReadFile(filePath)
 	if err != nil {
-		return rootId, verifyCase, err
+		return rootId, verifiedAlert, err
 	}
 
 	decoder := decoderjsondocuments.New(counting, logging)
-	chDecode := decoder.Start(b, "taskId_628292h")
+	chDecode := decoder.Start(b)
 
-	go func() {
+	logging := helpers.NewLogging()
+	counting := helpers.NewCounting()
+
+	go func(ctx context.Context, l interfaces.Logger, c *helpers.Counting) {
 		for {
 			select {
 			case <-ctx.Done():
 				return
 
-			case msg := <-logging.GetChan():
-				fmt.Println("Log:", msg)
+			case count := <-c.GetChan():
+				fmt.Println("count.message:", count.Message, " count.Count", count.Count)
+
+			case msg := <-l.GetChan():
+				if msg.GetType() == "error" {
+					log.Fatal(msg.GetMessage())
+
+					return
+				}
+
+				fmt.Println("LOG:", msg)
 
 			}
 		}
-	}()
+	}(ctx, logging, counting)
 
-	rootId, verifyCase, _ = documentgenerator.CaseGenerator(chDecode)
+	rootId, verifiedAlert, _ = documentgenerator.BiZoneAlertsGenerator(chDecode)
 
-	return rootId, verifyCase, nil
+	return rootId, verifiedAlert, nil
 }
 
 func TestUpdateIndexCaseGeoIp(t *testing.T) {
@@ -92,8 +108,10 @@ func TestUpdateIndexCaseGeoIp(t *testing.T) {
 	}
 
 	//подключение к БД
-	apiDBS, err := ConnectionInitialization(
+	apiDBS, err := helpers.ConnectionInitialization(
 		ctx,
+		logging,
+		counting,
 		databasestorageapi.WithHost("datahook.cloud.gcm"),
 		databasestorageapi.WithPort(9200),
 		databasestorageapi.WithUser("writer"),
@@ -140,12 +158,12 @@ func TestUpdateIndexCaseGeoIp(t *testing.T) {
 	assert.NoError(t, err)
 
 	//проверяем наличие кейса
-	underlineId, err := apiDBS.SearchUnderlineIdCase(ctx, Index_Test, rootId)
+	underlineId, err := apiDBS.GetUnderlineId(ctx, Index_Test, rootId)
 	assert.NoError(t, err)
 
 	t.Log("underlineId:", underlineId)
 
-	request, err := json.MarshalIndent(databasestorageapi.AdditionalInformationIpAddress{
+	request, err := json.MarshalIndent(datamodels.AdditionalInformationIpAddress{
 		IpAddresses: listIPAddress,
 	}, "", " ")
 	assert.NoError(t, err)

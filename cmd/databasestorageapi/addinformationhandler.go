@@ -64,6 +64,9 @@ func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, a any) {
 	//текущий индекс
 	indexCurrent := fmt.Sprintf("%s_%d_%d", indexName, t.Year(), month)
 
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
+
 	//добавляем небольшую задержку что бы СУБД успела добавить индекс
 	//***************************************************************
 	time.Sleep(3 * time.Second)
@@ -98,7 +101,7 @@ func (dbs *DatabaseStorage) addGeoIPInformation(ctx context.Context, a any) {
 		return
 	}
 
-	underlineId, geoIpInfo, err := dbs.SearchGeoIPInformation(ctx, indexCurrent, specialUuid)
+	underlineId, geoIpInfo, err := dbs.SearchGeoIPInformation(ctxTimeout, indexCurrent, specialUuid)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 
@@ -197,13 +200,16 @@ func (dbs *DatabaseStorage) addSensorInformation(ctx context.Context, a any) {
 	//текущий индекс
 	indexCurrent := fmt.Sprintf("%s_%d_%d", indexName, t.Year(), month)
 
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
+
 	//добавляем небольшую задержку что бы СУБД успела добавить индекс
 	//***************************************************************
 	time.Sleep(3 * time.Second)
 	//***************************************************************
 
 	//поиск _id объекта по его '@special_uuid'
-	underlineId, err := dbs.GetUnderlineId(ctx, indexCurrent, specialUuid)
+	underlineId, err := dbs.GetUnderlineId(ctxTimeout, indexCurrent, specialUuid)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("the identifier of the index name was not found")).Error())
 

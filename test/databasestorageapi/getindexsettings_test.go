@@ -2,13 +2,19 @@ package databasestorageapi_test
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"os"
+	"os/signal"
+	"syscall"
 	"testing"
 
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/test/helpers"
 )
 
 func TestGetIndexSettings(t *testing.T) {
@@ -17,10 +23,45 @@ func TestGetIndexSettings(t *testing.T) {
 		t.Log(err)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill, syscall.SIGINT)
 
-	apiDBS, err := ConnectionInitialization(
+	go func() {
+		<-ctx.Done()
+
+		fmt.Println("placeholder_doc-basedb-bi-zone module is Stop")
+
+		stop()
+	}()
+
+	logging := helpers.NewLogging()
+	counting := helpers.NewCounting()
+
+	go func(ctx context.Context, l interfaces.Logger, c *helpers.Counting) {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+
+			case count := <-c.GetChan():
+				fmt.Println("count.message:", count.Message, " count.Count", count.Count)
+
+			case msg := <-l.GetChan():
+				if msg.GetType() == "error" {
+					log.Fatal(msg.GetMessage())
+
+					return
+				}
+
+				fmt.Println("LOG:", msg)
+
+			}
+		}
+	}(ctx, logging, counting)
+
+	apiDBS, err := helpers.ConnectionInitialization(
 		ctx,
+		logging,
+		counting,
 		databasestorageapi.WithHost("datahook.cloud.gcm"),
 		databasestorageapi.WithPort(9200),
 		databasestorageapi.WithUser("writer"),
@@ -44,7 +85,5 @@ func TestGetIndexSettings(t *testing.T) {
 	t.Cleanup(func() {
 		os.Unsetenv("GO_PHDOCBASEDB_DBWLOGPASSWD")
 		os.Unsetenv("GO_PHDOCBASEDB_DBSTORAGEPASSWD")
-
-		cancel()
 	})
 }

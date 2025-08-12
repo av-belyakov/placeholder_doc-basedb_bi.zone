@@ -334,3 +334,12 @@ func (dbs *DatabaseStorage) SearchGeoIPInformation(ctx context.Context, indexNam
 
 	return underlineId, geoIpInformation, nil
 }
+
+// Search общий поиск
+func (dbs *DatabaseStorage) Search(ctx context.Context, indexes []string, query *strings.Reader) (*esapi.Response, error) {
+	return dbs.client.Search(
+		dbs.client.Search.WithContext(ctx),
+		dbs.client.Search.WithIndex(indexes...),
+		dbs.client.Search.WithBody(query),
+	)
+}

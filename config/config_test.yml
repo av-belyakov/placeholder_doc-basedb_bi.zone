@@ -6,8 +6,6 @@ NATS:
   port: 4222
   cache_ttl: 3600
   subscriptions:
-    alert: object.alerttype.test
-    case: object.casetype.test
   enriching_queries:
     get_geoip_info: object.geoip-request.test
     get_sensor_info: object.sensor-info-request.test

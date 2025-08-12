@@ -86,7 +86,7 @@ func TestAlertDocument(t *testing.T) {
 			t.Log("Received new message...")
 			t.Logf("Received message:%s\n\n", string(msg.Data))
 			decoder := decoderjsondocuments.New(counting, logging)
-			id, verifedBiZoneAlert, listRawFields := documentgenerator.BiZoneAlertsGenerator(decoder.Start(msg.Data, "uniq_task_id_1"))
+			id, verifedBiZoneAlert, listRawFields := documentgenerator.BiZoneAlertsGenerator(decoder.Start(msg.Data))
 
 			t.Log("with id:", id)
 			//t.Logf("Received message:\n%s\n", str)

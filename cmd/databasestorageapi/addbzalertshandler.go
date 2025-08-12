@@ -17,6 +17,8 @@ import (
 // addBiZoneAlerts добавление объекта типа 'alerts'
 func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	t := time.Now()
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
 
 	newDocument, ok := a.(*datamodels.VerifiedBiZoneAlert)
 	if !ok {
@@ -104,7 +106,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	if len(indexesOnlyCurrentYear) == 0 {
 		//
 		//вставка документа
-		statusCode, err := dbs.InsertDocument(ctx, currentIndex, newDocumentBinary)
+		statusCode, err := dbs.InsertDocument(ctxTimeout, currentIndex, newDocumentBinary)
 		if err != nil {
 			dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 
@@ -114,7 +116,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 		existingIndexes = append(existingIndexes, currentIndex)
 		//устанавливаем максимальный лимит количества полей для всех индексов которые
 		//содержат значение по умолчанию в 1000 полей
-		if err := dbs.SetMaxTotalFieldsLimit(ctx, existingIndexes); err != nil {
+		if err := dbs.SetMaxTotalFieldsLimit(ctxTimeout, existingIndexes); err != nil {
 			dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 		}
 
@@ -122,24 +124,16 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 		dbs.counter.SendMessage("update count insert subject alerts to db", 1)
 		dbs.logger.Send("info", fmt.Sprintf("insert new document to alerts id:'%s', uuid:'%s', status code:'%d'", newDocument.GetIDNum(), newDocument.GetUUID(), statusCode))
 
-		//*****************************
-		//*** здесь установка тегов ***
-		//пока не знаю нужно ли это в BiZone
-		//запрос на отправку сообщения для установки тега
-		//dbs.GetChanDataFromModule() <- SettingsChanOutput{
-		//	Command: "set_tag",
-		//	CaseId:  caseId,
-		//	RootId:  newDocument.GetEvent().GetRootId(),
-		//	Data:    reqSetTag,
-		//}
-		//*****************************
+		//*******************************************
+		//*** здесь установка тегов, под вопросом ***
+		//*******************************************
 
 		return
 	}
 
 	//устанавливаем максимальный лимит количества полей для всех индексов которые
 	//содержат значение по умолчанию в 1000 полей
-	if err := dbs.SetMaxTotalFieldsLimit(ctx, existingIndexes); err != nil {
+	if err := dbs.SetMaxTotalFieldsLimit(ctxTimeout, existingIndexes); err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 	}
 
@@ -149,7 +143,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 			"{\"query\": {\"bool\": {\"must\": [{\"match\": {\"uuid\": \"%s\"}}]}}}",
 			newDocument.GetUUID()))
 	res, err := dbs.client.Search(
-		dbs.client.Search.WithContext(context.Background()),
+		dbs.client.Search.WithContext(ctxTimeout),
 		dbs.client.Search.WithIndex(indexesOnlyCurrentYear...),
 		dbs.client.Search.WithBody(currentQuery),
 	)
@@ -173,7 +167,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	if response.Options.Total.Value == 0 {
 		//
 		//вставка документа
-		statusCode, err := dbs.InsertDocument(ctx, currentIndex, newDocumentBinary)
+		statusCode, err := dbs.InsertDocument(ctxTimeout, currentIndex, newDocumentBinary)
 		if err != nil {
 			dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 
@@ -182,19 +176,11 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 
 		//счетчик
 		dbs.counter.SendMessage("update count insert subject alerts to db", 1)
-		dbs.logger.Send("info", fmt.Sprintf("insert new document to alerts id:'%s', uuid:'%s', status code:'%d'", newDocument.GetIDNum(), newDocument.GetUUID(), statusCode))
+		dbs.logger.Send("info", fmt.Sprintf("insert new document to alerts id:'%d', uuid:'%s', status code:'%d'", newDocument.GetIDNum(), newDocument.GetUUID(), statusCode))
 
-		//*****************************
-		//*** здесь установка тегов ***
-		//пока не знаю нужно ли это в BiZone
-		//запрос на отправку сообщения для установки тега
-		//dbs.GetChanDataFromModule() <- SettingsChanOutput{
-		//	Command: "set_tag",
-		//	CaseId:  caseId,
-		//	RootId:  newDocument.GetEvent().GetRootId(),
-		//	Data:    reqSetTag,
-		//}
-		//*****************************
+		//*******************************************
+		//*** здесь установка тегов, под вопросом ***
+		//*******************************************
 
 		return
 	}
@@ -229,7 +215,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	}
 
 	//обновление в базе данных уже существующего документа
-	statusCode, countDel, err := dbs.UpdateDocument(ctx, currentIndex, listDeleting, nvbyte)
+	statusCode, countDel, err := dbs.UpdateDocument(ctxTimeout, currentIndex, listDeleting, nvbyte)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("uuid '%s' '%s'", newDocument.GetUUID(), err.Error())).Error())
 
@@ -238,4 +224,9 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 
 	dbs.counter.SendMessage("update count insert subject alerts to db", 1)
 	dbs.logger.Send("info", fmt.Sprintf("update document 'alerts' type, count delete:'%d', count replacing fields:'%d' for alerts with uuid:'%s', status code:'%d'", countDel, countReplacingFields, newDocument.GetUUID(), statusCode))
+}
+
+// TestAddBiZoneAlerts использовать только в тестах
+func (dbs *DatabaseStorage) TestAddBiZoneAlerts(ctx context.Context, a any) {
+	dbs.addBiZoneAlerts(ctx, a)
 }

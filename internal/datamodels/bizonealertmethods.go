@@ -15,14 +15,16 @@ import (
 
 // NewVerifiedBiZoneAlert новый объект
 func NewVerifiedBiZoneAlert() *VerifiedBiZoneAlert {
+	oldTime := time.Date(1970, time.January, 1, 0, 0, 0, 1, time.UTC).Format(time.RFC3339)
+
 	return &VerifiedBiZoneAlert{
 		SpecialUUID:        uuid.NewString(),
-		CreatedTime:        time.Now().Format(time.RFC3339),
-		UpdatedTime:        time.Now().Format(time.RFC3339),
-		EventEndTime:       time.Now().Format(time.RFC3339),
-		EventStartTime:     time.Now().Format(time.RFC3339),
-		LastDetectionTime:  time.Now().Format(time.RFC3339),
-		FirstDetectionTime: time.Now().Format(time.RFC3339),
+		CreatedTime:        oldTime,
+		UpdatedTime:        oldTime,
+		EventEndTime:       oldTime,
+		EventStartTime:     oldTime,
+		LastDetectionTime:  oldTime,
+		FirstDetectionTime: oldTime,
 		Tags:               []BiZoneTag(nil),
 		Snapshots:          []BiZoneSnapshot(nil),
 	}

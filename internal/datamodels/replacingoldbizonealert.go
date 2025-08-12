@@ -44,6 +44,12 @@ func (va *VerifiedBiZoneAlert) RepalcingOldBiZoneAlert(incomingType VerifiedBiZo
 				continue
 			}
 
+			//поле с дополнительной информацией пропускаем, так как заменять эту
+			//информацию не будем, а будет выполнятся добавление новой информации
+			if typeOfCurrentStruct.Field(i).Name == "AdditionalInformation" {
+				continue
+			}
+
 			if !currentStruct.Field(i).Equal(newStruct.Field(j)) {
 				if !currentStruct.Field(i).CanSet() {
 					continue

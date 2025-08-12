@@ -2,15 +2,21 @@ package databasestorageapi_test
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
 	"testing"
 
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/test/helpers"
 )
 
 func TestSearchUnderlineId(t *testing.T) {
@@ -19,13 +25,48 @@ func TestSearchUnderlineId(t *testing.T) {
 		t.Log(err)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-
 	fmt.Println("GO_PHDOCBASEDB_DBWLOGPASSWD =", os.Getenv("GO_PHDOCBASEDB_DBWLOGPASSWD"))
 	fmt.Println("GO_PHDOCBASEDB_DBSTORAGEPASSWD =", os.Getenv("GO_PHDOCBASEDB_DBSTORAGEPASSWD"))
 
-	apiDBS, err := ConnectionInitialization(
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill, syscall.SIGINT)
+
+	go func() {
+		<-ctx.Done()
+
+		fmt.Println("placeholder_doc-basedb-bi-zone module is Stop")
+
+		stop()
+	}()
+
+	logging := helpers.NewLogging()
+	counting := helpers.NewCounting()
+
+	go func(ctx context.Context, l interfaces.Logger, c *helpers.Counting) {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+
+			case count := <-c.GetChan():
+				fmt.Println("count.message:", count.Message, " count.Count", count.Count)
+
+			case msg := <-l.GetChan():
+				if msg.GetType() == "error" {
+					assert.NoError(t, errors.New(msg.GetMessage()))
+
+					return
+				}
+
+				fmt.Println("LOG:", msg)
+
+			}
+		}
+	}(ctx, logging, counting)
+
+	apiDBS, err := helpers.ConnectionInitialization(
 		ctx,
+		logging,
+		counting,
 		databasestorageapi.WithHost("datahook.cloud.gcm"),
 		databasestorageapi.WithPort(9200),
 		databasestorageapi.WithUser("writer"),
@@ -41,7 +82,7 @@ func TestSearchUnderlineId(t *testing.T) {
 	   для "module_placeholder_case_2024_7", "~86803587072" нет
 	*/
 
-	newGeoIpList := []databasestorageapi.IpAddressesInformation{
+	newGeoIpList := []datamodels.IpAddressInformation{
 		{Ip: "45.13.191.34", City: "Oslolo", Country: "Норвегия", CountryCode: "NO"},
 		{Ip: "45.13.191.28", City: "Oslolo", Country: "Норвегия", CountryCode: "NO"},
 		{Ip: "45.13.191.18", City: "Oslo", Country: "Норвегия", CountryCode: "NO"},
@@ -49,8 +90,7 @@ func TestSearchUnderlineId(t *testing.T) {
 		{Ip: "98.113.101.17", City: "Xmu", Country: "Нигерия", CountryCode: "NG"},
 	}
 
-	//underlineId, err := apiDBS.SearchUnderlineIdCase(ctx, "module_placeholderdb_case_2025_7", "~88190333152")
-	underlineId, geoIpList, err := apiDBS.SearchGeoIPInformationCase(ctx, "module_placeholderdb_case_2025_7", "~1665007800")
+	underlineId, geoIpList, err := apiDBS.SearchGeoIPInformation(ctx, "module_placeholderdb_bizone_alerts_2025_8", "~1665007800")
 	assert.NoError(t, err)
 	assert.Equal(t, underlineId, "4g0WIJcBRHX25kGeUOOR")
 
@@ -85,7 +125,5 @@ func TestSearchUnderlineId(t *testing.T) {
 	t.Cleanup(func() {
 		os.Unsetenv("GO_PHDOCBASEDB_DBWLOGPASSWD")
 		os.Unsetenv("GO_PHDOCBASEDB_DBSTORAGEPASSWD")
-
-		cancel()
 	})
 }

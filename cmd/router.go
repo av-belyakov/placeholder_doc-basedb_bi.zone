@@ -63,7 +63,7 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 				switch msg.SubjectType {
 				case "alerts":
 					go func() {
-						id, verifedBiZoneAlert, listRawFields := documentgenerator.BiZoneAlertsGenerator(decoder.Start(msg.Data, "uniq_task_id_1"))
+						id, verifedBiZoneAlert, listRawFields := documentgenerator.BiZoneAlertsGenerator(decoder.Start(msg.Data))
 
 						r.logger.Send("info", fmt.Sprintf("an 'alerts' document has been generated, and the document has been transferred to the database (id document '%s')", id))
 

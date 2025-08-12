@@ -14,7 +14,7 @@ func New(counter interfaces.Counter, logger interfaces.Logger) *DecoderJsonDocum
 }
 
 // Start инициализация обработки
-func (s *DecoderJsonDocuments) Start(b []byte, taskId string) chan interfaces.CustomJsonDecoder {
+func (s *DecoderJsonDocuments) Start(b []byte) chan interfaces.CustomJsonDecoder {
 	chanInput := make(chan interfaces.CustomJsonDecoder)
 
 	go func() {
