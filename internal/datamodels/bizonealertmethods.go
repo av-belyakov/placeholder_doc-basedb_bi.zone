@@ -171,12 +171,15 @@ func (va *VerifiedBiZoneAlert) GetDescription() string {
 
 // SetDescription для поля Description
 func (va *VerifiedBiZoneAlert) SetDescription(description string) {
+	description = strings.ReplaceAll(description, "\t", "")
+	description = strings.ReplaceAll(description, "\n", "")
+
 	va.Description = description
 }
 
 // SetAnyDescription для поля Description
 func (va *VerifiedBiZoneAlert) SetAnyDescription(a any) {
-	va.Description = fmt.Sprint(a)
+	va.SetDescription(fmt.Sprint(a))
 }
 
 // GetDetectionRule для поля DetectionRule

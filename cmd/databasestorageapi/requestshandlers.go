@@ -144,8 +144,6 @@ func (dbs *DatabaseStorage) GetDocument(ctx context.Context, indexes []string, q
 	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
 	defer ctxCancel()
 
-	dbs.logger.Send("info", "start 'GetDocument' method")
-
 	response, err := dbs.client.Search(
 		dbs.client.Search.WithContext(ctxTimeout),
 		dbs.client.Search.WithIndex(indexes...),

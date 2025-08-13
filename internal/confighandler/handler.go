@@ -295,14 +295,6 @@ func New(rootDir string) (*Config, error) {
 		}
 	}
 
-	/*
-		//Подключение к Kafka
-		"GO_PHDOCBASEDBBZ_KHOST":     "",
-		"GO_PHDOCBASEDBBZ_KPORT":     "",
-		"GO_PHDOCBASEDBBZ_KTOPICS":   "",
-		"GO_PHDOCBASEDBBZ_KCACHETTL": "",
-	*/
-
 	//Настройки для модуля подключения к Kafka
 	if envList["GO_PHDOCBASEDBBZ_KHOST"] != "" {
 		conf.Kafka.Host = envList["GO_PHDOCBASEDBBZ_KHOST"]

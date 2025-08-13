@@ -1,7 +1,7 @@
 package constants
 
 const (
-	Root_Dir = "placeholder_doc-base_db"
+	Root_Dir = "placeholder-doc-basedb-bi-zone"
 
 	Ansi_Reset                 = "\033[0m"
 	Ansi_White                 = "\033[97m"

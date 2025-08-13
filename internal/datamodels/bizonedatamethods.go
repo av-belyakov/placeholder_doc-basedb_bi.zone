@@ -2,6 +2,7 @@ package datamodels
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
@@ -264,6 +265,10 @@ func (d *BiZoneData) SetSnortSid(sid uint64) {
 		d.SnortSid = []uint64(nil)
 	}
 
+	if slices.Contains(d.SnortSid, sid) {
+		return
+	}
+
 	d.SnortSid = append(d.SnortSid, sid)
 }
 
@@ -290,7 +295,7 @@ func (d *BiZoneData) SetAnySnortSid(a any) {
 		sid = v
 	}
 
-	d.SnortSid = append(d.SnortSid, sid)
+	d.SetSnortSid(sid)
 }
 
 // GetAllSensors для поля AllSensors
@@ -307,6 +312,10 @@ func (d *BiZoneData) SetAllSensors(allSensors []uint64) {
 func (d *BiZoneData) SetAllSensor(sensor uint64) {
 	if d.AllSensors == nil {
 		d.AllSensors = []uint64(nil)
+	}
+
+	if slices.Contains(d.AllSensors, sensor) {
+		return
 	}
 
 	d.SnortSid = append(d.SnortSid, sensor)
@@ -335,7 +344,7 @@ func (d *BiZoneData) SetAnyAllSensor(a any) {
 		sensor = v
 	}
 
-	d.AllSensors = append(d.AllSensors, sensor)
+	d.SetAllSensor(sensor)
 }
 
 // GetAllIPHomes для поля AllIPHome
@@ -354,16 +363,16 @@ func (d *BiZoneData) SetAllIPHome(ipHome string) {
 		d.AllIPHome = []string(nil)
 	}
 
+	if slices.Contains(d.AllIPHome, ipHome) {
+		return
+	}
+
 	d.AllIPHome = append(d.AllIPHome, ipHome)
 }
 
 // SetAnyAllIPHome добавляет значение AllIPHome  в список
-func (d *BiZoneData) SetAnyAllIPHome(i any) {
-	if d.AllIPHome == nil {
-		d.AllIPHome = []string(nil)
-	}
-
-	d.AllIPHome = append(d.AllIPHome, fmt.Sprint(i))
+func (d *BiZoneData) SetAnyAllIPHome(a any) {
+	d.SetAllIPHome(fmt.Sprint(a))
 }
 
 // ToStringBeautiful форматированный вывод

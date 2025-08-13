@@ -27,8 +27,6 @@ func (api *kafkaApiModule) topicsHandler(ctx context.Context) {
 
 			topic := msg.TopicPartition.Topic
 
-			fmt.Println("func 'topicsHandler', Topic:", *topic)
-
 			subjectType := "undefined_type"
 			topicKey, ok := supportingfunctions.SearchValue(api.topics, *topic)
 			if ok {
