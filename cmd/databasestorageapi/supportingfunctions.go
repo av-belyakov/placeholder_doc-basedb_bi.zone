@@ -27,7 +27,7 @@ func sendGeoIpRequest(
 
 	getChan() <- SettingsChanOutput{
 		Command: "get_geoip_info",
-		RootId:  id,
+		Id:      id,
 		Data:    reqGeoIP,
 	}
 
@@ -55,7 +55,7 @@ func sendSensorInformationRequest(
 
 	getChan() <- SettingsChanOutput{
 		Command: "get_sensor_info",
-		RootId:  id,
+		Id:      id,
 		Data:    reqSensorId,
 	}
 

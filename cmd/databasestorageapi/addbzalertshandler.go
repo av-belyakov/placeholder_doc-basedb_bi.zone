@@ -17,8 +17,6 @@ import (
 // addBiZoneAlerts добавление объекта типа 'alerts'
 func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	t := time.Now()
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
-	defer ctxCancel()
 
 	newDocument, ok := a.(*datamodels.VerifiedBiZoneAlert)
 	if !ok {
@@ -27,7 +25,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 		return
 	}
 
-	newDocumentBinary, err := json.Marshal(newDocument.Get())
+	binaryDocument, err := json.Marshal(newDocument.Get())
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 
@@ -106,7 +104,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	if len(indexesOnlyCurrentYear) == 0 {
 		//
 		//вставка документа
-		statusCode, err := dbs.InsertDocument(ctxTimeout, currentIndex, newDocumentBinary)
+		statusCode, err := dbs.InsertDocument(ctx, currentIndex, binaryDocument)
 		if err != nil {
 			dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 
@@ -116,13 +114,13 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 		existingIndexes = append(existingIndexes, currentIndex)
 		//устанавливаем максимальный лимит количества полей для всех индексов которые
 		//содержат значение по умолчанию в 1000 полей
-		if err := dbs.SetMaxTotalFieldsLimit(ctxTimeout, existingIndexes); err != nil {
+		if err := dbs.SetMaxTotalFieldsLimit(ctx, existingIndexes); err != nil {
 			dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 		}
 
 		//счетчик
 		dbs.counter.SendMessage("update count insert subject alerts to db", 1)
-		dbs.logger.Send("info", fmt.Sprintf("insert new document to alerts id:'%s', uuid:'%s', status code:'%d'", newDocument.GetIDNum(), newDocument.GetUUID(), statusCode))
+		dbs.logger.Send("info", fmt.Sprintf("insert new document to alerts id:'%d', uuid:'%s', status code:'%d'", newDocument.GetIDNum(), newDocument.GetUUID(), statusCode))
 
 		//*******************************************
 		//*** здесь установка тегов, под вопросом ***
@@ -133,31 +131,22 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 
 	//устанавливаем максимальный лимит количества полей для всех индексов которые
 	//содержат значение по умолчанию в 1000 полей
-	if err := dbs.SetMaxTotalFieldsLimit(ctxTimeout, existingIndexes); err != nil {
+	if err := dbs.SetMaxTotalFieldsLimit(ctx, existingIndexes); err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 	}
 
 	//ищем объект с таким же идентификатором как и принятый в обработку объект
-	currentQuery := strings.NewReader(
+	res, err := dbs.GetDocument(ctx, indexesOnlyCurrentYear, strings.NewReader(
 		fmt.Sprintf(
 			"{\"query\": {\"bool\": {\"must\": [{\"match\": {\"uuid\": \"%s\"}}]}}}",
-			newDocument.GetUUID()))
-	res, err := dbs.client.Search(
-		dbs.client.Search.WithContext(ctxTimeout),
-		dbs.client.Search.WithIndex(indexesOnlyCurrentYear...),
-		dbs.client.Search.WithBody(currentQuery),
-	)
+			newDocument.GetUUID())))
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 
 		return
 	}
-	defer res.Body.Close()
-
-	//обрабатываем принятую от базы данных информацию
 	response := ResponseVerifiedBiZoneAlerts{}
-	err = json.NewDecoder(res.Body).Decode(&response)
-	if err != nil {
+	if err = json.Unmarshal(res, &response); err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 
 		return
@@ -167,7 +156,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	if response.Options.Total.Value == 0 {
 		//
 		//вставка документа
-		statusCode, err := dbs.InsertDocument(ctxTimeout, currentIndex, newDocumentBinary)
+		statusCode, err := dbs.InsertDocument(ctx, currentIndex, binaryDocument)
 		if err != nil {
 			dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
 
@@ -215,7 +204,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	}
 
 	//обновление в базе данных уже существующего документа
-	statusCode, countDel, err := dbs.UpdateDocument(ctxTimeout, currentIndex, listDeleting, nvbyte)
+	statusCode, countDel, err := dbs.UpdateDocument(ctx, currentIndex, listDeleting, nvbyte)
 	if err != nil {
 		dbs.logger.Send("error", supportingfunctions.CustomError(fmt.Errorf("uuid '%s' '%s'", newDocument.GetUUID(), err.Error())).Error())
 

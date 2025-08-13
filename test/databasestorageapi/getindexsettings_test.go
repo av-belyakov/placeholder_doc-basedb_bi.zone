@@ -58,7 +58,7 @@ func TestGetIndexSettings(t *testing.T) {
 		}
 	}(ctx, logging, counting)
 
-	apiDBS, err := helpers.ConnectionInitialization(
+	apiDBS, err := helpers.DataBaseConnectionInitialization(
 		ctx,
 		logging,
 		counting,

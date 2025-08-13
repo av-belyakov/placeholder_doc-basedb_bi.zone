@@ -95,7 +95,7 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 				// информации о место располажения и принадлежности сенсоров
 				r.chToNatsApi <- natsapi.SettingsChanInput{
 					Command: msg.Command,
-					RootId:  msg.RootId,
+					RootId:  msg.Id,
 					Data:    msg.Data,
 				}
 			}

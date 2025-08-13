@@ -108,7 +108,7 @@ func TestUpdateIndexCaseGeoIp(t *testing.T) {
 	}
 
 	//подключение к БД
-	apiDBS, err := helpers.ConnectionInitialization(
+	apiDBS, err := helpers.DataBaseConnectionInitialization(
 		ctx,
 		logging,
 		counting,

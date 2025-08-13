@@ -29,8 +29,11 @@ func (dbs *DatabaseStorage) GetExistingIndexes(ctx context.Context, pattern stri
 		Index string `json:"index"`
 	}(nil)
 
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
+
 	res, err := dbs.client.Cat.Indices(
-		dbs.client.Cat.Indices.WithContext(ctx),
+		dbs.client.Cat.Indices.WithContext(ctxTimeout),
 		dbs.client.Cat.Indices.WithFormat("json"),
 	)
 	if err != nil {
@@ -134,6 +137,33 @@ func (dbs *DatabaseStorage) DelIndexSetting(ctx context.Context, indexes []strin
 	return err
 }
 
+// GetDocument выполняет запросы по поиску документа
+func (dbs *DatabaseStorage) GetDocument(ctx context.Context, indexes []string, query *strings.Reader) ([]byte, error) {
+	var res []byte
+
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
+
+	dbs.logger.Send("info", "start 'GetDocument' method")
+
+	response, err := dbs.client.Search(
+		dbs.client.Search.WithContext(ctxTimeout),
+		dbs.client.Search.WithIndex(indexes...),
+		dbs.client.Search.WithBody(query),
+	)
+	if err != nil {
+		return res, err
+	}
+	defer response.Body.Close()
+
+	res, err = io.ReadAll(response.Body)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
+}
+
 // InsertDocument добавить новый документ в заданный индекс
 func (dbs *DatabaseStorage) InsertDocument(ctx context.Context, index string, b []byte) (int, error) {
 	if dbs.client == nil {
@@ -152,7 +182,10 @@ func (dbs *DatabaseStorage) InsertDocument(ctx context.Context, index string, b 
 		return res.StatusCode, err
 	}
 
-	result, err := supportingfunctions.GetElementsFromJSON(ctx, bodyRes)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
+
+	result, err := supportingfunctions.GetElementsFromJSON(ctxTimeout, bodyRes)
 	if err != nil {
 		return res.StatusCode, err
 	}
@@ -178,7 +211,10 @@ func (dbs *DatabaseStorage) UpdateDocument(ctx context.Context, currentIndex str
 		countDel++
 	}
 
-	statusCode, err = dbs.InsertDocument(ctx, currentIndex, document)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
+
+	statusCode, err = dbs.InsertDocument(ctxTimeout, currentIndex, document)
 
 	return statusCode, countDel, err
 }
@@ -195,7 +231,10 @@ func (dbs *DatabaseStorage) SetMaxTotalFieldsLimit(ctx context.Context, indexes 
 	}
 
 	getIndexLimit := func(ctx context.Context, indexName string) (string, bool, error) {
-		indexSettings, err := dbs.GetIndexSetting(ctx, indexName)
+		ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+		defer ctxCancel()
+
+		indexSettings, err := dbs.GetIndexSetting(ctxTimeout, indexName)
 		if err != nil {
 			return "", false, err
 		}
@@ -226,6 +265,9 @@ func (dbs *DatabaseStorage) SetMaxTotalFieldsLimit(ctx context.Context, indexes 
 		return errList
 	}
 
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	defer ctxCancel()
+
 	var query string = `{
 		"index": {
 			"mapping": {
@@ -235,7 +277,7 @@ func (dbs *DatabaseStorage) SetMaxTotalFieldsLimit(ctx context.Context, indexes 
 				}
 			}
 		}`
-	if _, err := dbs.SetIndexSetting(ctx, indexForTotalFieldsLimit, query); err != nil {
+	if _, err := dbs.SetIndexSetting(ctxTimeout, indexForTotalFieldsLimit, query); err != nil {
 		errList = errors.Join(errList, err)
 
 		return err
@@ -321,6 +363,10 @@ func (dbs *DatabaseStorage) SearchGeoIPInformation(ctx context.Context, indexNam
 		if k == "hits.hits._id" {
 			underlineId = fmt.Sprint(v.Value)
 		}
+	}
+
+	if len(resTmp.Options.Hits) == 0 {
+		return "", geoIpInformation, fmt.Errorf("there is no template for updating geolocation information in object with uuid:'%s'", specialUuid)
 	}
 
 	for _, v := range resTmp.Options.Hits[0].Source.IpAddresses {

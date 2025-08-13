@@ -70,20 +70,20 @@ func TestUpdateIndexBiZoneVerifiedAlert(t *testing.T) {
 				return
 
 			case msg := <-l.GetChan():
+				fmt.Println("LOG:", msg)
+
 				if msg.GetType() == "error" {
 					log.Fatal(msg.GetMessage())
 
 					return
 				}
 
-				fmt.Println("LOG:", msg)
-
 			}
 		}
 	}(ctx, logging, counting)
 
 	t.Run("Тест 1. Подключение к БД", func(t *testing.T) {
-		apiDBS, err = helpers.ConnectionInitialization(
+		apiDBS, err = helpers.DataBaseConnectionInitialization(
 			t.Context(),
 			logging,
 			counting,

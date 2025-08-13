@@ -2,31 +2,28 @@ package databasestorageapi_test
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"testing"
-	"time"
-
-	"github.com/joho/godotenv"
-	"github.com/stretchr/testify/assert"
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/decoderjsondocuments"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/test/helpers"
+	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/assert"
 )
 
-func TestIInsertIndexBiZoneAlert(t *testing.T) {
+func TestGetIndexBiZoneVerifiedAlerts(t *testing.T) {
+	const Search_UUID = "eb62b40e-067a-4261-824f-56c3ff280db3"
+
 	var (
-		verifedBiZoneAlert *datamodels.VerifiedBiZoneAlert
-		apiDBS             *databasestorageapi.DatabaseStorage
-		fb                 []byte
-		id                 string
+		Indexes []string = []string{"module_placeholderdb_bizone_alerts_2025_8"}
+		apiDBS  *databasestorageapi.DatabaseStorage
 
 		err error
 	)
@@ -61,11 +58,15 @@ func TestIInsertIndexBiZoneAlert(t *testing.T) {
 			case count := <-c.GetChan():
 				fmt.Println("count.message:", count.Message, " count.Count", count.Count)
 
+				return
+
 			case msg := <-l.GetChan():
 				fmt.Println("LOG:", msg)
 
 				if msg.GetType() == "error" {
 					log.Fatal(msg.GetMessage())
+
+					return
 				}
 
 			}
@@ -87,29 +88,25 @@ func TestIInsertIndexBiZoneAlert(t *testing.T) {
 			}),
 		)
 		assert.NoError(t, err)
+		apiDBS.Start(ctx)
 	})
 
-	t.Run("Тест 2. Чтение тестового файла с объектом типа 'alerts'", func(t *testing.T) {
-		fb, err = os.ReadFile("../kafka/incoming_alert_1.json")
-		//fb, err = os.ReadFile("../kafka/replacing_alert_1.json")
+	t.Run("Тест 2. Получить документ", func(t *testing.T) {
+		//ищем объект с таким же идентификатором как и принятый в обработку объект
+		res, err := apiDBS.GetDocument(
+			ctx,
+			Indexes,
+			strings.NewReader(
+				fmt.Sprintf(
+					"{\"query\": {\"bool\": {\"must\": [{\"match\": {\"uuid\": \"%s\"}}]}}}",
+					Search_UUID)))
 		assert.NoError(t, err)
-		assert.NotEqual(t, len(fb), 0)
-	})
 
-	t.Run("Тест 3. Генерирование нового объекта типа datamodels.VerifiedBiZoneAlert", func(t *testing.T) {
-		decoder := decoderjsondocuments.New(counting, logging)
-		id, verifedBiZoneAlert, _ = documentgenerator.BiZoneAlertsGenerator(decoder.Start(fb))
+		//обрабатываем принятую от базы данных информацию
+		response := databasestorageapi.ResponseVerifiedBiZoneAlerts{}
+		err = json.Unmarshal(res, &response)
+		assert.NoError(t, err)
 
-		t.Logf("\nID:'%s'\nVerifiedBiZoneAlert:'%#v'\n", id, verifedBiZoneAlert)
-
-		assert.NotEqual(t, id, "")
-		assert.NotEmpty(t, verifedBiZoneAlert)
-	})
-
-	t.Run("Тест 4. Вставка нового индекса в БД или замена старого", func(t *testing.T) {
-		apiDBS.TestAddBiZoneAlerts(ctx, verifedBiZoneAlert)
-
-		time.Sleep(time.Second * 3)
-
+		t.Logf("\nResult:'%#v'\n", response)
 	})
 }

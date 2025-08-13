@@ -77,7 +77,7 @@ func (l *Logging) Send(msgType, msgData string) {
 	l.Ch <- &Message{Type: msgType, Message: msgData}
 }
 
-func ConnectionInitialization(
+func DataBaseConnectionInitialization(
 	ctx context.Context,
 	logging interfaces.Logger,
 	counting interfaces.Counter,
@@ -104,7 +104,9 @@ func ConnectionInitialization(
 				return
 
 			case msg := <-ch:
-				fmt.Println("Chan output message:", msg)
+				fmt.Println("Chan output message:")
+				fmt.Printf("ID:'%s'\nUUID:'%s'\nCommand:'%s'\n", msg.Id, msg.UUID, msg.Command)
+				fmt.Printf("Data:'%s'\n", string(msg.Data))
 
 			}
 		}
