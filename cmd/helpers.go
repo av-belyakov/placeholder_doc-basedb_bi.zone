@@ -21,7 +21,7 @@ func getInformationMessage(conf *confighandler.Config) string {
 
 	var profiling string
 	appStatus := fmt.Sprintf("%vproduction%v", constants.Ansi_Bright_Blue, constants.Ansi_Reset)
-	envValue, ok := os.LookupEnv("GO_PHDOCBASEDB_MAIN")
+	envValue, ok := os.LookupEnv("GO_PHDOCBASEDBBZ_MAIN")
 	if ok && (envValue == "development" || envValue == "test") {
 		appStatus = fmt.Sprintf("%v%s", constants.Ansi_Bright_Red, envValue)
 

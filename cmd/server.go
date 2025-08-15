@@ -208,7 +208,7 @@ func server(ctx context.Context) {
 	//go tool pprof http://host:port/debug/pprof/heap
 	//go tool pprof http://host:port/debug/pprof/allocs
 	//go tool pprof http://host:port/debug/pprof/goroutine
-	if os.Getenv("GO_PHDOCBASEDB_MAIN") == "test" || os.Getenv("GO_PHDOCBASEDB_MAIN") == "development" {
+	if os.Getenv("GO_PHDOCBASEDBBZ_MAIN") == "test" || os.Getenv("GO_PHDOCBASEDBBZ_MAIN") == "development" {
 		if conf.Common.Profiling.Port > 0 {
 			go func() {
 				log.Println(http.ListenAndServe(fmt.Sprintf("%s:%d", conf.Common.Profiling.Host, conf.Common.Profiling.Port), nil))
