@@ -2,19 +2,19 @@ version: "3.4"
 
 services:
   app:
-    container_name: placeholder_doc-base_db.test
+    container_name: placeholder_doc-basedb_bi.zone.test
     environment:
-      - GO_PHDOCBASEDB_DBWLOGPASSWD=$DEV_PHDOCBASEDB_DBWLOGPASSWD
-      - GO_PHDOCBASEDB_DBSTORAGEPASSWD=$DEV_PHDOCBASEDB_DBSTORAGEPASSWD
-    image: gitlab.cloud.gcm:5050/a.belyakov/placeholder_doc-base_db:test
+      - GO_PHDOCBASEDBBZ_DBWLOGPASSWD=$DEV_PHDOCBASEDBBZ_DBWLOGPASSWD
+      - GO_PHDOCBASEDBBZ_DBSTORAGEPASSWD=$DEV_PHDOCBASEDBBZ_DBSTORAGEPASSWD
+    image: gitlab.cloud.gcm:5050/a.belyakov/placeholder_doc-basedb_bi.zone:test
     restart: unless-stopped
     #пробрасываем user ID для корректной записи в логов
     user: root
-    command: chmod 777 /opt/placeholder_doc-base_db/logs && \
-             chown 1500:1500 /opt/placeholder_doc-base_db/logs
+    command: chmod 777 /opt/placeholder_doc-basedb_bi.zone/logs && \
+             chown 1500:1500 /opt/placeholder_doc-basedb_bi.zone/logs
     volumes:
-      - /var/log/placeholder_doc-base_db.test:/opt/placeholder_doc-base_db/logs:rw
-      - ./config:/opt/placeholder_doc-base_db/config:rw
+      - /var/log/placeholder_doc-basedb_bi.zone.test:/opt/placeholder_doc-basedb_bi.zone/logs:rw
+      - ./config:/opt/placeholder_doc-basedb_bi.zone/config:rw
       #выполняем для корректного отображения даты с учетом временной зоны
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro

@@ -22,10 +22,10 @@ RUN echo -e "build_image" && \
     apk update && \
     apk add --no-cache git && \
     # брать исходный код с репозитория на gitlab.cloud.gcm 
-    #git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@gitlab.cloud.gcm/a.belyakov/placeholder_doc-base_db.git ./src/${VERSION}/ && \
-    git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder_doc-base_db.git ./src/${VERSION}/ && \
+    #git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@gitlab.cloud.gcm/a.belyakov/placeholder_doc-basedb_bi.zone.git ./src/${VERSION}/ && \
+    git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder_doc-basedb_bi.zone.git ./src/${VERSION}/ && \
     # брать исходный код с репозитория на github.com 
-    #git clone -b ${BRANCH} https://github.com/av-belyakov/placeholder_doc-base_db.git  ./src/${VERSION}/ && \
+    #git clone -b ${BRANCH} https://github.com/av-belyakov/placeholder_doc-basedb_bi.zone.git  ./src/${VERSION}/ && \
     go build -C ./src/${VERSION}/cmd/ -o ../app
 
 FROM ${IMAGE_NAME}
@@ -36,7 +36,7 @@ LABEL author="Artemij Belyakov"
 ARG STATUS=""
 ARG VERSION
 ARG USERNAME=dockeruser
-ARG US_DIR=/opt/placeholder_doc-base_db
+ARG US_DIR=/opt/placeholder_doc-basedb_bi.zone
 ENV GO_PHDOCBASEDB_MAIN=${STATUS}
 RUN addgroup --g 1500 groupcontainer && \
     adduser -u 1500 -G groupcontainer -D ${USERNAME} --home ${US_DIR}
