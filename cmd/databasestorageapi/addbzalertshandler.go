@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/documentgenerator"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/datamodels"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // addBiZoneAlerts добавление объекта типа 'alerts'

@@ -1,14 +1,14 @@
-module github.com/av-belyakov/placeholder-doc-basedb-bi-zone
+module github.com/isems-development/placeholder_doc-basedb_bi.zone
 
 go 1.24.4
 
 require (
-	github.com/av-belyakov/objectsthehiveformat v0.0.0-20250606102826-eb7e88c1d921
 	github.com/av-belyakov/simplelogger v0.0.0-20250225125610-1e1723ce15ea
 	github.com/av-belyakov/zabbixapicommunicator v0.0.0-20250618124251-10a4a23cd7ca
 	github.com/confluentinc/confluent-kafka-go v1.9.2
 	github.com/elastic/go-elasticsearch/v8 v8.18.0
 	github.com/go-playground/validator/v10 v10.26.0
+	github.com/goforj/godump v1.6.0
 	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/nats-io/nats.go v1.41.2
@@ -26,7 +26,6 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
-	github.com/goforj/godump v1.6.0 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/nats-io/nkeys v0.4.11 // indirect

@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supporting"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supporting"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 /*

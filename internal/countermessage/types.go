@@ -1,8 +1,8 @@
 package countermessage
 
 import (
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/informationcountingstorage"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/informationcountingstorage"
 )
 
 // CounterMessage счетчик сообщений

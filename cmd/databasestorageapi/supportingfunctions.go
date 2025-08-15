@@ -3,7 +3,7 @@ package databasestorageapi
 import (
 	"encoding/json"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/request"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/request"
 )
 
 // sendGeoIpRequest запрос для обогащения кейса дополнительной информацией о

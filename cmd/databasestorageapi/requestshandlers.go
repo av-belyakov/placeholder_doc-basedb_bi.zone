@@ -14,8 +14,8 @@ import (
 
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/datamodels"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // GetExistingIndexes проверка наличия индексов соответствующих определенному шаблону

@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // ******* Основная структура Alert ********

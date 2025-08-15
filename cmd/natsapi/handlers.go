@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/nats-io/nats.go"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // subscriptionHandler обработчик подписок

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // topicsHandler обработчик топиков (подписок)

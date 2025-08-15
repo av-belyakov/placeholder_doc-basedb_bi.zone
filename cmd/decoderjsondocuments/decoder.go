@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
 )
 
 func processingReflectAnySimpleType(chInput chan<- interfaces.CustomJsonDecoder, name any, anyType any, fieldBranch string) any {

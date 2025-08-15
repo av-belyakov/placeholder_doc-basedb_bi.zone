@@ -5,7 +5,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/av-belyakov/objectsthehiveformat/supportingfunctions"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // ************* Структура Data ************

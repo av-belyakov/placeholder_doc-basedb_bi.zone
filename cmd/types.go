@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/kafkaapi"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/natsapi"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/natsapi"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
 )
 
 // ApplicationRouter модуль маршрутизации

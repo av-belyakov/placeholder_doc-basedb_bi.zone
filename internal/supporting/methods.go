@@ -1,6 +1,6 @@
 package supporting
 
-import "github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+import "github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
 
 // *** для счётчика ***
 func (c *Counting) SendMessage(msg string, count int) {}

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
+	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
 )
 
 // *** для счётчика ***
