@@ -165,9 +165,19 @@ func (ai *AdditionalInformation) AddSensorInformation(v SensorInformation) {
 	}
 }
 
+// SetSensorInformation добавляет информацию о сенсорах
+func (ai *AdditionalInformation) SetSensorInformation(v []SensorInformation) {
+	ai.Sensors = append(ai.Sensors, v...)
+}
+
 // GetIpAddressesInformation объекты с информацией об ip адресах
 func (ai *AdditionalInformation) GetIpAddressesInformation() []IpAddressInformation {
 	return ai.IpAddresses
+}
+
+// SetIpAddressesInformation добавляет информацию об ip адресах
+func (ai *AdditionalInformation) SetIpAddressesInformation(v []IpAddressInformation) {
+	ai.IpAddresses = append(ai.IpAddresses, v...)
 }
 
 // GetIpAddrString ip адрес в виде строки

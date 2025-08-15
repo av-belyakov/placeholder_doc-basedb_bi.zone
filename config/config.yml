@@ -32,7 +32,7 @@ LOGGING:
     writingFile: true
     pathDirectory: logs
     maxFileSize: 10000000
-  - msgTypeName: case_raw_fields
+  - msgTypeName: soaralert_raw_fields
     writingDB: false
     writingStdout: false
     writingFile: true

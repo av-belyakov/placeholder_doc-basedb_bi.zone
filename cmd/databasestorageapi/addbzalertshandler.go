@@ -131,9 +131,9 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 
 	//устанавливаем максимальный лимит количества полей для всех индексов которые
 	//содержат значение по умолчанию в 1000 полей
-	if err := dbs.SetMaxTotalFieldsLimit(ctx, existingIndexes); err != nil {
-		dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
-	}
+	//if err := dbs.SetMaxTotalFieldsLimit(ctx, existingIndexes); err != nil {
+	//	dbs.logger.Send("error", supportingfunctions.CustomError(err).Error())
+	//}
 
 	//ищем объект с таким же идентификатором как и принятый в обработку объект
 	res, err := dbs.GetDocument(ctx, indexesOnlyCurrentYear, strings.NewReader(

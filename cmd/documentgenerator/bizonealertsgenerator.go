@@ -2,7 +2,6 @@ package documentgenerator
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/handlers"
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
@@ -95,38 +94,18 @@ func BiZoneAlertsGenerator(chInput <-chan interfaces.CustomJsonDecoder) (string,
 		}
 	}
 
-	//формируем дополнительную информацию со списком ip адресов
-	snapshots := verifiedMainObject.GetSnapshots()
-	for _, v := range snapshots {
-		if len(v.IPAddresses) > 0 {
-			for _, ip := range v.IPAddresses {
-				if strings.Contains(ip, "[.]") {
-					ip = strings.ReplaceAll(ip, "[.]", ".")
-				}
-
-				additionalInformation.AddIpAddressInformation(datamodels.IpAddressInformation{
-					Ip: ip,
-				})
-			}
-		}
-	}
-	additionalInformation.AddIpAddressInformation(datamodels.IpAddressInformation{
-		Ip: verifiedData.GetIPExter(),
-	})
-
-	// формируем дополнительную информацию с идентификаторами сенсоров
-	for _, sensor := range verifiedData.AllSensors {
-		additionalInformation.AddSensorInformation(datamodels.SensorInformation{
-			SensorId: fmt.Sprint(sensor),
-		})
-	}
-
-	verifiedMainObject.SetAdditionalInformation(additionalInformation)
-
 	//собираем все объекты в один
 	verifiedMainObject.SetData(*verifiedData.Get())
 	verifiedMainObject.SetTags(supportObjectTags.GetTags())
 	verifiedMainObject.SetSnapshots(supportObjectSnapshot.GetSnapshots())
+
+	// формируем дополнительную информацию с идентификаторами сенсоров
+	additionalInformation.SetSensorInformation(CreateListSensors(verifiedData).GetSensorsInformation())
+
+	// формируем дополнительную информацию с ip адресами
+	additionalInformation.SetIpAddressesInformation(CreateListIpAddreses(verifiedMainObject).GetIpAddressesInformation())
+
+	verifiedMainObject.SetAdditionalInformation(additionalInformation)
 
 	return verifiedMainObject.GetUUID(), verifiedMainObject, listRawFields
 }

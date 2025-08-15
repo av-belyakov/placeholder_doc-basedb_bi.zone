@@ -1,7 +1,9 @@
 package documentgenerator
 
 import (
+	"fmt"
 	"slices"
+	"strings"
 
 	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
@@ -38,6 +40,71 @@ func GetListSensorId(objects []datamodels.SensorInformation) []string {
 	}
 
 	return newList
+}
+
+// CreateListSensors список с идентификаторами сенсоров
+func CreateListSensors(verifiedData *datamodels.BiZoneData) *datamodels.AdditionalInformation {
+	information := &datamodels.AdditionalInformation{
+		Sensors: []datamodels.SensorInformation(nil),
+	}
+
+	//из свойства 'data.all_sensors'
+	for _, sensor := range verifiedData.AllSensors {
+		information.AddSensorInformation(datamodels.SensorInformation{
+			SensorId: fmt.Sprint(sensor),
+		})
+	}
+
+	//из свойства 'data.all__ip_home'
+	for _, ipHome := range verifiedData.AllIPHome {
+		tmp := strings.Split(ipHome, ":")
+		if len(tmp) == 0 {
+			continue
+		}
+
+		information.AddSensorInformation(datamodels.SensorInformation{SensorId: tmp[0]})
+
+	}
+
+	//из свойства 'data.sensor'
+	if verifiedData.Sensor != 0 {
+		information.AddSensorInformation(datamodels.SensorInformation{
+			SensorId: fmt.Sprint(verifiedData.Sensor),
+		})
+	}
+
+	return information
+}
+
+// CreateListIpAddreses список с ip адресами
+func CreateListIpAddreses(verifiedMainObject *datamodels.VerifiedBiZoneAlert) *datamodels.AdditionalInformation {
+	information := &datamodels.AdditionalInformation{
+		IpAddresses: []datamodels.IpAddressInformation(nil),
+	}
+
+	//из свойства 'snapshots'
+	for _, v := range verifiedMainObject.GetSnapshots() {
+		if len(v.IPAddresses) == 0 {
+			continue
+		}
+
+		for _, ip := range v.IPAddresses {
+			if strings.Contains(ip, "[.]") {
+				ip = strings.ReplaceAll(ip, "[.]", ".")
+			}
+
+			information.AddIpAddressInformation(datamodels.IpAddressInformation{
+				Ip: ip,
+			})
+		}
+	}
+
+	//из свойства 'data.ip_exter'
+	information.AddIpAddressInformation(datamodels.IpAddressInformation{
+		Ip: verifiedMainObject.GetData().GetIPExter(),
+	})
+
+	return information
 }
 
 /*

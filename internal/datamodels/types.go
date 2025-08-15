@@ -24,7 +24,7 @@ type AdditionalInformation struct {
 
 // AdditionalInformationSensors дополнительная информация добавляемая к информации по кейсам
 type AdditionalInformationSensors struct {
-	Sensors []SensorInformation `json:"@sensorAdditionalInformation"`
+	Sensors []SensorInformation `json:"@sensor_additional_information"`
 }
 
 // SensorInformation содержит дополнительную информацию о сенсоре
@@ -42,7 +42,7 @@ type SensorInformation struct {
 
 // AdditionalInformationIpAddress дополнительная информация добавляемая к информации по кейсам
 type AdditionalInformationIpAddress struct {
-	IpAddresses []IpAddressInformation `json:"@ipAddressAdditionalInformation"`
+	IpAddresses []IpAddressInformation `json:"@ip_address_additional_information"`
 }
 
 // IpAddressesInformation дополнительная информация об ip адресе
