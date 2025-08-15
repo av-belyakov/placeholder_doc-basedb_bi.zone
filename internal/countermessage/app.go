@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/informationcountingstorage"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/informationcountingstorage"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // New конструктор счетчика сообщений

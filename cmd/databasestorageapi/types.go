@@ -3,8 +3,8 @@ package databasestorageapi
 import (
 	"github.com/elastic/go-elasticsearch/v8"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
 )
 
 type DatabaseStorage struct {

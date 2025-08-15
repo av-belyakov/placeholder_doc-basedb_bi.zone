@@ -4,8 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/storagetemporary"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/storagetemporary"
 )
 
 type TestData struct {

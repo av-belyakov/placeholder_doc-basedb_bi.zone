@@ -3,7 +3,7 @@ package natsapi
 import (
 	"github.com/nats-io/nats.go"
 
-	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 )
 
 // apiNatsSettings настройки для API NATS
