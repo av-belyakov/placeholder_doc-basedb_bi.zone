@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
 
 // NewListBiZoneHandlerAlerts начальный обработчик событий топика 'alerts'

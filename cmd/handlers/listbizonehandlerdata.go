@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
+import "github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 
 // NewListBiZoneHandlerData начальный обработчик событий топика 'data.*'
 func NewListBiZoneHandlerData(data *datamodels.BiZoneData) map[string][]func(any) {

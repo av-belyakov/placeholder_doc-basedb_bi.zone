@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/decoderjsondocuments"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/natsapi"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/decoderjsondocuments"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/documentgenerator"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/natsapi"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 // NewRouter маршрутизатор сообщений внутри приложения

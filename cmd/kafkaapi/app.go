@@ -7,7 +7,7 @@ import (
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
 )
 
 // New настраивает модуль взаимодействия с API Kafka

@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
+import "github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 
 // NewListBiZoneHandlerTags обработчик для значений типа 'data.tags.*' основного объекта
 func NewListBiZoneHandlerTags(sst *datamodels.SupportingStructureForTags) map[string][]func(any) {

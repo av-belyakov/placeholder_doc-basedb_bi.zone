@@ -7,10 +7,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/constants"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/appname"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/appversion"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/confighandler"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/constants"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/appname"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/appversion"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/confighandler"
 )
 
 func getInformationMessage(conf *confighandler.Config) string {

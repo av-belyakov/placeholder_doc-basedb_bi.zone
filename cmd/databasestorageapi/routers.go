@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/supportingfunctions"
 )
 
 func (dbs *DatabaseStorage) router(ctx context.Context) {

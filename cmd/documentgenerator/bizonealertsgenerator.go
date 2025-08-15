@@ -3,9 +3,9 @@ package documentgenerator
 import (
 	"fmt"
 
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/handlers"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/cmd/handlers"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/interfaces"
+	"github.com/av-belyakov/placeholder-doc-basedb-bi-zone/internal/datamodels"
 )
 
 // BiZoneAlertsGenerator генерирует верифицированный объект типа 'alerts'.
