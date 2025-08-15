@@ -23,12 +23,10 @@ RUN echo -e "build_image" && \
     apk add --no-cache git && \
     # брать исходный код с репозитория на gitlab.cloud.gcm 
     #git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@gitlab.cloud.gcm/a.belyakov/placeholder_doc-basedb_bi.zone.git ./src/${VERSION}/ && \
-    #git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder-doc-basedb-bi-zone.git ./src/${VERSION}/ && \
-    git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder-doc-basedb-bi-zone.git ./src/${VERSION}/
-
-# брать исходный код с репозитория на github.com 
-#git clone -b ${BRANCH} https://github.com/av-belyakov/placeholder_doc-basedb_bi.zone.git  ./src/${VERSION}/ && \
-RUN go build -C ./src/${VERSION}/cmd/ -o ../app
+    git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder-doc-basedb-bi-zone.git ./src/${VERSION}/ && \
+    # брать исходный код с репозитория на github.com 
+    #git clone -b ${BRANCH} https://github.com/av-belyakov/placeholder_doc-basedb_bi.zone.git  ./src/${VERSION}/ && \
+    go build -C ./src/${VERSION}/cmd/ -o ../app
 
 FROM ${IMAGE_NAME}
 LABEL author="Artemij Belyakov"

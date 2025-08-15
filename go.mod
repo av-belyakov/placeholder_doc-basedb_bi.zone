@@ -1,4 +1,4 @@
-module github.com/av-belyakov/placeholder-doc-basedb-bi-zone
+module github.com/av-belyakov/placeholder_doc-basedb_bi.zone
 
 go 1.24.4
 
