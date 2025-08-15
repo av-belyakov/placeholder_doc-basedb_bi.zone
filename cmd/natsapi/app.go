@@ -48,7 +48,7 @@ func (api *apiNatsModule) Start(ctx context.Context) error {
 	nc, err := nats.Connect(
 		fmt.Sprintf("%s:%d", api.settings.host, api.settings.port),
 		//имя клиента
-		nats.Name(fmt.Sprintf("placeholder-doc-basedb-bi-zone.%s", api.settings.nameRegionalObject)),
+		nats.Name(fmt.Sprintf("placeholder_doc-basedb_bi.zone.%s", api.settings.nameRegionalObject)),
 		//неограниченное количество попыток переподключения
 		nats.MaxReconnects(-1),
 		//время ожидания до следующей попытки переподключения (по умолчанию 2 сек.)
