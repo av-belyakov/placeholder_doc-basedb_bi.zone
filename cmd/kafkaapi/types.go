@@ -1,7 +1,7 @@
 package kafkaapi
 
 import (
-	kaffka "github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 )
@@ -10,7 +10,7 @@ import (
 type kafkaApiModule struct {
 	counter      interfaces.Counter
 	logger       interfaces.Logger
-	consumer     *kaffka.Consumer
+	consumer     *kafka.Consumer
 	topics       map[string]string
 	settings     kafkaApiSettings
 	chFromModule chan SettingsChanOutput
