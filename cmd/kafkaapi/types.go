@@ -1,8 +1,9 @@
 package kafkaapi
 
 import (
+	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
+
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
-	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 // kafkaApiModule настройки для API Kafka
