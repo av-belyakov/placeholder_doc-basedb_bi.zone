@@ -13,7 +13,7 @@ import (
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/decoderjsondocuments"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/documentgenerator"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
+	kafkaapi "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supporting"
 )
 
