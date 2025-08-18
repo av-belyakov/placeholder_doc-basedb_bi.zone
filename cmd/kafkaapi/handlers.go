@@ -3,8 +3,6 @@ package kafkaapi
 import (
 	"context"
 	"fmt"
-
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // topicsHandler обработчик топиков (подписок)
@@ -20,23 +18,26 @@ func (api *kafkaApiModule) topicsHandler(ctx context.Context) {
 			return
 
 		default:
-			msg, err := api.consumer.ReadMessage(-1)
-			if err != nil {
-				api.logger.Send("error", supportingfunctions.CustomError(err).Error())
-			}
+			fmt.Println("Default msg")
+			/*
+				msg, err := api.consumer.ReadMessage(-1)
+				if err != nil {
+					api.logger.Send("error", supportingfunctions.CustomError(err).Error())
+				}
 
-			topic := msg.TopicPartition.Topic
+				topic := msg.TopicPartition.Topic
 
-			subjectType := "undefined_type"
-			topicKey, ok := supportingfunctions.SearchValue(api.topics, *topic)
-			if ok {
-				subjectType = topicKey
-			}
+				subjectType := "undefined_type"
+				topicKey, ok := supportingfunctions.SearchValue(api.topics, *topic)
+				if ok {
+					subjectType = topicKey
+				}
 
-			api.chFromModule <- SettingsChanOutput{
-				SubjectType: subjectType,
-				Data:        msg.Value,
-			}
+				api.chFromModule <- SettingsChanOutput{
+					SubjectType: subjectType,
+					Data:        msg.Value,
+				}
+			*/
 		}
 	}
 }
