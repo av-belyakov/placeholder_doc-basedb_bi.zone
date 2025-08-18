@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"maps"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	kafka "github.com/confluentinc/confluent-kafka-go/kafka"
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 )
