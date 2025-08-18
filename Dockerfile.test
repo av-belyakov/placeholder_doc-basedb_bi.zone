@@ -6,8 +6,7 @@ ENV PATH=/usr/local/go/bin:$PATH
 WORKDIR /go/src
 COPY go.mod go.sum ./
 RUN echo "packages_image" && \
-    go mod tidy
-#go mod download
+    go mod download
 
 FROM ${BUILD_IMAGE_NAME} AS build_image
 LABEL temporary=""
@@ -20,7 +19,7 @@ COPY --from=packages_image /go ./
 RUN echo -e "build_image" && \
     rm -r ./src && \
     apk update && \
-    apk add --no-cache git 
+    apk add --no-cache git
 #&& \
 # брать исходный код с репозитория на gitlab.cloud.gcm 
 #git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@gitlab.cloud.gcm/a.belyakov/placeholder_doc-basedb_bi.zone.git ./src/${VERSION}/ && \

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
-	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
+	kafkaapi "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/natsapi"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 )
