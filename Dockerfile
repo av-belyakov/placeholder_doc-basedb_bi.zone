@@ -7,7 +7,8 @@ ENV PATH=/usr/local/go/bin:$PATH
 WORKDIR /go/src
 COPY go.mod go.sum ./
 RUN echo "packages_image" && \
-    go mod download
+    go mod tidy
+#go mod download
 
 FROM ${BUILD_IMAGE_NAME} AS build_image
 LABEL temporary=""
