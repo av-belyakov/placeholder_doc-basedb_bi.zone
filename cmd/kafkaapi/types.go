@@ -1,4 +1,4 @@
-package kafkaapi
+package kafkaapimodule
 
 import (
 	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
