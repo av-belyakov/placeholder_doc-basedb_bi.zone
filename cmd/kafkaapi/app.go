@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"maps"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	kaffka "github.com/confluentinc/confluent-kafka-go/kafka"
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 )
@@ -39,7 +39,7 @@ func (api *kafkaApiModule) Start(ctx context.Context) error {
 		return ctx.Err()
 	}
 
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
+	consumer, err := kaffka.NewConsumer(&kaffka.ConfigMap{
 		"bootstrap.servers": fmt.Sprintf("%s:%d", api.settings.host, api.settings.port),
 		"group.id":          fmt.Sprintf("%s-group", api.settings.nameRegionalObject), // Идентификатор группы
 		"auto.offset.reset": "earliest",                                               // Читать с начала
