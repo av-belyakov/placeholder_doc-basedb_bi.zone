@@ -2,13 +2,14 @@ package kafkaapi
 
 import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 // kafkaApiModule настройки для API Kafka
 type kafkaApiModule struct {
-	counter interfaces.Counter
-	logger  interfaces.Logger
-	//	consumer     *kafka.Consumer
+	counter      interfaces.Counter
+	logger       interfaces.Logger
+	consumer     *kafka.Consumer
 	topics       map[string]string
 	settings     kafkaApiSettings
 	chFromModule chan SettingsChanOutput
