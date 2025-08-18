@@ -1,5 +1,5 @@
 
-ARG BUILD_IMAGE_NAME=golang:1.24.4-alpine
+ARG BUILD_IMAGE_NAME=golang:1.24.5-alpine
 ARG IMAGE_NAME=alpine
 
 FROM ${BUILD_IMAGE_NAME} AS packages_image
@@ -7,7 +7,8 @@ ENV PATH=/usr/local/go/bin:$PATH
 WORKDIR /go/src
 COPY go.mod go.sum ./
 RUN echo "packages_image" && \
-    go mod download
+    go mod tidy
+#go mod download
 
 FROM ${BUILD_IMAGE_NAME} AS build_image
 LABEL temporary=""
@@ -24,12 +25,13 @@ RUN echo -e "build_image" && \
 #&& \
 # брать исходный код с репозитория на gitlab.cloud.gcm 
 #git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@gitlab.cloud.gcm/a.belyakov/placeholder_doc-basedb_bi.zone.git ./src/${VERSION}/ && \
-RUN git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder-doc-basedb-bi-zone.git ./src/${VERSION}/ 
+##RUN git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder-doc-basedb-bi-zone.git ./src/${VERSION}/ 
 #&& \
 #RUN git clone -b ${BRANCH} http://${USERNAME}:${USERPASSWD}@192.168.9.33/a.belyakov/placeholder-doc-basedb-bi-zone.git ./src/${VERSION}/ 
 #&& \
 # брать исходный код с репозитория на github.com 
-#git clone -b ${BRANCH} https://github.com/av-belyakov/placeholder_doc-basedb_bi.zone.git  ./src/${VERSION}/ && \
+RUN git clone -b ${BRANCH} https://github.com/av-belyakov/placeholder_doc-basedb_bi.zone.git  ./src/${VERSION}/ 
+#&& \
 RUN go build -C ./src/${VERSION}/cmd/ -o ../app
 
 FROM ${IMAGE_NAME}
