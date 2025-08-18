@@ -2,10 +2,7 @@ package kafkaapi
 
 import (
 	"context"
-	"fmt"
 	"maps"
-
-	kafka "github.com/confluentinc/confluent-kafka-go/kafka"
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 )
@@ -39,19 +36,21 @@ func (api *kafkaApiModule) Start(ctx context.Context) error {
 		return ctx.Err()
 	}
 
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": fmt.Sprintf("%s:%d", api.settings.host, api.settings.port),
-		"group.id":          fmt.Sprintf("%s-group", api.settings.nameRegionalObject), // Идентификатор группы
-		"auto.offset.reset": "earliest",                                               // Читать с начала
-	})
-	if err != nil {
-		return err
-	}
-	api.consumer = consumer
+	/*
+		consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
+			"bootstrap.servers": fmt.Sprintf("%s:%d", api.settings.host, api.settings.port),
+			"group.id":          fmt.Sprintf("%s-group", api.settings.nameRegionalObject), // Идентификатор группы
+			"auto.offset.reset": "earliest",                                               // Читать с начала
+		})
+		if err != nil {
+			return err
+		}
+		api.consumer = consumer
 
-	context.AfterFunc(ctx, func() {
-		consumer.Close()
-	})
+		context.AfterFunc(ctx, func() {
+			consumer.Close()
+		})
+	*/
 
 	var topics []string
 	mapTopics := maps.Values(api.topics)
@@ -60,10 +59,10 @@ func (api *kafkaApiModule) Start(ctx context.Context) error {
 	}
 
 	// подписка на топик
-	err = consumer.SubscribeTopics(topics, nil)
-	if err != nil {
-		return err
-	}
+	//	err = consumer.SubscribeTopics(topics, nil)
+	//	if err != nil {
+	//		return err
+	//	}
 
 	//обработчик подписок
 	go api.topicsHandler(ctx)
