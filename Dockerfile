@@ -1,5 +1,5 @@
 
-ARG BUILD_IMAGE_NAME=golang:1.24.4-alpine
+ARG BUILD_IMAGE_NAME=golang:1.24.5-alpine
 ARG IMAGE_NAME=alpine
 
 FROM ${BUILD_IMAGE_NAME} AS packages_image
