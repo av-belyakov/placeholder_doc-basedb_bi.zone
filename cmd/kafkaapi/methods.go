@@ -1,4 +1,4 @@
-package kafkaapimodule
+package modulekafkaapi
 
 import "errors"
 
