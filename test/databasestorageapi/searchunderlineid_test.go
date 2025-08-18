@@ -12,11 +12,11 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/datamodels"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/test/helpers"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/test/helpers"
 )
 
 func TestSearchUnderlineId(t *testing.T) {

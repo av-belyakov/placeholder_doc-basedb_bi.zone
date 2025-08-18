@@ -8,7 +8,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/confighandler"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/confighandler"
 )
 
 const Root_Dir = "placeholder-doc-basedb-bi-zone"

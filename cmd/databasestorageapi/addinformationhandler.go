@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/datamodels"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/response"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/response"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // addGeoIPInformation дополнительная информация о географическом местоположении ip адресов

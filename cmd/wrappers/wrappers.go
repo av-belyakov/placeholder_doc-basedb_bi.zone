@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 	zabbixapicommunicator "github.com/av-belyakov/zabbixapicommunicator/cmd"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // WrappersZabbixInteraction обертка для взаимодействия с модулем zabbixapi

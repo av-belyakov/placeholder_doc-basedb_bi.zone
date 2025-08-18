@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 // ************* Структура BiZoneTag *************

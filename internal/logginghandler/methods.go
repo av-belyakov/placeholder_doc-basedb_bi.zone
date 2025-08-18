@@ -1,6 +1,6 @@
 package logginghandler
 
-import "github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
+import "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 
 func (l *LoggingChan) GetChan() <-chan interfaces.Messager {
 	return l.chanLogging

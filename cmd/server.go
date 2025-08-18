@@ -10,17 +10,17 @@ import (
 
 	"github.com/av-belyakov/simplelogger"
 
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/elasticsearchapi"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/natsapi"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/cmd/wrappers"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/constants"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/confighandler"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/countermessage"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/logginghandler"
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/elasticsearchapi"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/natsapi"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/wrappers"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/constants"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/confighandler"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/countermessage"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/logginghandler"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 func server(ctx context.Context) {

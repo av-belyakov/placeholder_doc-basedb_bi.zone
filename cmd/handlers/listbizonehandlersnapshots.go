@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/isems-development/placeholder_doc-basedb_bi.zone/internal/datamodels"
+import "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/datamodels"
 
 // NewListBiZoneHandlerSnapshots обработчик для значений типа 'data.snapshots.*' основного объекта
 func NewListBiZoneHandlerSnapshots(sst *datamodels.SupportingStructureForSnapshots) map[string][]func(any) {

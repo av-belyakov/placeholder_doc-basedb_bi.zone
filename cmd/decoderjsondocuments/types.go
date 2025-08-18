@@ -1,7 +1,7 @@
 package decoderjsondocuments
 
 import (
-	"github.com/isems-development/placeholder_doc-basedb_bi.zone/interfaces"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/interfaces"
 )
 
 type DecoderJsonDocuments struct {
