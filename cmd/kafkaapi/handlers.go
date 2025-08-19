@@ -1,4 +1,4 @@
-package modulekafkaapi
+package kafkaapi
 
 import (
 	"context"
