@@ -19,7 +19,7 @@ ENV CGO_ENABLED=1
 WORKDIR /go/
 COPY --from=packages_image /go ./
 # устанавливаем дополнительные пакеты, в том числе и те, которые нужны для
-# сборки librdkafka, пакет confluent-kafka-go всего лишь обёртка для librdkafka
+#сборки librdkafka, пакет confluent-kafka-go всего лишь обёртка для librdkafka
 RUN echo -e "build_image" && \
     rm -r ./src && \
     apk update && \
@@ -47,9 +47,9 @@ ARG VERSION
 ARG USERNAME=dockeruser
 ARG US_DIR=/opt/placeholder-doc-basedb-bi-zone
 ARG GROUP_ID=1500
-ENV GO_PHDOCBASEDB_MAIN=${STATUS}
+ENV GO_PHDOCBASEDBBZ_MAIN=${STATUS}
 # устанавливаем дополнительные пакеты, в том числе и те, которые нужны для
-# сборки librdkafka, пакет confluent-kafka-go всего лишь обёртка для librdkafka
+#сборки librdkafka, пакет confluent-kafka-go всего лишь обёртка для librdkafka
 RUN apk update && \
     apk add --no-cache g++ make bash git openssl-dev musl-dev pkgconf zlib-dev
 # собираем и устанавливаем librdkafka из исходников
