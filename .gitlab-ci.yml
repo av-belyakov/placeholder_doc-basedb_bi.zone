@@ -114,7 +114,7 @@ deploy-test:
   script:
     - *docker-login
     - docker-compose -f $CI_PROJECT_DIR/docker-compose.test.yml down
-    - docker rmi gitlab.cloud.gcm:5050/a.belyakov/placeholder_doc-basedb_bi.zone:test || true
+    - docker rmi gitlab.cloud.gcm:5050/a.belyakov/placeholder-doc-basedb-bi-zone:test || true
     - docker-compose -f $CI_PROJECT_DIR/docker-compose.test.yml up -d --force-recreate --build
 
 # развёртывание основной сборки (GCM)
@@ -131,5 +131,5 @@ deploy-prod-gcm:
   script:
     - *docker-login
     - docker-compose -f $CI_PROJECT_DIR/docker-compose.yml down
-    - docker rmi gitlab.cloud.gcm:5050/a.belyakov/placeholder_doc-basedb_bi.zone:latest || true
+    - docker rmi gitlab.cloud.gcm:5050/a.belyakov/placeholder-doc-basedb-bi-zone:latest || true
     - docker-compose -f $CI_PROJECT_DIR/docker-compose.yml up -d --force-recreate --build
