@@ -6,7 +6,7 @@ services:
     environment:
       - GO_PHDOCBASEDBBZ_DBWLOGPASSWD=$DEV_PHDOCBASEDBBZ_DBWLOGPASSWD
       - GO_PHDOCBASEDBBZ_DBSTORAGEPASSWD=$DEV_PHDOCBASEDBBZ_DBSTORAGEPASSWD
-    image: gitlab.cloud.gcm:5050/a.belyakov/placeholder_doc-basedb_bi.zone:test
+    image: gitlab.cloud.gcm:5050/a.belyakov/placeholder-doc-basedb-bi-zone:test
     restart: unless-stopped
     #пробрасываем user ID для корректной записи в логов
     user: root
