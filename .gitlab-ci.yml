@@ -110,7 +110,7 @@ deploy-test:
     - *readme-no-commit
     - *dev-test-commit
   before_script:
-    - echo "Start deploy placeholder_doc-basedb_bi.zone application for GCM.test"
+    - echo "Start deploy placeholder-doc-basedb-bi-zone application for GCM.test"
   script:
     - *docker-login
     - docker-compose -f $CI_PROJECT_DIR/docker-compose.test.yml down
@@ -127,7 +127,7 @@ deploy-prod-gcm:
       when: manual
       allow_failure: true
   before_script:
-    - echo "Start deploy placeholder_doc-basedb_bi.zone application for GCM"
+    - echo "Start deploy placeholder-doc-basedb-bi-zone application for GCM"
   script:
     - *docker-login
     - docker-compose -f $CI_PROJECT_DIR/docker-compose.yml down
