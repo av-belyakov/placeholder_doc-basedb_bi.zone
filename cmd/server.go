@@ -12,7 +12,7 @@ import (
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/databasestorageapi"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/elasticsearchapi"
-	modulekafkaapi "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/kafkaapi"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/natsapi"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/cmd/wrappers"
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/constants"
@@ -113,14 +113,14 @@ func server(ctx context.Context) {
 	// ************ инициализация модуля взаимодействия с Kafka *************
 	// в данном случае это основной источник получения информации о КА/КИ
 	confKafka := conf.Kafka
-	apiKafka, err := modulekafkaapi.New(
+	apiKafka, err := kafkaapi.New(
 		counting,
 		logging,
-		modulekafkaapi.WithNameRegionalObject(conf.Common.RegionalObject),
-		modulekafkaapi.WithHost(confKafka.Host),
-		modulekafkaapi.WithPort(confKafka.Port),
-		modulekafkaapi.WithCacheTTL(confKafka.CacheTTL),
-		modulekafkaapi.WithTopicsSubscription(confKafka.Topics),
+		kafkaapi.WithNameRegionalObject(conf.Common.RegionalObject),
+		kafkaapi.WithHost(confKafka.Host),
+		kafkaapi.WithPort(confKafka.Port),
+		kafkaapi.WithCacheTTL(confKafka.CacheTTL),
+		kafkaapi.WithTopicsSubscription(confKafka.Topics),
 	)
 	if err != nil {
 		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
