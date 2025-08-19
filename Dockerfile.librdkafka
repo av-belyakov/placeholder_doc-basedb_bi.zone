@@ -45,7 +45,7 @@ LABEL author="Artemij Belyakov"
 ARG STATUS=""
 ARG VERSION
 ARG USERNAME=dockeruser
-ARG US_DIR=/opt/placeholder_doc-basedb_bi.zone
+ARG US_DIR=/opt/placeholder-doc-basedb-bi-zone
 ARG GROUP_ID=1500
 ENV GO_PHDOCBASEDB_MAIN=${STATUS}
 # устанавливаем дополнительные пакеты, в том числе и те, которые нужны для
