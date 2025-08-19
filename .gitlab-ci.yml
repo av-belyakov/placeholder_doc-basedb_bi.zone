@@ -6,38 +6,52 @@ stages:
   - build
   - deploy
 
-# сборка, это на моем ПК
+# сборка (на моем ПК)
 .build-runner-tags: &build-tags
   tags:
     - placeholder_doc-basedb_bi.zone.build
 
-# разворачивает тестовую сборку
+# развёртывание тестовой сборки
 .deploy-test-runner-tags: &deploy-test-tags
   tags:
     - placeholder_doc-basedb_bi.zone.test
 
-# разворачивает продуктовую сборку
+# развёртывание продуктовой сборки
 .deploy-prod-runner-tags: &deploy-prod-tags
   tags:
     - placeholder_doc-basedb_bi.zone.prod
 
+# авторизация
 .docker-login-script: &docker-login
   - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
 
+# удаление промежуточных образов с меткой 'temporary'
 .docker-image-prune: &docker-image-pure
   - docker image prune -a --force --filter="label=temporary"
 
+# не выполнять если изменился один из ниже следующих файлов
 .change-readme-never-commit: &readme-no-commit
   - if: $CI_COMMIT_BRANCH == $BRANCH_MAJOR || $CI_COMMIT_BRANCH == $BRANCH_TEST
     changes:
       - README.md
     when: never
 
+# не выполнять если изменился один из ниже следующих файлов
 .change-docker-compose-never-commit: &docker-compose-no-commit
   - if: $CI_COMMIT_BRANCH == $BRANCH_MAJOR || $CI_COMMIT_BRANCH == $BRANCH_TEST
     changes:
       - docker-compose.yml
       - docker-compose.test.yml
+    when: never
+
+# не выполнять если изменился один из ниже следующих файлов
+.change-configs-never-commit: &configs-no-commit
+  - if: $CI_COMMIT_BRANCH == $BRANCH_MAJOR || $CI_COMMIT_BRANCH == $BRANCH_TEST
+    changes:
+      - config.yml
+      - config_dev.yml
+      - config_test.yml
+      - config_prod.yml
     when: never
 
 .is-branch-dev-test-commit: &dev-test-commit
@@ -46,7 +60,7 @@ stages:
 .is-branch-master-commit: &master-commit
   - if: $CI_COMMIT_BRANCH == $BRANCH_MAJOR || $CI_COMMIT_REF_NAME == $BRANCH_MAJOR
 
-# выводим версию приложения
+# версия приложения
 get_version:
   stage: .pre
   <<: *deploy-prod-tags

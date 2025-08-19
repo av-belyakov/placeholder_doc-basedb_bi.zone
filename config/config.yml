@@ -88,4 +88,4 @@ ZABBIX:
         message: "0"
 PROFILING:
   host:
-  port: 6162
+  port: 6163
