@@ -19,7 +19,7 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/test/helpers"
 )
 
-func TestKafkaProducer(t *testing.T) {
+func TestKafkaProducerFile(t *testing.T) {
 	var (
 		id                 string
 		fb                 []byte

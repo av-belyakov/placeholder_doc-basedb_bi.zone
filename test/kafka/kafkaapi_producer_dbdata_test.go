@@ -1,4 +1,4 @@
-package databasestorageapi_test
+package kafka
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 
@@ -19,24 +20,28 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/test/helpers"
 )
 
-func TestGetIndexBiZoneVerifiedAlerts(t *testing.T) {
-	const Search_UUID = "eb62b40e-067a-4261-824f-56c3ff280db3"
-
+func TestProducerDBData(t *testing.T) {
 	var (
-		indexes []string = []string{"module_placeholderdb_bizone_alerts_2025_8"}
-		apiDBS  *databasestorageapi.DatabaseStorage
+		topic         string   = "object.topicalerttype.test"
+		outputIndexes []string = []string{"module_placeholderdb_bizone_alerts_2025_8"}
+
+		producer *kafka.Producer
+		apiDBS   *databasestorageapi.DatabaseStorage
+		response databasestorageapi.ResponseVerifiedBiZoneAlerts
+		alerts   []databasestorageapi.PatternVerifiedBiZoneAlert
 
 		err error
 	)
 
 	//загружаем ключи и пароли
-	if err := godotenv.Load(".env"); err != nil {
+	if err = godotenv.Load("./../databasestorageapi/.env"); err != nil {
 		t.Log(err)
 	}
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill, syscall.SIGINT)
 	t.Cleanup(func() {
 		stop()
+		producer.Close()
 	})
 
 	go func() {
@@ -45,6 +50,7 @@ func TestGetIndexBiZoneVerifiedAlerts(t *testing.T) {
 		fmt.Println("placeholder_doc-basedb-bi-zone module is Stop")
 
 		stop()
+		producer.Close()
 	}()
 
 	logging := helpers.NewLogging()
@@ -92,36 +98,13 @@ func TestGetIndexBiZoneVerifiedAlerts(t *testing.T) {
 		apiDBS.Start(ctx)
 	})
 
-	t.Run("Тест 2. Получить документ", func(t *testing.T) {
-		//ищем объект с таким же идентификатором как и принятый в обработку объект
-		res, err := apiDBS.GetDocument(
-			ctx,
-			indexes,
-			strings.NewReader(
-				fmt.Sprintf(
-					`{
-						"query": {
-							"bool": {
-								"must": [{"match": {"uuid": "%s"}}]}}}`,
-					Search_UUID,
-				)),
-			0)
-		assert.NoError(t, err)
-
-		//обрабатываем принятую от базы данных информацию
-		response := databasestorageapi.ResponseVerifiedBiZoneAlerts{}
-		err = json.Unmarshal(res, &response)
-		assert.NoError(t, err)
-		assert.Equal(t, response.Options.Hits[0].Source.UUID, Search_UUID)
-	})
-
-	t.Run("Тест 3. Получить некоторое количество документов", func(t *testing.T) {
+	t.Run("Тест 2. Получение некоторого количества документов из БД", func(t *testing.T) {
 		fmt.Println("\nFound documents:")
 
 		for num := range 3 {
 			res, err := apiDBS.GetDocument(
 				ctx,
-				indexes,
+				outputIndexes,
 				strings.NewReader(`{ "query": { "match_all": {} } }`),
 				num)
 			assert.NoError(t, err)
@@ -130,13 +113,53 @@ func TestGetIndexBiZoneVerifiedAlerts(t *testing.T) {
 			//fmt.Println(string(res))
 
 			//обрабатываем принятую от базы данных информацию
-			response := databasestorageapi.ResponseVerifiedBiZoneAlerts{}
 			err = json.Unmarshal(res, &response)
 			assert.NoError(t, err)
 
 			for k, v := range response.Options.Hits {
-				fmt.Printf("%d.%d. UUID:%s\n", num, k, v.Source.UUID)
+				fmt.Printf("%d.%d. UUID:%s\n", num, k, v.Source.Get().GetUUID())
+
+				alerts = append(alerts, v)
 			}
 		}
+	})
+
+	t.Run("Тест 3. Передача некоторого количества документов в kafka", func(t *testing.T) {
+		producer, err = kafka.NewProducer(&kafka.ConfigMap{
+			"bootstrap.servers": "localhost",
+			"group.id":          fmt.Sprintf("%s-group", "GCM-test"),
+		})
+		assert.NoError(t, err)
+
+		// информационное сообщение о доставки
+		go func() {
+			for e := range producer.Events() {
+				switch ev := e.(type) {
+				case *kafka.Message:
+					if ev.TopicPartition.Error != nil {
+						fmt.Printf("Delivery failed: %v\n", ev.TopicPartition)
+					} else {
+						fmt.Printf("Delivered message to %v\n", ev.TopicPartition)
+					}
+				}
+			}
+		}()
+
+		fmt.Println("\nThe beginning of data transmission")
+		for k, v := range alerts {
+			fmt.Printf("%d. UUID:%s\n", k, v.Source.Get().GetUUID())
+
+			b, err := json.Marshal(v.Source.Get())
+			assert.NoError(t, err)
+
+			producer.Produce(&kafka.Message{
+				TopicPartition: kafka.TopicPartition{
+					Topic:     &topic,
+					Partition: kafka.PartitionAny,
+				},
+				Value: b,
+			}, nil)
+		}
+		producer.Flush(15 * 1000)
 	})
 }
