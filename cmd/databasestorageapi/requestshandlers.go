@@ -29,7 +29,7 @@ func (dbs *DatabaseStorage) GetExistingIndexes(ctx context.Context, pattern stri
 		Index string `json:"index"`
 	}(nil)
 
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 	defer ctxCancel()
 
 	res, err := dbs.client.Cat.Indices(
@@ -138,13 +138,15 @@ func (dbs *DatabaseStorage) DelIndexSetting(ctx context.Context, indexes []strin
 }
 
 // GetDocument выполняет запросы по поиску документа
-func (dbs *DatabaseStorage) GetDocument(ctx context.Context, indexes []string, query *strings.Reader) ([]byte, error) {
+func (dbs *DatabaseStorage) GetDocument(ctx context.Context, indexes []string, query *strings.Reader, offset int) ([]byte, error) {
 	var res []byte
 
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 	defer ctxCancel()
 
 	response, err := dbs.client.Search(
+		dbs.client.Search.WithSize(dbs.settings.maxGetDocumentsSize),
+		dbs.client.Search.WithFrom(offset),
 		dbs.client.Search.WithContext(ctxTimeout),
 		dbs.client.Search.WithIndex(indexes...),
 		dbs.client.Search.WithBody(query),
@@ -180,7 +182,7 @@ func (dbs *DatabaseStorage) InsertDocument(ctx context.Context, index string, b 
 		return res.StatusCode, err
 	}
 
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 	defer ctxCancel()
 
 	result, err := supportingfunctions.GetElementsFromJSON(ctxTimeout, bodyRes)
@@ -209,7 +211,7 @@ func (dbs *DatabaseStorage) UpdateDocument(ctx context.Context, currentIndex str
 		countDel++
 	}
 
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 	defer ctxCancel()
 
 	statusCode, err = dbs.InsertDocument(ctxTimeout, currentIndex, document)
@@ -229,7 +231,7 @@ func (dbs *DatabaseStorage) SetMaxTotalFieldsLimit(ctx context.Context, indexes 
 	}
 
 	getIndexLimit := func(ctx context.Context, indexName string) (string, bool, error) {
-		ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+		ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 		defer ctxCancel()
 
 		indexSettings, err := dbs.GetIndexSetting(ctxTimeout, indexName)
@@ -263,7 +265,7 @@ func (dbs *DatabaseStorage) SetMaxTotalFieldsLimit(ctx context.Context, indexes 
 		return errList
 	}
 
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*15)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 	defer ctxCancel()
 
 	var query string = `{
@@ -286,7 +288,7 @@ func (dbs *DatabaseStorage) SetMaxTotalFieldsLimit(ctx context.Context, indexes 
 
 // GetUnderlineId поиск объекта по его '@special_uuid'
 func (dbs *DatabaseStorage) GetUnderlineId(ctx context.Context, indexName, specialUuid string) (string, error) {
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*5)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 	defer ctxCancel()
 
 	query := strings.NewReader(fmt.Sprintf("{\"query\": {\"bool\": {\"must\": [{\"match\": {\"@special_uuid\": \"%s\"}}]}}}", specialUuid))
@@ -324,7 +326,7 @@ func (dbs *DatabaseStorage) GetUnderlineId(ctx context.Context, indexName, speci
 // SearchGeoIPInformation поиск объекта по его '@special_uuid'
 // возвращает _id объекта под которым он находится в БД и объект типа []IpAddressInformation
 func (dbs *DatabaseStorage) SearchGeoIPInformation(ctx context.Context, indexName, specialUuid string) (string, []datamodels.IpAddressInformation, error) {
-	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*5)
+	ctxTimeout, ctxCancel := context.WithTimeout(ctx, time.Second*60)
 	defer ctxCancel()
 
 	geoIpInformation := make([]datamodels.IpAddressInformation, 0)

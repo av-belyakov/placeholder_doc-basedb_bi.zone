@@ -171,7 +171,8 @@ func server(ctx context.Context) {
 		databasestorageapi.WithNameDB(confStorageDB.NameDB),
 		databasestorageapi.WithUser(confStorageDB.User),
 		databasestorageapi.WithPasswd(confStorageDB.Passwd),
-		databasestorageapi.WithStorage(confStorageDB.Storage))
+		databasestorageapi.WithStorage(confStorageDB.Storage),
+		databasestorageapi.WithMaxGetDocumentSize(15))
 	if err != nil {
 		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
 

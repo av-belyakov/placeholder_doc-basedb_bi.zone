@@ -17,12 +17,13 @@ type DatabaseStorage struct {
 }
 
 type settingsDatabaseStorage struct {
-	storages map[string]string
-	namedb   string
-	user     string
-	passwd   string
-	host     string
-	port     int
+	storages            map[string]string //хранилища (в elasticsearch - индексы)
+	namedb              string            //наименование базы данных
+	user                string            //имя пользователя для аутентификации
+	passwd              string            //пароль для авторизации
+	host                string            //ip адрес или доменное имя
+	port                int               //сетевой порт
+	maxGetDocumentsSize int               //максимальное количество запрашиваемых документов
 }
 
 // SettingsChanInput параметры канала для передачи данных в модуль

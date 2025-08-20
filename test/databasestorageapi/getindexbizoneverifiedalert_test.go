@@ -99,15 +99,44 @@ func TestGetIndexBiZoneVerifiedAlerts(t *testing.T) {
 			Indexes,
 			strings.NewReader(
 				fmt.Sprintf(
-					"{\"query\": {\"bool\": {\"must\": [{\"match\": {\"uuid\": \"%s\"}}]}}}",
-					Search_UUID)))
+					`{
+						"query": {
+							"bool": {
+								"must": [{"match": {"uuid": "%s"}}]}}}`,
+					Search_UUID,
+				)),
+			0)
 		assert.NoError(t, err)
 
 		//обрабатываем принятую от базы данных информацию
 		response := databasestorageapi.ResponseVerifiedBiZoneAlerts{}
 		err = json.Unmarshal(res, &response)
 		assert.NoError(t, err)
+		assert.Equal(t, response.Options.Hits[0].Source.UUID, Search_UUID)
+	})
 
-		t.Logf("\nResult:'%#v'\n", response)
+	t.Run("Тест 3. Получить все документы", func(t *testing.T) {
+		fmt.Println("\nFound documents:")
+
+		for num := range 3 {
+			res, err := apiDBS.GetDocument(
+				ctx,
+				Indexes,
+				strings.NewReader(`{ "query": { "match_all": {} } }`),
+				num)
+			assert.NoError(t, err)
+
+			//fmt.Println("---------------------------------------")
+			//fmt.Println(string(res))
+
+			//обрабатываем принятую от базы данных информацию
+			response := databasestorageapi.ResponseVerifiedBiZoneAlerts{}
+			err = json.Unmarshal(res, &response)
+			assert.NoError(t, err)
+
+			for k, v := range response.Options.Hits {
+				fmt.Printf("%d.%d. UUID:%s\n", num, k, v.Source.UUID)
+			}
+		}
 	})
 }

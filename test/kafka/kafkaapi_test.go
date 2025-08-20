@@ -15,53 +15,6 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
-/*
-// *** для счётчика ***
-type Counting struct{}
-
-func (c *Counting) SendMessage(msg string, count int) {}
-
-// *** для сообщений ***
-type Message struct {
-	Type, Message string
-}
-
-func (m *Message) GetType() string {
-	return m.Type
-}
-
-func (m *Message) SetType(v string) {
-	m.Type = v
-}
-
-func (m *Message) GetMessage() string {
-	return m.Message
-}
-
-func (m *Message) SetMessage(v string) {
-	m.Message = v
-}
-
-// *** для логирования ***
-type Logging struct {
-	ch chan interfaces.Messager
-}
-
-func NewLogging() *Logging {
-	return &Logging{
-		ch: make(chan interfaces.Messager),
-	}
-}
-
-func (l *Logging) GetChan() <-chan interfaces.Messager {
-	return l.ch
-}
-
-func (l *Logging) Send(msgType, msgData string) {
-	l.ch <- &Message{Type: msgType, Message: msgData}
-}
-*/
-
 func TestKafkaApi(t *testing.T) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill, syscall.SIGINT)
 

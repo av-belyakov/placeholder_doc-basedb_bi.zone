@@ -20,6 +20,9 @@ func New(counter interfaces.Counter, logger interfaces.Logger, opts ...DatabaseS
 		logger:   logger,
 		chInput:  make(chan SettingsChanInput),
 		chOutput: make(chan SettingsChanOutput),
+		settings: settingsDatabaseStorage{
+			maxGetDocumentsSize: 10,
+		},
 	}
 
 	for _, opt := range opts {

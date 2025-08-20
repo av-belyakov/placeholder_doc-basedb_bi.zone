@@ -93,3 +93,12 @@ func WithStorage(v map[string]string) DatabaseStorageOptions {
 		return nil
 	}
 }
+
+// WithMaxGetDocumentSize максимальное количество запрашиваемых документов (по умолчанию 10)
+func WithMaxGetDocumentSize(v int) DatabaseStorageOptions {
+	return func(dbs *DatabaseStorage) error {
+		dbs.settings.maxGetDocumentsSize = v
+
+		return nil
+	}
+}

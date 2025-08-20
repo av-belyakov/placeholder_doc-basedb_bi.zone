@@ -48,7 +48,6 @@ func (api *kafkaApiModule) Start(ctx context.Context) error {
 		return err
 	}
 	api.consumer = consumer
-
 	context.AfterFunc(ctx, func() {
 		consumer.Close()
 	})
@@ -60,7 +59,7 @@ func (api *kafkaApiModule) Start(ctx context.Context) error {
 	}
 
 	// подписка на топик
-	err = consumer.SubscribeTopics(topics, nil)
+	err = api.consumer.SubscribeTopics(topics, nil)
 	if err != nil {
 		return err
 	}

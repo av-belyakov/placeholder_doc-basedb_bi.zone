@@ -20,14 +20,14 @@ KAFKA:
 DATABASESTORAGE:
   host: 192.168.9.208
   port: 9200
-  user: placeholder-docbasedb-bizone
+  user: placeholder-docbase-db
   namedb: ""
   storage_name_db:
-    alerts: module_placeholderdb_bizone_alerts
-    soar-alerts: module_placeholderdb_bizone_soar-alerts
+    alerts: module_placeholderdb_bizone_alerts.test
+    soar-alerts: module_placeholderdb_bizone_soar-alerts.test
 DATABASEWRITELOG:
   host: 192.168.9.208
   port: 9200
-  user: placeholder-docbasedb-bizone
+  user: placeholder-docbase-db
   namedb: ""
-  storage_name_db: placeholder_docbasedb-bizone
+  storage_name_db: placeholder_doc-base-db
