@@ -60,10 +60,10 @@ func (api *kafkaApiModule) Start(ctx context.Context) error {
 	}
 
 	// подписка на топик
-	//	err = consumer.SubscribeTopics(topics, nil)
-	//	if err != nil {
-	//		return err
-	//	}
+	err = consumer.SubscribeTopics(topics, nil)
+	if err != nil {
+		return err
+	}
 
 	//обработчик подписок
 	go api.topicsHandler(ctx)

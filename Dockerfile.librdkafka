@@ -25,7 +25,7 @@ RUN echo -e "build_image" && \
     apk update && \
     apk add --no-cache g++ make bash git openssl-dev musl-dev pkgconf zlib-dev
 # собираем и устанавливаем librdkafka из исходников
-RUN git clone --depth 1 --branch v2.2.0 https://github.com/edenhill/librdkafka.git && \
+RUN git clone --depth 1 --branch v2.11.1 https://github.com/edenhill/librdkafka.git && \
     cd librdkafka && \
     ./configure --install-deps && \
     make -j$(nproc) && \
