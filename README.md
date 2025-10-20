@@ -1,5 +1,8 @@
 # Placeholder_doc_basedb-bi-zone
 
+[![Go Version](https://img.shields.io/badge/Go-1.24.5+-00ADD8?style=flat&logo=go)](https://golang.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat&logo=docker)](https://www.docker.com/)
+
 Сервис 'placeholder_doc_basedbbi-zone' принимает сообщения, структурированные в формате JSON, поступающие от IRP BI.ZONE, через брокер сообщений Kafka. Разбирает их и укладывает в документо-ориентированную базу данных.
 
 ## Конфигурационные настройки
