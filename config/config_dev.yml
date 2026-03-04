@@ -13,7 +13,7 @@ NATS:
 KAFKA:
   host: 192.168.9.71
   port: 31792
-  cache_ttl: 3600
+  cache_ttl: 3601
   topics:
     alerts: alertmgr-alerts
     soar-alerts: soar-alertmgr-alerts-default-topic
