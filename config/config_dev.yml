@@ -30,4 +30,4 @@ DATABASEWRITELOG:
   port: 9200
   user: placeholder-docbase-db
   namedb: ""
-  storage_name_db: placeholder_doc-base-db
+  storage_name_db: module_placeholderdb_bizone
