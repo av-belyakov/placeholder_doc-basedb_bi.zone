@@ -11,9 +11,9 @@ services:
     #пробрасываем user ID для корректной записи в логов
     user: root
     command: chmod 777 /opt/placeholder-doc-basedb-bi-zone/logs && \
-             chown 1500:1500 /opt/placeholder-doc-basedb-bi-zone/logs
+      chown 1500:1500 /opt/placeholder-doc-basedb-bi-zone/logs
     volumes:
-      - /var/log/placeholder-doc-basedb-bi-zone.prod:/opt/placeholder-doc-basedb-bi-zone.zone/logs:rw
+      - /var/log/placeholder-doc-basedb-bi-zone.prod:/opt/placeholder-doc-basedb-bi-zone/logs:rw
       - ./config:/opt/placeholder-doc-basedb-bi-zone/config:rw
       #выполняем для корректного отображения даты с учетом временной зоны
       - /etc/timezone:/etc/timezone:ro
