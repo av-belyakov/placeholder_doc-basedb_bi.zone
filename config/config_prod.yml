@@ -30,4 +30,4 @@ DATABASEWRITELOG: # хранилище логов работы модуля
   port: 9200
   user: log_writer
   namedb: ""
-  storage_name_db: placeholder_doc-base-db
+  storage_name_db: module_placeholderdb_bizone
