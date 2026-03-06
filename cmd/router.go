@@ -80,7 +80,7 @@ func (r *ApplicationRouter) Router(ctx context.Context) {
 						}
 					}()
 
-				case "soar-alerts":
+				case "case":
 					// *************
 					// Здесь нужны разные обработчики
 					// *************

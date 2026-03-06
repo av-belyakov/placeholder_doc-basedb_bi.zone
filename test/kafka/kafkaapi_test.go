@@ -61,8 +61,8 @@ func TestKafkaApi(t *testing.T) {
 		kafkaapi.WithHost("192.168.9.71"),
 		kafkaapi.WithPort(31792),
 		kafkaapi.WithTopicsSubscription(map[string]string{
-			"alerts":      "alertmgr-alerts",
-			"soar-alerts": "soar-alertmgr-alerts-default-topic",
+			"alerts": "alertmgr-alerts",
+			"case":   "socd-soar-prod-issue-v1",
 		}),
 		kafkaapi.WithCacheTTL(3600),
 	)

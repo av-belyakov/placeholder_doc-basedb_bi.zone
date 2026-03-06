@@ -1,6 +1,6 @@
 package datamodels
 
-// VerifiedBiZoneAlert основная структура
+// VerifiedBiZoneAlert основная структура объекта Alert
 type VerifiedBiZoneAlert struct {
 	AdditionalInformation
 	Snapshots          []BiZoneSnapshot `json:"snapshots"`
@@ -46,7 +46,109 @@ type BiZoneData struct {
 	ResponseTeam uint64   `json:"response_team"`
 }
 
-type verifiedTags []*BiZoneTag
+// VerifiedIRPBiZoneCase основная структура объекта Case
+type VerifiedIRPBiZoneCase struct {
+	GossopkaErrors            map[string]any       `json:"gossopka_errors,omitzero"` // пока тип в мапе не ясен
+	ObservedIocs              []BiZoneObservedIocs `json:"observed_iocs"`
+	SecondaryCategoryRef      []BiZoneTypeRef      `json:"secondary_category_ref"`
+	ActivityDetected          []any                `json:"activity_detected,omitzero"` // пока тип в срезе не ясен
+	Attachments               []any                `json:"attachments,omitzero"`       // пока тип в срезе не ясен
+	Badges                    []any                `json:"badges,omitzero"`            // пока тип в срезе не ясен
+	Emls                      []any                `json:"emls,omitzero"`              // пока тип в срезе не ясен
+	Slas                      []any                `json:"slas,omitzero"`              // пока тип в срезе не ясен
+	Tags                      []any                `json:"tags,omitzero"`              // пока тип в срезе не ясен
+	KeyField                  []any                `json:"keyfield,omitzero"`          // пока тип в срезе не ясен
+	MITRECOV                  BiZoneMITRECOV       `json:"mitre_cov"`
+	DetectionRules            []string             `json:"detection_rules"`
+	SecondaryCategory         []string             `json:"secondary_category"`
+	PlatformHostname          []string             `json:"platform_hostname"`
+	WatchersId                []uint64             `json:"watchers_id"`
+	Assignee                  any                  `json:"assignee,omitzero"` // пока тип не ясен
+	AssigneeDisplayName       any                  `json:"assignee_displayName,omitzero"`
+	Service                   any                  `json:"service,omitzero"`                      // пока тип не ясен
+	ResolutionDate            any                  `json:"resolutiondate,omitzero"`               // пока тип не ясен
+	ResolutionName            any                  `json:"resolution_name,omitzero"`              // пока тип не ясен
+	ResolutionNameRef         any                  `json:"resolution_name_ref,omitzero"`          // пока тип не ясен
+	GossopkaId                any                  `json:"gossopka_id,omitzero"`                  // пока тип не ясен
+	GossopkaSendTime          any                  `json:"gossopka_send_time,omitzero"`           // пока тип не ясен (возможно время)
+	GtiId                     any                  `json:"gti_id,omitzero"`                       // пока тип не ясен
+	GtiSendTime               any                  `json:"gti_send_time,omitzero"`                // пока тип не ясен (возможно время)
+	CustomerStarRating        any                  `json:"customer_star_rating,omitzero"`         // пока тип не ясен
+	FirstSentNotificationTime any                  `json:"first_sent_notification_time,omitzero"` // пока тип не ясен (возможно время)
+	ResponseTeam              any                  `json:"response_team,omitzero"`                // пока тип не ясен
+	GossopkaKeyLink           any                  `json:"gossopka_key_link,omitzero"`            // пока тип не ясен
+	IssueTypeRef              BiZoneTypeRef        `json:"issue_type_ref"`
+	PrimaryCategoryRef        BiZoneTypeRef        `json:"primary_category_ref"`
+	AttackType                string               `json:"attack_type"`
+	Created                   string               `json:"created"` // дата нужно сделать формат RFC3339
+	CreatorDisplayName        string               `json:"creator_displayName"`
+	DetectionDate             string               `json:"detection_date"` // дата нужно сделать формат RFC3339
+	Key                       string               `json:"key"`
+	IssueType                 string               `json:"issue_type"`
+	Priority                  string               `json:"priority"`
+	Summary                   string               `json:"summary"`
+	Description               string               `json:"description"`
+	RenderedDescription       string               `json:"rendered_description"`
+	Status                    string               `json:"status"`
+	StatusDescription         string               `json:"status_description"`
+	ReporterDisplayName       string               `json:"reporter_displayName"`
+	ReporterEmailAddress      string               `json:"reporter_emailAddress"`
+	PrimaryCategory           string               `json:"primary_category"`
+	Updated                   string               `json:"updated"`   // дата нужно сделать формат RFC3339
+	Timestamp                 string               `json:"timestamp"` // дата нужно сделать формат RFC3339
+	ResolutionDetailed        string               `json:"resolution_detailed"`
+	PlatformURL               string               `json:"platform_url"`
+	CustomerStarRatingComment string               `json:"customer_star_rating_comment"`
+	Recommendations           string               `json:"recommendations"`
+	ParsedActivityDetected    string               `json:"parsed_activity_detected"` // пока тип в срезе не ясен
+	AffectedService           string               `json:"affected_service"`
+	FakeAsPath                string               `json:"fake_as_path"`
+	FakePrefix                string               `json:"fake_prefix"`
+	FpType                    string               `json:"fp_type"`
+	LookingGlass              string               `json:"looking_glass"`
+	SpamRecipients            string               `json:"spam_recipients"`
+	TLP                       string               `json:"tlp"`
+	UsualPrefix               string               `json:"usual_prefix"`
+	UsualAsPath               string               `json:"usual_as_path"`
+	Source                    string               `json:"source"`
+	ExternalId                string               `json:"external_id"`
+	UnderliningSource         string               `json:"_source"`
+	UpdatedAll                string               `json:"updated_all"` // дата нужно сделать формат RFC3339
+	GossopkaKey               string               `json:"gossopka_key"`
+	Watchers                  BiZoneWatcher        `json:"watchers"`
+	ID                        uint64               `json:"id"`
+	System                    uint64               `json:"system"`
+	CancelGossopkaSendButton  bool                 `json:"cancel_gossopka_send_button"`
+	IsVisibleForCustomer      bool                 `json:"is_visible_for_customer"`
+	ShowGossopkaButton        bool                 `json:"show_gossopka_button"`
+	ShowGtiButton             bool                 `json:"show_gti_button"`
+}
+
+type BiZoneTypeRef struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+}
+
+type BiZoneObservedIocs struct {
+	Category []string `json:"category"`
+	IocType  string   `json:"ioc_type"`
+	Ioc      string   `json:"ioc"`
+}
+
+type BiZoneMITRECOV struct {
+	Persistence []string `json:"persistence"`
+}
+
+type BiZoneWatcher struct {
+	ID         string `json:"id"`
+	Username   string `json:"username"`
+	FirstName  string `json:"first_name"`
+	LastName   string `json:"last_name"`
+	Email      string `json:"email"`
+	Patronimic string `json:"patronimic"`
+	IsActive   bool   `json:"is_active"`
+}
 
 // BiZoneTag структура для тегов
 type BiZoneTag struct {
@@ -58,8 +160,6 @@ type BiZoneTag struct {
 		ID       uint64 `json:"id"`
 	} `json:"created_by"`
 }
-
-type verifiedSnapshots []*BiZoneSnapshot
 
 // BiZoneSnapshot структура для снимков
 type BiZoneSnapshot struct {
