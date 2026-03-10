@@ -274,28 +274,12 @@ func (d *BiZoneData) SetSnortSid(sid uint64) {
 
 // SetAnySnortSid записывает значение в список SnortSid
 func (d *BiZoneData) SetAnySnortSid(a any) {
-	var sid uint64
-	if d.SnortSid == nil {
-		d.SnortSid = []uint64(nil)
+	v, err := supportingfunctions.GetUint64(a)
+	if err != nil {
+		return
 	}
 
-	if v, ok := a.(int); ok {
-		sid = uint64(v)
-	}
-
-	if v, ok := a.(float32); ok {
-		sid = uint64(v)
-	}
-
-	if v, ok := a.(float64); ok {
-		sid = uint64(v)
-	}
-
-	if v, ok := a.(uint64); ok {
-		sid = v
-	}
-
-	d.SetSnortSid(sid)
+	d.SetSnortSid(v)
 }
 
 // GetAllSensors для поля AllSensors
@@ -323,28 +307,12 @@ func (d *BiZoneData) SetAllSensor(sensor uint64) {
 
 // SetAnyAllSensor записывает значение в список AllSensors
 func (d *BiZoneData) SetAnyAllSensor(a any) {
-	var sensor uint64
-	if d.AllSensors == nil {
-		d.AllSensors = []uint64(nil)
+	v, err := supportingfunctions.GetUint64(a)
+	if err != nil {
+		return
 	}
 
-	if v, ok := a.(int); ok {
-		sensor = uint64(v)
-	}
-
-	if v, ok := a.(float32); ok {
-		sensor = uint64(v)
-	}
-
-	if v, ok := a.(float64); ok {
-		sensor = uint64(v)
-	}
-
-	if v, ok := a.(uint64); ok {
-		sensor = v
-	}
-
-	d.SetAllSensor(sensor)
+	d.SetAllSensor(v)
 }
 
 // GetAllIPHomes для поля AllIPHome

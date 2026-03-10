@@ -5,6 +5,7 @@ go 1.24.5
 require (
 	github.com/av-belyakov/simplelogger v0.0.0-20250708122117-e5df57013a70
 	github.com/av-belyakov/zabbixapicommunicator v0.0.0-20250618124251-10a4a23cd7ca
+	github.com/brianvoe/gofakeit/v7 v7.14.1
 	github.com/confluentinc/confluent-kafka-go/v2 v2.11.1
 	github.com/elastic/go-elasticsearch/v8 v8.19.0
 	github.com/go-playground/validator/v10 v10.27.0

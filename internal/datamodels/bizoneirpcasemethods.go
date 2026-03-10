@@ -4,7 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+	"strings"
 	"time"
+
+	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
 func NewBiZoneIRPCase() *VerifiedIRPBiZoneCase {
@@ -61,15 +64,15 @@ func (vc *VerifiedIRPBiZoneCase) GetObservedIocs() []BiZoneObservedIocs {
 }
 
 // SetObservedIocs список наблюдаемых IOC
-func (vc *VerifiedIRPBiZoneCase) SetObservedIocs(iocs []BiZoneObservedIocs) {
-	vc.ObservedIocs = iocs
+func (vc *VerifiedIRPBiZoneCase) SetObservedIocs(list []BiZoneObservedIocs) {
+	vc.ObservedIocs = list
 }
 
 // AddObservedIocs добавить значение в список наблюдаемых IOC
-func (vc *VerifiedIRPBiZoneCase) AddObservedIocs(iocs BiZoneObservedIocs) {
+func (vc *VerifiedIRPBiZoneCase) AddObservedIocs(v BiZoneObservedIocs) {
 	vc.GetObservedIocs()
 
-	vc.ObservedIocs = append(vc.ObservedIocs, iocs)
+	vc.ObservedIocs = append(vc.ObservedIocs, v)
 }
 
 // GetSecondaryCategoryRef список ссылок на категории
@@ -82,15 +85,29 @@ func (vc *VerifiedIRPBiZoneCase) GetSecondaryCategoryRef() []BiZoneTypeRef {
 }
 
 // SetSecondaryCategoryRef список ссылок на категории
-func (vc *VerifiedIRPBiZoneCase) SetSecondaryCategoryRef(refs []BiZoneTypeRef) {
-	vc.SecondaryCategoryRef = refs
+func (vc *VerifiedIRPBiZoneCase) SetSecondaryCategoryRef(list []BiZoneTypeRef) {
+	vc.SecondaryCategoryRef = list
+}
+
+// GetWatchers список наблюдателей
+func (vc *VerifiedIRPBiZoneCase) GetWatchers() []BiZoneWatcher {
+	if vc.Watchers == nil {
+		vc.Watchers = make([]BiZoneWatcher, 0)
+	}
+
+	return vc.Watchers
+}
+
+// SetWatchers список наблюдателей
+func (vc *VerifiedIRPBiZoneCase) SetWatchers(list []BiZoneWatcher) {
+	vc.Watchers = list
 }
 
 // AddSecondaryCategoryRef добавляет ссылку в список категорий
-func (vc *VerifiedIRPBiZoneCase) AddSecondaryCategoryRef(ref BiZoneTypeRef) {
+func (vc *VerifiedIRPBiZoneCase) AddSecondaryCategoryRef(v BiZoneTypeRef) {
 	vc.GetSecondaryCategoryRef()
 
-	vc.SecondaryCategoryRef = append(vc.SecondaryCategoryRef, ref)
+	vc.SecondaryCategoryRef = append(vc.SecondaryCategoryRef, v)
 }
 
 // GetActivityDetected список обнаруженной активности
@@ -103,15 +120,15 @@ func (vc *VerifiedIRPBiZoneCase) GetActivityDetected() []any {
 }
 
 // SetActivityDetected список обнаруженной активности
-func (vc *VerifiedIRPBiZoneCase) SetActivityDetected(detected []any) {
-	vc.ActivityDetected = detected
+func (vc *VerifiedIRPBiZoneCase) SetActivityDetected(list []any) {
+	vc.ActivityDetected = list
 }
 
 // AddActivityDetected обнаруженная активность
-func (vc *VerifiedIRPBiZoneCase) AddActivityDetected(detected any) {
+func (vc *VerifiedIRPBiZoneCase) AddActivityDetected(a any) {
 	vc.GetActivityDetected()
 
-	vc.ActivityDetected = append(vc.ActivityDetected, detected)
+	vc.ActivityDetected = append(vc.ActivityDetected, a)
 }
 
 // GetAttachments список связий
@@ -124,15 +141,15 @@ func (vc *VerifiedIRPBiZoneCase) GetAttachments() []any {
 }
 
 // SetAttachments список связей
-func (vc *VerifiedIRPBiZoneCase) SetAttachments(attachments []any) {
-	vc.Attachments = attachments
+func (vc *VerifiedIRPBiZoneCase) SetAttachments(list []any) {
+	vc.Attachments = list
 }
 
 // AddAttachments связи
-func (vc *VerifiedIRPBiZoneCase) AddAttachments(attachment any) {
+func (vc *VerifiedIRPBiZoneCase) AddAttachments(v any) {
 	vc.GetAttachments()
 
-	vc.Attachments = append(vc.Attachments, attachment)
+	vc.Attachments = append(vc.Attachments, v)
 }
 
 // GetBadges значки
@@ -145,15 +162,15 @@ func (vc *VerifiedIRPBiZoneCase) GetBadges() []interface{} {
 }
 
 // SetBadges значки
-func (vc *VerifiedIRPBiZoneCase) SetBadges(badges []interface{}) {
-	vc.Badges = badges
+func (vc *VerifiedIRPBiZoneCase) SetBadges(list []interface{}) {
+	vc.Badges = list
 }
 
 // AddBadges значок
-func (vc *VerifiedIRPBiZoneCase) AddBadges(badge any) {
+func (vc *VerifiedIRPBiZoneCase) AddBadges(v any) {
 	vc.GetBadges()
 
-	vc.Badges = append(vc.Badges, badge)
+	vc.Badges = append(vc.Badges, v)
 }
 
 // GetEmls
@@ -166,15 +183,15 @@ func (vc *VerifiedIRPBiZoneCase) GetEmls() []interface{} {
 }
 
 // SetEmls
-func (vc *VerifiedIRPBiZoneCase) SetEmls(emls []interface{}) {
-	vc.Emls = emls
+func (vc *VerifiedIRPBiZoneCase) SetEmls(list []interface{}) {
+	vc.Emls = list
 }
 
 // AddEmls
-func (vc *VerifiedIRPBiZoneCase) AddEmls(emls any) {
+func (vc *VerifiedIRPBiZoneCase) AddEmls(a any) {
 	vc.GetEmls()
 
-	vc.Emls = append(vc.Emls, emls)
+	vc.Emls = append(vc.Emls, a)
 }
 
 // GetSlas
@@ -187,15 +204,15 @@ func (vc *VerifiedIRPBiZoneCase) GetSlas() []interface{} {
 }
 
 // SetSlas
-func (vc *VerifiedIRPBiZoneCase) SetSlas(slas []interface{}) {
-	vc.Slas = slas
+func (vc *VerifiedIRPBiZoneCase) SetSlas(list []interface{}) {
+	vc.Slas = list
 }
 
 // AddSlas
-func (vc *VerifiedIRPBiZoneCase) AddSlas(slas any) {
+func (vc *VerifiedIRPBiZoneCase) AddSlas(a any) {
 	vc.GetSlas()
 
-	vc.Slas = append(vc.Slas, slas)
+	vc.Slas = append(vc.Slas, a)
 }
 
 // GetTags теги
@@ -208,15 +225,15 @@ func (vc *VerifiedIRPBiZoneCase) GetTags() []interface{} {
 }
 
 // SetTags теги
-func (vc *VerifiedIRPBiZoneCase) SetTags(tags []interface{}) {
-	vc.Tags = tags
+func (vc *VerifiedIRPBiZoneCase) SetTags(list []interface{}) {
+	vc.Tags = list
 }
 
 // AddTags теги
-func (vc *VerifiedIRPBiZoneCase) AddTags(tags any) {
+func (vc *VerifiedIRPBiZoneCase) AddTags(a any) {
 	vc.GetTags()
 
-	vc.Tags = append(vc.Tags, tags)
+	vc.Tags = append(vc.Tags, a)
 }
 
 // GetKeyField ключевые поля
@@ -229,15 +246,15 @@ func (vc *VerifiedIRPBiZoneCase) GetKeyField() []interface{} {
 }
 
 // SetKeyField ключевые поля
-func (vc *VerifiedIRPBiZoneCase) SetKeyField(keyField []interface{}) {
-	vc.KeyField = keyField
+func (vc *VerifiedIRPBiZoneCase) SetKeyField(list []interface{}) {
+	vc.KeyField = list
 }
 
 // AddKeyField ключевые поля
-func (vc *VerifiedIRPBiZoneCase) AddKeyField(keyField any) {
+func (vc *VerifiedIRPBiZoneCase) AddKeyField(a any) {
 	vc.GetKeyField()
 
-	vc.KeyField = append(vc.KeyField, keyField)
+	vc.KeyField = append(vc.KeyField, a)
 }
 
 // GetMITRECOV
@@ -250,8 +267,8 @@ func (vc *VerifiedIRPBiZoneCase) GetMITRECOV() BiZoneMITRECOV {
 }
 
 // SetMITRECOV
-func (vc *VerifiedIRPBiZoneCase) SetMITRECOV(mitreconv BiZoneMITRECOV) {
-	vc.MITRECOV = mitreconv
+func (vc *VerifiedIRPBiZoneCase) SetMITRECOV(v BiZoneMITRECOV) {
+	vc.MITRECOV = v
 }
 
 // GetDetectionRules правила обнаружения
@@ -264,19 +281,19 @@ func (vc *VerifiedIRPBiZoneCase) GetDetectionRules() []string {
 }
 
 // SetDetectionRules правила обнаружения
-func (vc *VerifiedIRPBiZoneCase) SetDetectionRules(rules []string) {
-	vc.DetectionRules = rules
+func (vc *VerifiedIRPBiZoneCase) SetDetectionRules(list []string) {
+	vc.DetectionRules = list
 }
 
 // AddDetectionRules добавляет правило в список
-func (vc *VerifiedIRPBiZoneCase) AddDetectionRules(detectionRule string) {
+func (vc *VerifiedIRPBiZoneCase) AddDetectionRules(v string) {
 	vc.GetDetectionRules()
 
-	if slices.Contains(vc.DetectionRules, detectionRule) {
+	if slices.Contains(vc.DetectionRules, v) {
 		return
 	}
 
-	vc.DetectionRules = append(vc.DetectionRules, detectionRule)
+	vc.DetectionRules = append(vc.DetectionRules, v)
 }
 
 // AddAnyDetectionRule добавляет правило в список
@@ -294,19 +311,19 @@ func (vc *VerifiedIRPBiZoneCase) GetSecondaryCategory() []string {
 }
 
 // SetSecondaryCategories список вторичных категорий
-func (vc *VerifiedIRPBiZoneCase) SetSecondaryCategories(categories []string) {
-	vc.SecondaryCategory = categories
+func (vc *VerifiedIRPBiZoneCase) SetSecondaryCategories(list []string) {
+	vc.SecondaryCategory = list
 }
 
 // AddSecondaryCategory добавляет значение в список вторичных категорий
-func (vc *VerifiedIRPBiZoneCase) AddSecondaryCategory(category string) {
+func (vc *VerifiedIRPBiZoneCase) AddSecondaryCategory(v string) {
 	vc.GetSecondaryCategory()
 
-	if slices.Contains(vc.SecondaryCategory, category) {
+	if slices.Contains(vc.SecondaryCategory, v) {
 		return
 	}
 
-	vc.SecondaryCategory = append(vc.SecondaryCategory, category)
+	vc.SecondaryCategory = append(vc.SecondaryCategory, v)
 }
 
 // AddAnySecondaryCategory добавляет значение в список вторичных категорий
@@ -324,19 +341,19 @@ func (vc *VerifiedIRPBiZoneCase) GetPlatformHostname() []string {
 }
 
 // SetPlatformHostname список с наименованиями платформы
-func (vc *VerifiedIRPBiZoneCase) SetPlatformHostname(rules []string) {
-	vc.PlatformHostname = rules
+func (vc *VerifiedIRPBiZoneCase) SetPlatformHostname(list []string) {
+	vc.PlatformHostname = list
 }
 
 // AddPlatformHostname добавляетнаименование платформы в список
-func (vc *VerifiedIRPBiZoneCase) AddPlatformHostname(phn string) {
+func (vc *VerifiedIRPBiZoneCase) AddPlatformHostname(v string) {
 	vc.GetPlatformHostname()
 
-	if slices.Contains(vc.PlatformHostname, phn) {
+	if slices.Contains(vc.PlatformHostname, v) {
 		return
 	}
 
-	vc.PlatformHostname = append(vc.PlatformHostname, phn)
+	vc.PlatformHostname = append(vc.PlatformHostname, v)
 }
 
 // AddAnyPlatformHostname добавляетнаименование платформы в список
@@ -354,19 +371,19 @@ func (vc *VerifiedIRPBiZoneCase) GetWatchersId() []uint64 {
 }
 
 // SetWatchersId список идентификаторов наблюдения
-func (vc *VerifiedIRPBiZoneCase) SetWatchersId(id []uint64) {
-	vc.WatchersId = id
+func (vc *VerifiedIRPBiZoneCase) SetWatchersId(list []uint64) {
+	vc.WatchersId = list
 }
 
 // AddWatchersId добавить идентификатор в список идентификаторов наблюдения
-func (vc *VerifiedIRPBiZoneCase) AddWatchersId(id uint64) {
+func (vc *VerifiedIRPBiZoneCase) AddWatchersId(v uint64) {
 	vc.GetWatchersId()
 
-	if slices.Contains(vc.WatchersId, id) {
+	if slices.Contains(vc.WatchersId, v) {
 		return
 	}
 
-	vc.WatchersId = append(vc.WatchersId, id)
+	vc.WatchersId = append(vc.WatchersId, v)
 }
 
 // AddAnyPlatformHostname добавляетнаименование платформы в список
@@ -535,8 +552,8 @@ func (vc *VerifiedIRPBiZoneCase) GetIssueTypeRef() BiZoneTypeRef {
 }
 
 // SetIssueTypeRef ссылка на тип проблеммы
-func (vc *VerifiedIRPBiZoneCase) SetIssueTypeRef(ref BiZoneTypeRef) {
-	vc.IssueTypeRef = ref
+func (vc *VerifiedIRPBiZoneCase) SetIssueTypeRef(v BiZoneTypeRef) {
+	vc.IssueTypeRef = v
 }
 
 // GetPrimaryCategoryRef ссылка на первичную категорию
@@ -545,8 +562,8 @@ func (vc *VerifiedIRPBiZoneCase) GetPrimaryCategoryRef() BiZoneTypeRef {
 }
 
 // SetPrimaryCategoryRef ссылка на первичную категорию
-func (vc *VerifiedIRPBiZoneCase) SetPrimaryCategoryRef(ref BiZoneTypeRef) {
-	vc.PrimaryCategoryRef = ref
+func (vc *VerifiedIRPBiZoneCase) SetPrimaryCategoryRef(v BiZoneTypeRef) {
+	vc.PrimaryCategoryRef = v
 }
 
 // GetAttackType тип атаки
@@ -555,8 +572,8 @@ func (vc *VerifiedIRPBiZoneCase) GetAttackType() string {
 }
 
 // SetAttackType тип атаки
-func (vc *VerifiedIRPBiZoneCase) SetAttackType(at string) {
-	vc.AttackType = at
+func (vc *VerifiedIRPBiZoneCase) SetAttackType(v string) {
+	vc.AttackType = v
 }
 
 // SetAnyAttackType тип атаки
@@ -570,8 +587,8 @@ func (vc *VerifiedIRPBiZoneCase) GetCreated() string {
 }
 
 // SetCreated время создания (формат времени RFC3339)
-func (vc *VerifiedIRPBiZoneCase) SetCreated(str string) error {
-	t, err := time.Parse(time.RFC3339, str)
+func (vc *VerifiedIRPBiZoneCase) SetCreated(v string) error {
+	t, err := time.Parse(time.RFC3339, v)
 	if err != nil {
 		return err
 	}
@@ -596,8 +613,8 @@ func (vc *VerifiedIRPBiZoneCase) GetCreatorDisplayName() string {
 }
 
 // SetCreatorDisplayName имя создающего дисплей
-func (vc *VerifiedIRPBiZoneCase) SetCreatorDisplayName(cdn string) {
-	vc.CreatorDisplayName = cdn
+func (vc *VerifiedIRPBiZoneCase) SetCreatorDisplayName(v string) {
+	vc.CreatorDisplayName = v
 }
 
 // SetAnyCreatorDisplayName имя создающего дисплей
@@ -611,8 +628,8 @@ func (vc *VerifiedIRPBiZoneCase) GetDetectionDate() string {
 }
 
 // SetDetectionDate дата обнаружения (формат времени RFC3339)
-func (vc *VerifiedIRPBiZoneCase) SetDetectionDate(str string) error {
-	t, err := time.Parse(time.RFC3339, str)
+func (vc *VerifiedIRPBiZoneCase) SetDetectionDate(v string) error {
+	t, err := time.Parse(time.RFC3339, v)
 	if err != nil {
 		return err
 	}
@@ -637,8 +654,8 @@ func (vc *VerifiedIRPBiZoneCase) GetKey() string {
 }
 
 // SetKey ключ
-func (vc *VerifiedIRPBiZoneCase) SetKey(key string) {
-	vc.SetKey(key)
+func (vc *VerifiedIRPBiZoneCase) SetKey(v string) {
+	vc.SetKey(v)
 }
 
 // SetAnyKey ключ
@@ -652,8 +669,8 @@ func (vc *VerifiedIRPBiZoneCase) GetIssueType() string {
 }
 
 // SetIssueType тип проблемы
-func (vc *VerifiedIRPBiZoneCase) SetIssueType(it string) {
-	vc.SetIssueType(it)
+func (vc *VerifiedIRPBiZoneCase) SetIssueType(v string) {
+	vc.SetIssueType(v)
 }
 
 // SetAnyIssueType тип проблемы
@@ -667,8 +684,8 @@ func (vc *VerifiedIRPBiZoneCase) GetPriority() string {
 }
 
 // SetPriority приоритет
-func (vc *VerifiedIRPBiZoneCase) SetPriority(p string) {
-	vc.Priority = p
+func (vc *VerifiedIRPBiZoneCase) SetPriority(v string) {
+	vc.Priority = v
 }
 
 // SetAnyPriority приоритет
@@ -682,8 +699,8 @@ func (vc *VerifiedIRPBiZoneCase) GetSummary() string {
 }
 
 // SetSummary резюме
-func (vc *VerifiedIRPBiZoneCase) SetSummary(sum string) {
-	vc.Summary = sum
+func (vc *VerifiedIRPBiZoneCase) SetSummary(v string) {
+	vc.Summary = v
 }
 
 // SetAnySummary резюме
@@ -697,8 +714,8 @@ func (vc *VerifiedIRPBiZoneCase) GetDescription() string {
 }
 
 // SetDescription описание
-func (vc *VerifiedIRPBiZoneCase) SetDescription(d string) {
-	vc.Description = d
+func (vc *VerifiedIRPBiZoneCase) SetDescription(v string) {
+	vc.Description = v
 }
 
 // SetAnyDescription описание
@@ -712,8 +729,8 @@ func (vc *VerifiedIRPBiZoneCase) GetRenderedDescription() string {
 }
 
 // SetRenderedDescription отрисованое описание
-func (vc *VerifiedIRPBiZoneCase) SetRenderedDescription(rd string) {
-	vc.RenderedDescription = rd
+func (vc *VerifiedIRPBiZoneCase) SetRenderedDescription(v string) {
+	vc.RenderedDescription = v
 }
 
 // SetAnyRenderedDescription отрисованое описание
@@ -727,8 +744,8 @@ func (vc *VerifiedIRPBiZoneCase) GetStatus() string {
 }
 
 // SetStatus статус
-func (vc *VerifiedIRPBiZoneCase) SetStatus(s string) {
-	vc.Status = s
+func (vc *VerifiedIRPBiZoneCase) SetStatus(v string) {
+	vc.Status = v
 }
 
 // SetAnyStatus статус
@@ -742,8 +759,8 @@ func (vc *VerifiedIRPBiZoneCase) GetStatusDescription() string {
 }
 
 // SetStatusDescription описание статуса
-func (vc *VerifiedIRPBiZoneCase) SetStatusDescription(sd string) {
-	vc.StatusDescription = sd
+func (vc *VerifiedIRPBiZoneCase) SetStatusDescription(v string) {
+	vc.StatusDescription = v
 }
 
 // SetAnyStatusDescription описание статуса
@@ -757,8 +774,8 @@ func (vc *VerifiedIRPBiZoneCase) GetReporterDisplayName() string {
 }
 
 // SetReporterDisplayName нименование докладчика
-func (vc *VerifiedIRPBiZoneCase) SetReporterDisplayName(rdn string) {
-	vc.ReporterDisplayName = rdn
+func (vc *VerifiedIRPBiZoneCase) SetReporterDisplayName(v string) {
+	vc.ReporterDisplayName = v
 }
 
 // SetAnyReporterDisplayName нименование докладчика
@@ -772,8 +789,8 @@ func (vc *VerifiedIRPBiZoneCase) GetReporterEmailAddress() string {
 }
 
 // SetReporterEmailAddress email адрес докладчика
-func (vc *VerifiedIRPBiZoneCase) SetReporterEmailAddress(re string) {
-	vc.ReporterEmailAddress = re
+func (vc *VerifiedIRPBiZoneCase) SetReporterEmailAddress(v string) {
+	vc.ReporterEmailAddress = v
 }
 
 // SetAnyReporterEmailAddress email адрес докладчика
@@ -787,8 +804,8 @@ func (vc *VerifiedIRPBiZoneCase) GetPrimaryCategory() string {
 }
 
 // SetPrimaryCategory первичная категория
-func (vc *VerifiedIRPBiZoneCase) SetPrimaryCategory(pc string) {
-	vc.PrimaryCategory = pc
+func (vc *VerifiedIRPBiZoneCase) SetPrimaryCategory(v string) {
+	vc.PrimaryCategory = v
 }
 
 // SetAnyPrimaryCategory первичная категория
@@ -802,8 +819,8 @@ func (vc *VerifiedIRPBiZoneCase) GetUpdated() string {
 }
 
 // SetUpdated время обновления (формат времени RFC3339)
-func (vc *VerifiedIRPBiZoneCase) SetUpdated(str string) error {
-	t, err := time.Parse(time.RFC3339, str)
+func (vc *VerifiedIRPBiZoneCase) SetUpdated(v string) error {
+	t, err := time.Parse(time.RFC3339, v)
 	if err != nil {
 		return err
 	}
@@ -828,8 +845,8 @@ func (vc *VerifiedIRPBiZoneCase) GetTimestamp() string {
 }
 
 // SetTimestamp временная метка (формат времени RFC3339)
-func (vc *VerifiedIRPBiZoneCase) SetTimestamp(str string) error {
-	t, err := time.Parse(time.RFC3339, str)
+func (vc *VerifiedIRPBiZoneCase) SetTimestamp(v string) error {
+	t, err := time.Parse(time.RFC3339, v)
 	if err != nil {
 		return err
 	}
@@ -854,13 +871,13 @@ func (vc *VerifiedIRPBiZoneCase) GetResolutionDetailed() string {
 }
 
 // SetResolutionDetailed подробная информация о разрешении
-func (vc *VerifiedIRPBiZoneCase) SetResolutionDetailed(rd string) {
-	vc.ResolutionDetailed = rd
+func (vc *VerifiedIRPBiZoneCase) SetResolutionDetailed(v string) {
+	vc.ResolutionDetailed = v
 }
 
 // SetAnyResolutionDetailed подробная информация о разрешении
-func (vc *VerifiedIRPBiZoneCase) SetAnyResolutionDetailed(rd string) {
-	vc.SetResolutionDetailed(rd)
+func (vc *VerifiedIRPBiZoneCase) SetAnyResolutionDetailed(a any) {
+	vc.SetResolutionDetailed(fmt.Sprint(a))
 }
 
 // GetPlatformURL
@@ -869,114 +886,477 @@ func (vc *VerifiedIRPBiZoneCase) GetPlatformURL() string {
 }
 
 // SetPlatformURL
-func (vc *VerifiedIRPBiZoneCase) SetPlatformURL(purl string) {
-	vc.PlatformURL = purl
+func (vc *VerifiedIRPBiZoneCase) SetPlatformURL(v string) {
+	vc.PlatformURL = v
 }
 
 // SetAnyPlatformURL
-func (vc *VerifiedIRPBiZoneCase) SetAnyPlatformURL(purl string) {
-	vc.SetPlatformURL(purl)
+func (vc *VerifiedIRPBiZoneCase) SetAnyPlatformURL(a any) {
+	vc.SetPlatformURL(fmt.Sprint(a))
 }
 
+// GetCustomerStarRatingComment комментарий к звездному рейтингу клиента
 func (vc *VerifiedIRPBiZoneCase) GetCustomerStarRatingComment() string {
-	return vc.customerStarRatingComment
+	return vc.CustomerStarRatingComment
 }
 
+// SetCustomerStarRatingComment комментарий к звездному рейтингу клиента
+func (vc *VerifiedIRPBiZoneCase) SetCustomerStarRatingComment(v string) {
+	vc.CustomerStarRatingComment = v
+}
+
+// SetAnyCustomerStarRatingComment комментарий к звездному рейтингу клиента
+func (vc *VerifiedIRPBiZoneCase) SetAnyCustomerStarRatingComment(a any) {
+	vc.SetCustomerStarRatingComment(fmt.Sprint(a))
+}
+
+// GetRecommendations рекомендации
 func (vc *VerifiedIRPBiZoneCase) GetRecommendations() string {
-	return vc.recommendations
+	return vc.Recommendations
 }
 
+// SetRecommendations рекомендации
+func (vc *VerifiedIRPBiZoneCase) SetRecommendations(v string) {
+	vc.Recommendations = v
+}
+
+// SetAnyRecommendations рекомендации
+func (vc *VerifiedIRPBiZoneCase) SetAnyRecommendations(a any) {
+	vc.SetRecommendations(fmt.Sprint(a))
+}
+
+// GetParsedActivityDetected обнаружение активности
 func (vc *VerifiedIRPBiZoneCase) GetParsedActivityDetected() string {
-	return vc.parsedActivityDetected
+	return vc.ParsedActivityDetected
 }
 
+// SetParsedActivityDetected обнаружение активности
+func (vc *VerifiedIRPBiZoneCase) SetParsedActivityDetected(v string) {
+	vc.ParsedActivityDetected = v
+}
+
+// SetAnyParsedActivityDetected обнаружение активности
+func (vc *VerifiedIRPBiZoneCase) SetAnyParsedActivityDetected(a any) {
+	vc.SetParsedActivityDetected(fmt.Sprint(a))
+}
+
+// GetAffectedService затронутый сервис
 func (vc *VerifiedIRPBiZoneCase) GetAffectedService() string {
-	return vc.affectedService
+	return vc.AffectedService
 }
 
+// SetAffectedService затронутый сервис
+func (vc *VerifiedIRPBiZoneCase) SetAffectedService(v string) {
+	vc.AffectedService = v
+}
+
+// GetAnyAffectedService затронутый сервис
+func (vc *VerifiedIRPBiZoneCase) GetAnyAffectedService(a any) {
+	vc.SetAffectedService(fmt.Sprint(vc.AffectedService))
+}
+
+// GetFakeAsPath подделка как путь
 func (vc *VerifiedIRPBiZoneCase) GetFakeAsPath() string {
-	return vc.fakeAsPath
+	return vc.FakeAsPath
 }
 
+// SetFakeAsPath подделка как путь
+func (vc *VerifiedIRPBiZoneCase) SetFakeAsPath(v string) {
+	vc.FakeAsPath = v
+}
+
+// SetAnyFakeAsPath подделка как путь
+func (vc *VerifiedIRPBiZoneCase) SetAnyFakeAsPath(a any) {
+	vc.SetFakeAsPath(fmt.Sprint(a))
+}
+
+// GetFakePrefix подделка как префикс
 func (vc *VerifiedIRPBiZoneCase) GetFakePrefix() string {
-	return vc.fakePrefix
+	return vc.FakePrefix
 }
 
+// SetFakePrefix подделка как префикс
+func (vc *VerifiedIRPBiZoneCase) SetFakePrefix(v string) {
+	vc.FakePrefix = v
+}
+
+// SetAnyFakePrefix подделка как префикс
+func (vc *VerifiedIRPBiZoneCase) SetAnyFakePrefix(a any) {
+	vc.SetFakePrefix(fmt.Sprint(a))
+}
+
+// GetFpType fp тип
 func (vc *VerifiedIRPBiZoneCase) GetFpType() string {
-	return vc.fpType
+	return vc.FpType
 }
 
+// SetFpType fp тип
+func (vc *VerifiedIRPBiZoneCase) SetFpType(v string) {
+	vc.FpType = v
+}
+
+// SetAnyFpType fp тип
+func (vc *VerifiedIRPBiZoneCase) SetAnyFpType(a any) {
+	vc.SetFpType(fmt.Sprint(a))
+}
+
+// GetLookingGlass зазеркалье
 func (vc *VerifiedIRPBiZoneCase) GetLookingGlass() string {
-	return vc.lookingGlass
+	return vc.LookingGlass
 }
 
+// SetLookingGlass зазеркалье
+func (vc *VerifiedIRPBiZoneCase) SetLookingGlass(v string) {
+	vc.LookingGlass = v
+}
+
+// SetAnyLookingGlass зазеркалье
+func (vc *VerifiedIRPBiZoneCase) SetAnyLookingGlass(a any) {
+	vc.SetLookingGlass(fmt.Sprint(a))
+}
+
+// GetSpamRecipients получатели спама
 func (vc *VerifiedIRPBiZoneCase) GetSpamRecipients() string {
-	return vc.spamRecipients
+	return vc.SpamRecipients
 }
 
+// SetSpamRecipients получатели спама
+func (vc *VerifiedIRPBiZoneCase) SetSpamRecipients(v string) {
+	vc.SpamRecipients = v
+}
+
+// SetAnySpamRecipients получатели спама
+func (vc *VerifiedIRPBiZoneCase) SetAnySpamRecipients(a any) {
+	vc.SetSpamRecipients(fmt.Sprint(a))
+}
+
+// GetTLP
 func (vc *VerifiedIRPBiZoneCase) GetTLP() string {
-	return vc.tlp
+	return vc.TLP
 }
 
+// SetTLP
+func (vc *VerifiedIRPBiZoneCase) SetTLP(v string) {
+	vc.TLP = v
+}
+
+// SetAnyTLP
+func (vc *VerifiedIRPBiZoneCase) SetAnyTLP(a any) {
+	vc.SetTLP(fmt.Sprint(a))
+}
+
+// GetUsualPrefix обычный префикс
 func (vc *VerifiedIRPBiZoneCase) GetUsualPrefix() string {
-	return vc.usualPrefix
+	return vc.UsualPrefix
 }
 
+// SetUsualPrefix обычный префикс
+func (vc *VerifiedIRPBiZoneCase) SetUsualPrefix(v string) {
+	vc.UsualPrefix = v
+}
+
+// SetAnyUsualPrefix обычный префикс
+func (vc *VerifiedIRPBiZoneCase) SetAnyUsualPrefix(a any) {
+	vc.SetUsualPrefix(fmt.Sprint(a))
+}
+
+// GetUsualAsPath обычный путь
 func (vc *VerifiedIRPBiZoneCase) GetUsualAsPath() string {
-	return vc.usualAsPath
+	return vc.UsualAsPath
 }
 
+// SetUsualAsPath обычный путь
+func (vc *VerifiedIRPBiZoneCase) SetUsualAsPath(v string) {
+	vc.UsualAsPath = v
+}
+
+// SetAnyUsualAsPath обычный путь
+func (vc *VerifiedIRPBiZoneCase) SetAnyUsualAsPath(a any) {
+	vc.SetUsualAsPath(fmt.Sprint(a))
+}
+
+// GetSource источник
 func (vc *VerifiedIRPBiZoneCase) GetSource() string {
-	return vc.source
+	return vc.Source
 }
 
+// SetSource источник
+func (vc *VerifiedIRPBiZoneCase) SetSource(v string) {
+	vc.Source = v
+}
+
+// SetAnySource источник
+func (vc *VerifiedIRPBiZoneCase) SetAnySource(a any) {
+	vc.SetSource(fmt.Sprint(a))
+}
+
+// GetExternalId внешний идентификатор
 func (vc *VerifiedIRPBiZoneCase) GetExternalId() string {
-	return vc.externalId
+	return vc.ExternalId
 }
 
+// SetExternalId внешний идентификатор
+func (vc *VerifiedIRPBiZoneCase) SetExternalId(v string) {
+	vc.ExternalId = v
+}
+
+// SetAnyExternalId внешний идентификатор
+func (vc *VerifiedIRPBiZoneCase) SetAnyExternalId(a any) {
+	vc.SetExternalId(fmt.Sprint(a))
+}
+
+// GetUnderliningSource источник
 func (vc *VerifiedIRPBiZoneCase) GetUnderliningSource() string {
-	return vc.underliningSource
+	return vc.UnderliningSource
 }
 
-func (vc *VerifiedIRPBiZoneCase) GetUpdatedAll() time.Time {
-	return vc.updatedAll
+// SetUnderliningSource источник
+func (vc *VerifiedIRPBiZoneCase) SetUnderliningSource(v string) {
+	vc.UnderliningSource = v
 }
 
-func (vc *VerifiedIRPBiZoneCase) GetUpdatedAllString() string {
-	if vc.updatedAll.IsZero() {
-		return ""
+// SetAnyUnderliningSource источник
+func (vc *VerifiedIRPBiZoneCase) SetAnyUnderliningSource(a any) {
+	vc.SetUnderliningSource(fmt.Sprint(a))
+}
+
+// GetUpdatedAll время обновления всего (формат времени RFC3339)
+func (vc *VerifiedIRPBiZoneCase) GetUpdatedAll() string {
+	return vc.UpdatedAll
+}
+
+// SetUpdatedAll время обновления всего (формат времени RFC3339)
+func (vc *VerifiedIRPBiZoneCase) SetUpdatedAll(v string) error {
+	t, err := time.Parse(time.RFC3339, v)
+	if err != nil {
+		return err
 	}
-	return vc.updatedAll.Format(time.RFC3339)
+
+	vc.UpdatedAll = t.String()
+
+	return nil
 }
 
+// SetUpdatedAll время обновления всего
+func (vc *VerifiedIRPBiZoneCase) SetAnyUpdatedAll(a any) error {
+	if v, ok := a.(string); ok {
+		return vc.SetUpdatedAll(v)
+	}
+
+	return errors.New("type conversion error")
+}
+
+// GetGossopkaKey ключ ГосСОПКА
 func (vc *VerifiedIRPBiZoneCase) GetGossopkaKey() string {
-	return vc.gossopkaKey
+	return vc.GossopkaKey
 }
 
-func (vc *VerifiedIRPBiZoneCase) GetWatchers() BiZoneWatcher {
-	return vc.watchers
+// SetGossopkaKey ключ ГосСОПКА
+func (vc *VerifiedIRPBiZoneCase) SetGossopkaKey(v string) {
+	vc.GossopkaKey = v
 }
 
-func (vc *VerifiedIRPBiZoneCase) GetID() int {
-	return vc.id
+// GetGossopkaKey ключ ГосСОПКА
+func (vc *VerifiedIRPBiZoneCase) SetAnyGossopkaKey(a any) {
+	vc.SetGossopkaKey(fmt.Sprint(a))
 }
 
-func (vc *VerifiedIRPBiZoneCase) GetSystem() int {
-	return vc.system
+// GetID идентификатор
+func (vc *VerifiedIRPBiZoneCase) GetID() uint64 {
+	return vc.ID
 }
 
+// SetID идентификатор
+func (vc *VerifiedIRPBiZoneCase) SetID(v uint64) {
+	vc.ID = v
+}
+
+// SetAnyID идентификатор
+func (vc *VerifiedIRPBiZoneCase) SetAnyID(a any) {
+	v, err := supportingfunctions.GetUint64(a)
+	if err != nil {
+		return
+	}
+
+	vc.SetID(v)
+}
+
+// GetSystem идентификатор системы
+func (vc *VerifiedIRPBiZoneCase) GetSystem() uint64 {
+	return vc.System
+}
+
+// SetSystem идентификатор системы
+func (vc *VerifiedIRPBiZoneCase) SetSystem(v uint64) {
+	vc.System = v
+}
+
+// SetAnySystem идентификатор системы
+func (vc *VerifiedIRPBiZoneCase) SetAnySystem(a any) {
+	v, err := supportingfunctions.GetUint64(a)
+	if err != nil {
+		return
+	}
+
+	vc.SetSystem(v)
+}
+
+// GetCancelGossopkaSendButton кнопка отмены ГосСОПКА
 func (vc *VerifiedIRPBiZoneCase) GetCancelGossopkaSendButton() bool {
-	return vc.cancelGossopkaSendButton
+	return vc.CancelGossopkaSendButton
 }
 
+// SetCancelGossopkaSendButton кнопка отмены ГосСОПКА
+func (vc *VerifiedIRPBiZoneCase) SetCancelGossopkaSendButton(v bool) {
+	vc.CancelGossopkaSendButton = v
+}
+
+// SetAnyCancelGossopkaSendButton кнопка отмены ГосСОПКА
+func (vc *VerifiedIRPBiZoneCase) SetAnyCancelGossopkaSendButton(a any) {
+	if v, ok := a.(bool); ok {
+		vc.SetCancelGossopkaSendButton(v)
+	}
+}
+
+// GetIsVisibleForCustomer видимость для потребителя
 func (vc *VerifiedIRPBiZoneCase) GetIsVisibleForCustomer() bool {
-	return vc.isVisibleForCustomer
+	return vc.IsVisibleForCustomer
 }
 
+// SetIsVisibleForCustomer видимость для потребителя
+func (vc *VerifiedIRPBiZoneCase) SetIsVisibleForCustomer(v bool) {
+	vc.IsVisibleForCustomer = v
+}
+
+// SetAnyIsVisibleForCustomer видимость для потребителя
+func (vc *VerifiedIRPBiZoneCase) SetAnyIsVisibleForCustomer(a any) {
+	if v, ok := a.(bool); ok {
+		vc.SetIsVisibleForCustomer(v)
+	}
+}
+
+// GetShowGossopkaButton показать кнопку ГосСОПКА
 func (vc *VerifiedIRPBiZoneCase) GetShowGossopkaButton() bool {
-	return vc.showGossopkaButton
+	return vc.ShowGossopkaButton
 }
 
+// SetShowGossopkaButton показать кнопку ГосСОПКА
+func (vc *VerifiedIRPBiZoneCase) SetShowGossopkaButton(v bool) {
+	vc.ShowGossopkaButton = v
+}
+
+// SetAnyShowGossopkaButton показать кнопку ГосСОПКА
+func (vc *VerifiedIRPBiZoneCase) SetAnyShowGossopkaButton(a any) {
+	if v, ok := a.(bool); ok {
+		vc.SetShowGossopkaButton(v)
+	}
+}
+
+// GetShowGtiButton показать Gti кнопку
 func (vc *VerifiedIRPBiZoneCase) GetShowGtiButton() bool {
-	return vc.showGtiButton
+	return vc.ShowGtiButton
+}
+
+// SetShowGtiButton показать Gti кнопку
+func (vc *VerifiedIRPBiZoneCase) SetShowGtiButton(v bool) {
+	vc.ShowGtiButton = v
+}
+
+// SetAnyShowGtiButton показать Gti кнопку
+func (vc *VerifiedIRPBiZoneCase) SetAnyShowGtiButton(a any) {
+	if v, ok := a.(bool); ok {
+		vc.SetShowGtiButton(v)
+	}
+}
+
+// ToStringBeautiful форматированный вывод
+func (vc *VerifiedIRPBiZoneCase) ToStringBeautiful(num int) string {
+	str := strings.Builder{}
+
+	ws := supportingfunctions.GetWhitespace(num)
+
+	fmt.Fprintf(&str, "%s'_source': '%s'\n", ws, vc.UnderliningSource)
+	fmt.Fprintf(&str, "%s'id': '%d'\n", ws, vc.ID)
+	fmt.Fprintf(&str, "%s'system': '%d'\n", ws, vc.System)
+	fmt.Fprintf(&str, "%s'attack_type': '%s'\n", ws, vc.AttackType)
+	fmt.Fprintf(&str, "%s'created': '%s'\n", ws, vc.Created)
+	fmt.Fprintf(&str, "%s'creator_displayName': '%s'\n", ws, vc.CreatorDisplayName)
+	fmt.Fprintf(&str, "%s'detection_date': '%s'\n", ws, vc.DetectionDate)
+	fmt.Fprintf(&str, "%s'key': '%s'\n", ws, vc.Key)
+	fmt.Fprintf(&str, "%s'issue_type': '%s'\n", ws, vc.IssueType)
+	fmt.Fprintf(&str, "%s'priority': '%s'\n", ws, vc.Priority)
+	fmt.Fprintf(&str, "%s'summary': '%s'\n", ws, vc.Summary)
+	fmt.Fprintf(&str, "%s'description': '%s'\n", ws, vc.Description)
+	fmt.Fprintf(&str, "%s'issue_type': '%s'\n", ws, vc.IssueType)
+	fmt.Fprintf(&str, "%s'rendered_description': '%s'\n", ws, vc.RenderedDescription)
+	fmt.Fprintf(&str, "%s'status': '%s'\n", ws, vc.Status)
+	fmt.Fprintf(&str, "%s'status_description': '%s'\n", ws, vc.StatusDescription)
+	fmt.Fprintf(&str, "%s'reporter_displayName': '%s'\n", ws, vc.ReporterDisplayName)
+	fmt.Fprintf(&str, "%s'reporter_emailAddress': '%s'\n", ws, vc.ReporterEmailAddress)
+	fmt.Fprintf(&str, "%s'primary_category': '%s'\n", ws, vc.PrimaryCategory)
+	fmt.Fprintf(&str, "%s'updated': '%s'\n", ws, vc.Updated)
+	fmt.Fprintf(&str, "%s'timestamp': '%s'\n", ws, vc.Timestamp)
+	fmt.Fprintf(&str, "%s'resolution_detailed': '%s'\n", ws, vc.ResolutionDetailed)
+	fmt.Fprintf(&str, "%s'platform_url': '%s'\n", ws, vc.PlatformURL)
+	fmt.Fprintf(&str, "%s'customer_star_rating_comment': '%s'\n", ws, vc.CustomerStarRatingComment)
+	fmt.Fprintf(&str, "%s'recommendations': '%s'\n", ws, vc.Recommendations)
+	fmt.Fprintf(&str, "%s'parsed_activity_detected': '%s'\n", ws, vc.ParsedActivityDetected)
+	fmt.Fprintf(&str, "%s'affected_service': '%s'\n", ws, vc.AffectedService)
+	fmt.Fprintf(&str, "%s'fake_as_path': '%s'\n", ws, vc.FakeAsPath)
+	fmt.Fprintf(&str, "%s'fake_prefix': '%s'\n", ws, vc.FakePrefix)
+	fmt.Fprintf(&str, "%s'fp_type': '%s'\n", ws, vc.FpType)
+	fmt.Fprintf(&str, "%s'looking_glass': '%s'\n", ws, vc.LookingGlass)
+	fmt.Fprintf(&str, "%s'spam_recipients': '%s'\n", ws, vc.SpamRecipients)
+	fmt.Fprintf(&str, "%s'tlp': '%s'\n", ws, vc.TLP)
+	fmt.Fprintf(&str, "%s'usual_prefix': '%s'\n", ws, vc.UsualPrefix)
+	fmt.Fprintf(&str, "%s'usual_as_path': '%s'\n", ws, vc.UsualAsPath)
+	fmt.Fprintf(&str, "%s'source': '%s'\n", ws, vc.Source)
+	fmt.Fprintf(&str, "%s'external_id': '%s'\n", ws, vc.ExternalId)
+	fmt.Fprintf(&str, "%s'updated_all': '%s'\n", ws, vc.UpdatedAll)
+	fmt.Fprintf(&str, "%s'gossopka_key': '%s'\n", ws, vc.GossopkaKey)
+	fmt.Fprintf(&str, "%s'gossopka_errors': \n%s", ws, func(list map[string]any) string {
+		var str strings.Builder = strings.Builder{}
+		for k, v := range list {
+			fmt.Fprintf(&str, "%s'%s':'%+v'\n", supportingfunctions.GetWhitespace(num+1), k, v)
+		}
+
+		return str.String()
+	}(vc.GossopkaErrors))
+	fmt.Fprintf(&str, "%s'observed_iocs': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.ObservedIocs))
+	fmt.Fprintf(&str, "%s'secondary_category_ref': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.SecondaryCategoryRef))
+	fmt.Fprintf(&str, "%s'watchers': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.Watchers))
+	fmt.Fprintf(&str, "%s'mitre_cov': \n%s", ws, vc.MITRECOV.ToStringBeautiful(num+1))
+	fmt.Fprintf(&str, "%s'detection_rules': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.DetectionRules))
+	fmt.Fprintf(&str, "%s'secondary_category': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.SecondaryCategory))
+	fmt.Fprintf(&str, "%s'platform_hostname': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.PlatformHostname))
+	fmt.Fprintf(&str, "%s'watchers_id': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.WatchersId))
+	fmt.Fprintf(&str, "%s'activity_detected,omitzero': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.ActivityDetected))
+	fmt.Fprintf(&str, "%s'attachments': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.Attachments))
+	fmt.Fprintf(&str, "%s'badges': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.Badges))
+	fmt.Fprintf(&str, "%s'emls': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.Emls))
+	fmt.Fprintf(&str, "%s'slas': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.Slas))
+	fmt.Fprintf(&str, "%s'tags': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.Tags))
+	fmt.Fprintf(&str, "%s'keyfield': \n%s", ws, supportingfunctions.ToStringBeautifulSlice(num+1, vc.KeyField))
+	fmt.Fprintf(&str, "%s'issue_type_ref': \n%s", ws, vc.IssueTypeRef.ToStringBeautiful(num+1))
+	fmt.Fprintf(&str, "%s'primary_category_ref': \n%s", ws, vc.PrimaryCategoryRef.ToStringBeautiful(num+1))
+	fmt.Fprintf(&str, "%s'assignee': \n%v", ws, vc.Assignee)
+	fmt.Fprintf(&str, "%s'assignee_displayName': \n%v", ws, vc.AssigneeDisplayName)
+	fmt.Fprintf(&str, "%s'service': \n%v", ws, vc.Service)
+	fmt.Fprintf(&str, "%s'resolutiondate': \n%v", ws, vc.ResolutionDate)
+	fmt.Fprintf(&str, "%s'resolution_name': \n%v", ws, vc.ResolutionName)
+	fmt.Fprintf(&str, "%s'resolution_name_ref': \n%v", ws, vc.ResolutionNameRef)
+	fmt.Fprintf(&str, "%s'gossopka_id': \n%v", ws, vc.GossopkaId)
+	fmt.Fprintf(&str, "%s'gossopka_send_time': \n%v", ws, vc.GossopkaSendTime)
+	fmt.Fprintf(&str, "%s'gti_id': \n%v", ws, vc.GtiId)
+	fmt.Fprintf(&str, "%s'gti_send_time': \n%v", ws, vc.GtiSendTime)
+	fmt.Fprintf(&str, "%s'customer_star_rating': \n%v", ws, vc.CustomerStarRating)
+	fmt.Fprintf(&str, "%s'first_sent_notification_time': \n%v", ws, vc.FirstSentNotificationTime)
+	fmt.Fprintf(&str, "%s'response_team': \n%v", ws, vc.ResponseTeam)
+	fmt.Fprintf(&str, "%s'gossopka_key_link': \n%v", ws, vc.GossopkaKeyLink)
+	fmt.Fprintf(&str, "%s'cancel_gossopka_send_button': \n%v", ws, vc.CancelGossopkaSendButton)
+	fmt.Fprintf(&str, "%s'is_visible_for_customer': \n%v", ws, vc.IsVisibleForCustomer)
+	fmt.Fprintf(&str, "%s'show_gossopka_button': \n%v", ws, vc.ShowGossopkaButton)
+	fmt.Fprintf(&str, "%s'show_gti_button': \n%v", ws, vc.ShowGtiButton)
+
+	return str.String()
 }

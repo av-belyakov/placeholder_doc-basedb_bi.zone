@@ -51,6 +51,7 @@ type VerifiedIRPBiZoneCase struct {
 	GossopkaErrors            map[string]any       `json:"gossopka_errors,omitzero"` // пока тип в мапе не ясен
 	ObservedIocs              []BiZoneObservedIocs `json:"observed_iocs"`
 	SecondaryCategoryRef      []BiZoneTypeRef      `json:"secondary_category_ref"`
+	Watchers                  []BiZoneWatcher      `json:"watchers"`
 	ActivityDetected          []any                `json:"activity_detected,omitzero"` // пока тип в срезе не ясен
 	Attachments               []any                `json:"attachments,omitzero"`       // пока тип в срезе не ясен
 	Badges                    []any                `json:"badges,omitzero"`            // пока тип в срезе не ясен
@@ -115,7 +116,6 @@ type VerifiedIRPBiZoneCase struct {
 	UnderliningSource         string               `json:"_source"`
 	UpdatedAll                string               `json:"updated_all"` // дата нужно сделать формат RFC3339
 	GossopkaKey               string               `json:"gossopka_key"`
-	Watchers                  BiZoneWatcher        `json:"watchers"`
 	ID                        uint64               `json:"id"`
 	System                    uint64               `json:"system"`
 	CancelGossopkaSendButton  bool                 `json:"cancel_gossopka_send_button"`

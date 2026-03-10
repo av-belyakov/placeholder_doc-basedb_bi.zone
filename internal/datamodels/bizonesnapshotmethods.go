@@ -2,6 +2,7 @@ package datamodels
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
@@ -25,27 +26,27 @@ func (s *BiZoneSnapshot) SetIPAddresses(ipAddress []string) {
 	s.IPAddresses = ipAddress
 }
 
-// SetIPAddresse добавляет ip адрес в поле IPAddresses
+// SetIPAddresse добавляет IP адрес в поле IPAddresses
 func (s *BiZoneSnapshot) SetIPAddresse(ipAddress string) {
 	if s.IPAddresses == nil {
 		s.IPAddresses = []string(nil)
 	}
 
+	if slices.Contains(s.IPAddresses, ipAddress) {
+		return
+	}
+
 	s.IPAddresses = append(s.IPAddresses, ipAddress)
 }
 
-// SetAnyIPAddresse добавляет ip адрес в поле IPAddresses
+// SetAnyIPAddresse добавляет IP адрес в поле IPAddresses
 func (s *BiZoneSnapshot) SetAnyIPAddresse(a any) {
-	if s.IPAddresses == nil {
-		s.IPAddresses = []string(nil)
-	}
-
-	s.IPAddresses = append(s.IPAddresses, fmt.Sprint(a))
+	s.SetIPAddresse(fmt.Sprint(a))
 }
 
 // GetMACAddresses для поля MACAddresses
 func (s *BiZoneSnapshot) GetMACAddresses() []string {
-	return s.IPAddresses
+	return s.MACAddresses
 }
 
 // SetMACAddresses для поля MACAddresses
@@ -53,22 +54,22 @@ func (s *BiZoneSnapshot) SetMACAddresses(macAddress []string) {
 	s.MACAddresses = macAddress
 }
 
-// SetMACAddresse добавляет mac адрес в поле MACAddresses
+// SetMACAddresse добавляет MAC адрес в поле MACAddresses
 func (s *BiZoneSnapshot) SetMACAddresse(macAddress string) {
 	if s.MACAddresses == nil {
 		s.MACAddresses = []string(nil)
 	}
 
+	if slices.Contains(s.MACAddresses, macAddress) {
+		return
+	}
+
 	s.MACAddresses = append(s.MACAddresses, macAddress)
 }
 
-// SetAnyMACAddresse добавляет mac адрес в поле MACAddresses
+// SetAnyMACAddresse добавляет MAC адрес в поле MACAddresses
 func (s *BiZoneSnapshot) SetAnyMACAddresse(a any) {
-	if s.MACAddresses == nil {
-		s.MACAddresses = []string(nil)
-	}
-
-	s.MACAddresses = append(s.MACAddresses, fmt.Sprint(a))
+	s.SetMACAddresse(fmt.Sprint(a))
 }
 
 // GetDomain для поля Domain
