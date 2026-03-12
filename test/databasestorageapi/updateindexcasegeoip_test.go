@@ -52,10 +52,10 @@ var (
 	counting *helpers.Counting
 )
 
-func CreateTestCase(ctx context.Context, filePath string) (string, *datamodels.VerifiedBiZoneAlert, error) {
+func CreateTestCase(ctx context.Context, filePath string) (string, *datamodels.VerifiedBiZoneIRPAlert, error) {
 	var (
 		rootId        string
-		verifiedAlert *datamodels.VerifiedBiZoneAlert
+		verifiedAlert *datamodels.VerifiedBiZoneIRPAlert
 	)
 
 	ctx, cancel := context.WithCancel(ctx)

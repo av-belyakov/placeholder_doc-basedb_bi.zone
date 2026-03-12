@@ -8,44 +8,44 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
-func NewBiZoneObservedIocs() *BiZoneObservedIocs {
-	return &BiZoneObservedIocs{
+func NewBiZoneIRPObservedIocs() *BiZoneIRPObservedIocs {
+	return &BiZoneIRPObservedIocs{
 		Category: make([]string, 0),
 	}
 }
 
 // GetIoc сам Ioc
-func (oiocs *BiZoneObservedIocs) GetIoc() string {
+func (oiocs *BiZoneIRPObservedIocs) GetIoc() string {
 	return oiocs.Ioc
 }
 
 // SetIoc сам Ioc
-func (oiocs *BiZoneObservedIocs) SetIoc(ioc string) {
+func (oiocs *BiZoneIRPObservedIocs) SetIoc(ioc string) {
 	oiocs.Ioc = ioc
 }
 
 // SetAnyIoc сам Ioc
-func (oiocs *BiZoneObservedIocs) SetAnyIoc(a any) {
+func (oiocs *BiZoneIRPObservedIocs) SetAnyIoc(a any) {
 	oiocs.Ioc = fmt.Sprint(a)
 }
 
 // GetIocType тип Ioc
-func (oiocs *BiZoneObservedIocs) GetIocType() string {
+func (oiocs *BiZoneIRPObservedIocs) GetIocType() string {
 	return oiocs.IocType
 }
 
 // SetIocType тип Ioc
-func (oiocs *BiZoneObservedIocs) SetIocType(iocType string) {
+func (oiocs *BiZoneIRPObservedIocs) SetIocType(iocType string) {
 	oiocs.IocType = iocType
 }
 
 // SetAnyIocType тип Ioc
-func (oiocs *BiZoneObservedIocs) SetAnyIocType(a any) {
+func (oiocs *BiZoneIRPObservedIocs) SetAnyIocType(a any) {
 	oiocs.IocType = fmt.Sprint(a)
 }
 
 // GetCategories категории
-func (oiocs *BiZoneObservedIocs) GetCategories() []string {
+func (oiocs *BiZoneIRPObservedIocs) GetCategories() []string {
 	if oiocs.Category == nil {
 		oiocs.Category = make([]string, 0)
 	}
@@ -54,12 +54,12 @@ func (oiocs *BiZoneObservedIocs) GetCategories() []string {
 }
 
 // SetCategories категории
-func (oiocs *BiZoneObservedIocs) SetCategories(categories []string) {
+func (oiocs *BiZoneIRPObservedIocs) SetCategories(categories []string) {
 	oiocs.Category = categories
 }
 
 // AddCategory добавляет значение в список
-func (oiocs *BiZoneObservedIocs) AddCategory(category string) {
+func (oiocs *BiZoneIRPObservedIocs) AddCategory(category string) {
 	oiocs.GetCategories()
 
 	if slices.Contains(oiocs.Category, category) {
@@ -70,12 +70,12 @@ func (oiocs *BiZoneObservedIocs) AddCategory(category string) {
 }
 
 // AddAnyCategory добавляет значение в список
-func (oiocs *BiZoneObservedIocs) AddAnyCategory(a any) {
+func (oiocs *BiZoneIRPObservedIocs) AddAnyCategory(a any) {
 	oiocs.AddCategory(fmt.Sprint(a))
 }
 
 // ToStringBeautiful форматированный вывод
-func (oiocs *BiZoneObservedIocs) ToStringBeautiful(num int) string {
+func (oiocs *BiZoneIRPObservedIocs) ToStringBeautiful(num int) string {
 	str := strings.Builder{}
 
 	ws := supportingfunctions.GetWhitespace(num)

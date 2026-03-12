@@ -23,7 +23,7 @@ import (
 
 func TestIInsertIndexBiZoneAlert(t *testing.T) {
 	var (
-		verifedBiZoneAlert *datamodels.VerifiedBiZoneAlert
+		verifedBiZoneAlert *datamodels.VerifiedBiZoneIRPAlert
 		apiDBS             *databasestorageapi.DatabaseStorage
 		fb                 []byte
 		id                 string

@@ -13,8 +13,8 @@ import (
 func NewBiZoneIRPCase() *VerifiedIRPBiZoneCase {
 	return &VerifiedIRPBiZoneCase{
 		GossopkaErrors:       make(map[string]any),
-		ObservedIocs:         make([]BiZoneObservedIocs, 0),
-		SecondaryCategoryRef: make([]BiZoneTypeRef, 0),
+		ObservedIocs:         make([]BiZoneIRPObservedIocs, 0),
+		SecondaryCategoryRef: make([]BiZoneIRPTypeRef, 0),
 		DetectionRules:       make([]string, 0),
 		SecondaryCategory:    make([]string, 0),
 		PlatformHostname:     make([]string, 0),
@@ -55,56 +55,56 @@ func (vc *VerifiedIRPBiZoneCase) SetAnyGossopkaErrors(k string, v any) bool {
 }
 
 // GetObservedIocs список наблюдаемых IOC
-func (vc *VerifiedIRPBiZoneCase) GetObservedIocs() []BiZoneObservedIocs {
+func (vc *VerifiedIRPBiZoneCase) GetObservedIocs() []BiZoneIRPObservedIocs {
 	if vc.ObservedIocs == nil {
-		vc.ObservedIocs = make([]BiZoneObservedIocs, 0)
+		vc.ObservedIocs = make([]BiZoneIRPObservedIocs, 0)
 	}
 
 	return vc.ObservedIocs
 }
 
 // SetObservedIocs список наблюдаемых IOC
-func (vc *VerifiedIRPBiZoneCase) SetObservedIocs(list []BiZoneObservedIocs) {
+func (vc *VerifiedIRPBiZoneCase) SetObservedIocs(list []BiZoneIRPObservedIocs) {
 	vc.ObservedIocs = list
 }
 
 // AddObservedIocs добавить значение в список наблюдаемых IOC
-func (vc *VerifiedIRPBiZoneCase) AddObservedIocs(v BiZoneObservedIocs) {
+func (vc *VerifiedIRPBiZoneCase) AddObservedIocs(v BiZoneIRPObservedIocs) {
 	vc.GetObservedIocs()
 
 	vc.ObservedIocs = append(vc.ObservedIocs, v)
 }
 
 // GetSecondaryCategoryRef список ссылок на категории
-func (vc *VerifiedIRPBiZoneCase) GetSecondaryCategoryRef() []BiZoneTypeRef {
+func (vc *VerifiedIRPBiZoneCase) GetSecondaryCategoryRef() []BiZoneIRPTypeRef {
 	if vc.SecondaryCategoryRef == nil {
-		vc.SecondaryCategoryRef = make([]BiZoneTypeRef, 0)
+		vc.SecondaryCategoryRef = make([]BiZoneIRPTypeRef, 0)
 	}
 
 	return vc.SecondaryCategoryRef
 }
 
 // SetSecondaryCategoryRef список ссылок на категории
-func (vc *VerifiedIRPBiZoneCase) SetSecondaryCategoryRef(list []BiZoneTypeRef) {
+func (vc *VerifiedIRPBiZoneCase) SetSecondaryCategoryRef(list []BiZoneIRPTypeRef) {
 	vc.SecondaryCategoryRef = list
 }
 
 // GetWatchers список наблюдателей
-func (vc *VerifiedIRPBiZoneCase) GetWatchers() []BiZoneWatcher {
+func (vc *VerifiedIRPBiZoneCase) GetWatchers() []BiZoneIRPWatcher {
 	if vc.Watchers == nil {
-		vc.Watchers = make([]BiZoneWatcher, 0)
+		vc.Watchers = make([]BiZoneIRPWatcher, 0)
 	}
 
 	return vc.Watchers
 }
 
 // SetWatchers список наблюдателей
-func (vc *VerifiedIRPBiZoneCase) SetWatchers(list []BiZoneWatcher) {
+func (vc *VerifiedIRPBiZoneCase) SetWatchers(list []BiZoneIRPWatcher) {
 	vc.Watchers = list
 }
 
 // AddSecondaryCategoryRef добавляет ссылку в список категорий
-func (vc *VerifiedIRPBiZoneCase) AddSecondaryCategoryRef(v BiZoneTypeRef) {
+func (vc *VerifiedIRPBiZoneCase) AddSecondaryCategoryRef(v BiZoneIRPTypeRef) {
 	vc.GetSecondaryCategoryRef()
 
 	vc.SecondaryCategoryRef = append(vc.SecondaryCategoryRef, v)
@@ -258,7 +258,7 @@ func (vc *VerifiedIRPBiZoneCase) AddKeyField(a any) {
 }
 
 // GetMITRECOV
-func (vc *VerifiedIRPBiZoneCase) GetMITRECOV() BiZoneMITRECOV {
+func (vc *VerifiedIRPBiZoneCase) GetMITRECOV() BiZoneIRPMITRECOV {
 	if vc.MITRECOV.GetPersistence() == nil {
 		vc.MITRECOV = *NewBiZoneMITRECOV()
 	}
@@ -267,7 +267,7 @@ func (vc *VerifiedIRPBiZoneCase) GetMITRECOV() BiZoneMITRECOV {
 }
 
 // SetMITRECOV
-func (vc *VerifiedIRPBiZoneCase) SetMITRECOV(v BiZoneMITRECOV) {
+func (vc *VerifiedIRPBiZoneCase) SetMITRECOV(v BiZoneIRPMITRECOV) {
 	vc.MITRECOV = v
 }
 
@@ -547,22 +547,22 @@ func (vc *VerifiedIRPBiZoneCase) SetGossopkaKeyLink(a any) {
 }
 
 // GetIssueTypeRef ссылка на тип проблеммы
-func (vc *VerifiedIRPBiZoneCase) GetIssueTypeRef() BiZoneTypeRef {
+func (vc *VerifiedIRPBiZoneCase) GetIssueTypeRef() BiZoneIRPTypeRef {
 	return vc.IssueTypeRef
 }
 
 // SetIssueTypeRef ссылка на тип проблеммы
-func (vc *VerifiedIRPBiZoneCase) SetIssueTypeRef(v BiZoneTypeRef) {
+func (vc *VerifiedIRPBiZoneCase) SetIssueTypeRef(v BiZoneIRPTypeRef) {
 	vc.IssueTypeRef = v
 }
 
 // GetPrimaryCategoryRef ссылка на первичную категорию
-func (vc *VerifiedIRPBiZoneCase) GetPrimaryCategoryRef() BiZoneTypeRef {
+func (vc *VerifiedIRPBiZoneCase) GetPrimaryCategoryRef() BiZoneIRPTypeRef {
 	return vc.PrimaryCategoryRef
 }
 
 // SetPrimaryCategoryRef ссылка на первичную категорию
-func (vc *VerifiedIRPBiZoneCase) SetPrimaryCategoryRef(v BiZoneTypeRef) {
+func (vc *VerifiedIRPBiZoneCase) SetPrimaryCategoryRef(v BiZoneIRPTypeRef) {
 	vc.PrimaryCategoryRef = v
 }
 

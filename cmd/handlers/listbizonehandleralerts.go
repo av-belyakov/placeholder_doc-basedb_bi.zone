@@ -5,7 +5,7 @@ import (
 )
 
 // NewListBiZoneHandlerAlerts начальный обработчик событий топика 'alerts'
-func NewListBiZoneHandlerAlerts(alert *datamodels.VerifiedBiZoneAlert) map[string][]func(any) {
+func NewListBiZoneHandlerAlerts(alert *datamodels.VerifiedBiZoneIRPAlert) map[string][]func(any) {
 	return map[string][]func(any){
 		"id":                   {alert.SetAnyIDNum},
 		"uuid":                 {alert.SetAnyUUID},

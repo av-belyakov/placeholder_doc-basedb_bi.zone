@@ -59,7 +59,7 @@ type ResponseVerifiedBiZoneAlertsOptions struct {
 
 // PatternVerifiedBiZoneAlert шаблон
 type PatternVerifiedBiZoneAlert struct {
-	Source datamodels.VerifiedBiZoneAlert `json:"_source"`
+	Source datamodels.VerifiedBiZoneIRPAlert `json:"_source"`
 	ServiseOption
 }
 

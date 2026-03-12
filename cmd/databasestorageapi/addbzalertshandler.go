@@ -18,7 +18,7 @@ import (
 func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	t := time.Now()
 
-	newDocument, ok := a.(*datamodels.VerifiedBiZoneAlert)
+	newDocument, ok := a.(*datamodels.VerifiedBiZoneIRPAlert)
 	if !ok {
 		dbs.logger.Send("error", supportingfunctions.CustomError(errors.New("type conversion error")).Error())
 
@@ -48,7 +48,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 		return
 	}
 
-	defer func(document *datamodels.VerifiedBiZoneAlert, getChan func() chan SettingsChanOutput, logger interfaces.Logger) {
+	defer func(document *datamodels.VerifiedBiZoneIRPAlert, getChan func() chan SettingsChanOutput, logger interfaces.Logger) {
 		id := fmt.Sprintf("alerts:%s", newDocument.GetSpecialUUID())
 
 		//обогащение кейса дополнительной информацией о локальном место положении ip адресов
@@ -185,7 +185,7 @@ func (dbs *DatabaseStorage) addBiZoneAlerts(ctx context.Context, a any) {
 	//***********************************************************
 	var countReplacingFields int
 	listDeleting := []ServiseOption(nil)
-	updateVerified := datamodels.NewVerifiedBiZoneAlert()
+	updateVerified := datamodels.NewVerifiedBiZoneIRPAlert()
 	//заполняем новый объект информацией из базы данных
 	for _, v := range response.Options.Hits {
 		countReplacingFields += updateVerified.RepalcingOldBiZoneAlert(*v.Source.Get())
