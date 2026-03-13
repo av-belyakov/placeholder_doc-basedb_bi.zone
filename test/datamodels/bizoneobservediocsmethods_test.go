@@ -13,7 +13,7 @@ import (
 )
 
 func TestObservedIocs(t *testing.T) {
-	observedIocs := &datamodels.BiZoneObservedIocs{}
+	observedIocs := &datamodels.BiZoneIRPObservedIocs{}
 
 	listTesting := map[string]datamodelstest.TestOptions{}
 

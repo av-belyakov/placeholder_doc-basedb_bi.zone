@@ -13,7 +13,7 @@ import (
 )
 
 func TestBiZoneMitreCoveMethods(t *testing.T) {
-	mitreCov := &datamodels.BiZoneMITRECOV{}
+	mitreCov := &datamodels.BiZoneIRPMITRECOV{}
 
 	listTesting := map[string]datamodeltest.TestOptions{}
 

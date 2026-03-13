@@ -12,7 +12,7 @@ import (
 )
 
 func TestBiZoneWatcher(t *testing.T) {
-	watcher := &datamodels.BiZoneWatcher{}
+	watcher := &datamodels.BiZoneIRPWatcher{}
 
 	listTesting := map[string]datamodeltest.TestOptions{}
 

@@ -13,7 +13,7 @@ import (
 )
 
 func TestBiZoneSnapShot(t *testing.T) {
-	snapshot := &datamodels.BiZoneSnapshot{}
+	snapshot := &datamodels.BiZoneIRPSnapshot{}
 
 	listTesting := map[string]datamodeltest.TestOptions{}
 

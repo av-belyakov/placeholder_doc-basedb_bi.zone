@@ -11,7 +11,7 @@ import (
 )
 
 func TestBiZoneTypeRefMethods(t *testing.T) {
-	typeRef := &datamodels.BiZoneTypeRef{}
+	typeRef := &datamodels.BiZoneIRPTypeRef{}
 
 	listTesting := map[string]struct {
 		Value   string
