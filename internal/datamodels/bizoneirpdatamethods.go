@@ -24,13 +24,13 @@ func (d *BiZoneIRPData) Get() *BiZoneIRPData {
 	return d
 }
 
-// GetID для поля ID
-func (d *BiZoneIRPData) GetID() string {
+// GetId для поля ID
+func (d *BiZoneIRPData) GetId() string {
 	return d.ID
 }
 
-// SetID для поля ID
-func (d *BiZoneIRPData) SetID(id string) {
+// SetId для поля ID
+func (d *BiZoneIRPData) SetId(id string) {
 	d.ID = id
 }
 

@@ -7,13 +7,17 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
-// GetID уникальный идентификатор
-func (b *BiZoneIRPTypeRef) GetID() string {
+func NewBiZoneIRPTypeRef() *BiZoneIRPTypeRef {
+	return &BiZoneIRPTypeRef{}
+}
+
+// GetId уникальный идентификатор
+func (b *BiZoneIRPTypeRef) GetId() string {
 	return b.ID
 }
 
-// SetID уникальный идентификатор
-func (b *BiZoneIRPTypeRef) SetID(id string) {
+// SetId уникальный идентификатор
+func (b *BiZoneIRPTypeRef) SetId(id string) {
 	b.ID = id
 }
 

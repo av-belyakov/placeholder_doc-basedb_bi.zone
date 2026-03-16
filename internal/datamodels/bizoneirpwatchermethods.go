@@ -7,6 +7,10 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
+func NewBiZoneIRPWatcher() *BiZoneIRPWatcher {
+	return &BiZoneIRPWatcher{}
+}
+
 // GetId идентификатор
 func (b *BiZoneIRPWatcher) GetId() string {
 	return b.ID

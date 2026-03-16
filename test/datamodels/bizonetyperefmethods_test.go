@@ -29,7 +29,7 @@ func TestBiZoneTypeRefMethods(t *testing.T) {
 			typeRef.SetAnyID(listTesting["ID"].Value)
 		},
 		GetFunc: func() {
-			assert.Equal(t, typeRef.GetID(), listTesting["ID"].Value)
+			assert.Equal(t, typeRef.GetId(), listTesting["ID"].Value)
 		},
 	}
 
