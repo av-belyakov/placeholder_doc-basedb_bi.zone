@@ -301,15 +301,15 @@ func TestBiZoneCaseMethods(t *testing.T) {
 
 	// ---- KeyField ----
 	size = 12
-	keyField := make([]any, 0, size)
+	keyFieldExp := make([]any, 0, size)
 	for range size {
-		keyField = append(keyField, DataStorage[string]{Data: gofakeit.AnimalType()})
+		keyFieldExp = append(keyFieldExp, DataStorage[string]{Data: gofakeit.AnimalType()})
 	}
 
 	listTesting["KeyField"] = datamodelstest.TestOptions{
-		ValueAny: keyField,
+		ValueAny: keyFieldExp,
 		SetFunc: func() {
-			biZoneIRPCase.SetKeyField(keyField)
+			biZoneIRPCase.SetKeyField(keyFieldExp)
 		},
 		GetFunc: func() {
 			assert.Equal(t, biZoneIRPCase.GetKeyField(), listTesting["KeyField"].ValueAny)
@@ -318,22 +318,750 @@ func TestBiZoneCaseMethods(t *testing.T) {
 
 	// ---- MITRECOV ----
 	size = 11
-	mitreCov := datamodels.NewBiZoneMITRECOV()
+	mitreCovExp := datamodels.NewBiZoneMITRECOV()
 	for range size {
-		mitreCov.AddAnyPersistence(gofakeit.AppAuthor())
+		mitreCovExp.AddAnyPersistence(gofakeit.AppAuthor())
 	}
 
 	listTesting["MITRECOV"] = datamodelstest.TestOptions{
-		ValueAny: *mitreCov,
+		ValueAny: *mitreCovExp,
 		SetFunc: func() {
-			biZoneIRPCase.SetMITRECOV(*mitreCov)
+			biZoneIRPCase.SetMITRECOV(*mitreCovExp)
 		},
 		GetFunc: func() {
 			assert.Equal(t, biZoneIRPCase.GetMITRECOV(), listTesting["MITRECOV"].ValueAny)
 		},
 	}
 
+	// ---- DetectionRules ----
+	size = 10
+	detectionRulesExp := make([]string, 0, size)
+	for range size {
+		detectionRulesExp = append(detectionRulesExp, gofakeit.Dessert())
+	}
+
+	listTesting["DetectionRules"] = datamodelstest.TestOptions{
+		ValueSliceString: detectionRulesExp,
+		SetFunc: func() {
+			biZoneIRPCase.SetDetectionRules(detectionRulesExp)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetDetectionRules(), listTesting["DetectionRules"].ValueString)
+		},
+	}
+
+	// ---- SecondaryCategory ----
+	size = 15
+	secondaryCategoryExp := make([]string, 0, size)
+	for range size {
+		secondaryCategoryExp = append(secondaryCategoryExp, gofakeit.AchRouting())
+	}
+
+	listTesting["SecondaryCategory"] = datamodelstest.TestOptions{
+		ValueSliceString: secondaryCategoryExp,
+		SetFunc: func() {
+			biZoneIRPCase.SetSecondaryCategories(secondaryCategoryExp)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetSecondaryCategory(), listTesting["SecondaryCategory"].ValueString)
+		},
+	}
+
+	// ---- PlatformHostname ----
+	size = 15
+	platformHostnameExp := make([]string, 0, size)
+	for range size {
+		platformHostnameExp = append(platformHostnameExp, gofakeit.AppName())
+	}
+
+	listTesting["PlatformHostname"] = datamodelstest.TestOptions{
+		ValueSliceString: platformHostnameExp,
+		SetFunc: func() {
+			biZoneIRPCase.SetPlatformHostname(platformHostnameExp)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetPlatformHostname(), listTesting["PlatformHostname"].ValueString)
+		},
+	}
+
+	// ---- WatchersId ----
+	size = 15
+	watchersIdExp := make([]uint64, 0, size)
+	for range size {
+		watchersIdExp = append(watchersIdExp, gofakeit.Uint64())
+	}
+
+	listTesting["WatchersId"] = datamodelstest.TestOptions{
+		ValueSliceUint64: watchersIdExp,
+		SetFunc: func() {
+			biZoneIRPCase.SetWatchersId(watchersIdExp)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetWatchersId(), listTesting["WatchersId"].ValueSliceUint64)
+		},
+	}
+
+	// ---- Assignee ----
+	listTesting["Assignee"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.FarmAnimal(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAssignee(listTesting["Assignee"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetAssignee(), listTesting["Assignee"].ValueAny)
+		},
+	}
+
+	// ---- AssigneeDisplayName ----
+	listTesting["AssigneeDisplayName"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.School(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAssigneeDisplayName(listTesting["AssigneeDisplayName"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetAssigneeDisplayName(), listTesting["AssigneeDisplayName"].ValueAny)
+		},
+	}
+
+	// ---- Service ----
+	listTesting["Service"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.AirlineSeat(),
+		SetFunc: func() {
+			biZoneIRPCase.SetService(listTesting["Service"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetService(), listTesting["Service"].ValueAny)
+		},
+	}
+
+	// ---- ResolutionDate ----
+	listTesting["ResolutionDate"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.Dinner(),
+		SetFunc: func() {
+			biZoneIRPCase.SetResolutionDate(listTesting["ResolutionDate"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetResolutionDate(), listTesting["ResolutionDate"].ValueAny)
+		},
+	}
+
+	// ---- ResolutionName ----
+	listTesting["ResolutionName"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.Question(),
+		SetFunc: func() {
+			biZoneIRPCase.SetResolutionName(listTesting["ResolutionName"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetResolutionName(), listTesting["ResolutionName"].ValueAny)
+		},
+	}
+
+	// ---- ResolutionNameRef ----
+	listTesting["ResolutionNameRef"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.PronounReflective(),
+		SetFunc: func() {
+			biZoneIRPCase.SetResolutionNameRef(listTesting["ResolutionNameRef"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetResolutionNameRef(), listTesting["ResolutionNameRef"].ValueAny)
+		},
+	}
+
+	// ---- GossopkaId ----
+	listTesting["GossopkaId"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.GlobalFaker.ID(),
+		SetFunc: func() {
+			biZoneIRPCase.SetGossopkaId(listTesting["GossopkaId"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetGossopkaId(), listTesting["GossopkaId"].ValueAny)
+		},
+	}
+
+	// ---- GossopkaSendTime ----
+	listTesting["GossopkaSendTime"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.TimeZoneFull(),
+		SetFunc: func() {
+			biZoneIRPCase.SetGossopkaSendTime(listTesting["GossopkaSendTime"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetGossopkaSendTime(), listTesting["GossopkaSendTime"].ValueAny)
+		},
+	}
+
+	// ---- GtiId ----
+	listTesting["GtiId"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.ID(),
+		SetFunc: func() {
+			biZoneIRPCase.SetGtiId(listTesting["GtiId"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetGtiId(), listTesting["GtiId"].ValueAny)
+		},
+	}
+
+	// ---- GtiSendTime ----
+	listTesting["GtiSendTime"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.TimeZoneRegion(),
+		SetFunc: func() {
+			biZoneIRPCase.SetGtiSendTime(listTesting["GtiSendTime"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetGtiSendTime(), listTesting["GtiSendTime"].ValueAny)
+		},
+	}
+
+	// ---- CustomerStarRating ----
+	listTesting["CustomerStarRating"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.AdjectiveDemonstrative(),
+		SetFunc: func() {
+			biZoneIRPCase.SetCustomerStarRating(listTesting["CustomerStarRating"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetCustomerStarRating(), listTesting["CustomerStarRating"].ValueAny)
+		},
+	}
+
+	// ---- FirstSentNotificationTime ----
+	listTesting["FirstSentNotificationTime"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.AnimalType(),
+		SetFunc: func() {
+			biZoneIRPCase.SetFirstSentNotificationTime(listTesting["FirstSentNotificationTime"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetFirstSentNotificationTime(), listTesting["FirstSentNotificationTime"].ValueAny)
+		},
+	}
+
+	// ---- ResponseTeam ----
+	listTesting["ResponseTeam"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.Zip(),
+		SetFunc: func() {
+			biZoneIRPCase.SetResponseTeam(listTesting["ResponseTeam"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetResponseTeam(), listTesting["ResponseTeam"].ValueAny)
+		},
+	}
+
+	// ---- GossopkaKeyLink ----
+	listTesting["GossopkaKeyLink"] = datamodelstest.TestOptions{
+		ValueAny: gofakeit.FarmAnimal(),
+		SetFunc: func() {
+			biZoneIRPCase.SetGossopkaKeyLink(listTesting["GossopkaKeyLink"].ValueAny)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetGossopkaKeyLink(), listTesting["GossopkaKeyLink"].ValueAny)
+		},
+	}
+
+	// ---- IssueTypeRef ----
+	typeRefExp := datamodels.BiZoneIRPTypeRef{
+		ID:          gofakeit.ID(),
+		Title:       gofakeit.BookTitle(),
+		Description: gofakeit.BookGenre(),
+	}
+	listTesting["IssueTypeRef"] = datamodelstest.TestOptions{
+		ValueAny: typeRefExp,
+		SetFunc: func() {
+			biZoneIRPCase.SetIssueTypeRef(typeRefExp)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetIssueTypeRef(), listTesting["IssueTypeRef"].ValueAny)
+		},
+	}
+
+	// ---- PrimaryCategoryRef ----
+	primaryCategoryRef := datamodels.BiZoneIRPTypeRef{
+		ID:          gofakeit.ID(),
+		Title:       gofakeit.BookTitle(),
+		Description: gofakeit.BookGenre(),
+	}
+	listTesting["PrimaryCategoryRef"] = datamodelstest.TestOptions{
+		ValueAny: primaryCategoryRef,
+		SetFunc: func() {
+			biZoneIRPCase.SetPrimaryCategoryRef(primaryCategoryRef)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetIssueTypeRef(), listTesting["PrimaryCategoryRef"].ValueAny)
+		},
+	}
+
+	// ---- AttackType ----
+	listTesting["AttackType"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.CarType(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyAttackType(listTesting["AttackType"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetAttackType(), listTesting["AttackType"].ValueString)
+		},
+	}
+
+	// ---- Created ----
+	listTesting["Created"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.ConnectiveTime(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyCreated(listTesting["Created"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetCreated(), listTesting["Created"].ValueString)
+		},
+	}
+
+	// ---- CreatorDisplayName ----
+	listTesting["CreatorDisplayName"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.BeerName(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyCreatorDisplayName(listTesting["CreatorDisplayName"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetCreatorDisplayName(), listTesting["CreatorDisplayName"].ValueString)
+		},
+	}
+
+	// ---- DetectionDate ----
+	//	dt := gofakeit.Date().String()
+	//	fmt.Println("___ Date:", dt)
+	listTesting["DetectionDate"] = datamodelstest.TestOptions{
+		ValueString: "2026-02-19T16:33:03.108913+03:00",
+		SetFunc: func() {
+			err := biZoneIRPCase.SetAnyDetectionDate(listTesting["DetectionDate"].ValueString)
+			fmt.Println("Date Parse error:", err)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetDetectionDate(), listTesting["DetectionDate"].ValueString)
+		},
+	}
+
+	// ---- Key ----
+	listTesting["Key"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.ID(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyKey(listTesting["Key"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetKey(), listTesting["Key"].ValueString)
+		},
+	}
+
+	// ---- IssueType ----
+	listTesting["IssueType"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.BankType(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyIssueType(listTesting["IssueType"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetIssueType(), listTesting["IssueType"].ValueString)
+		},
+	}
+
+	// ---- Priority ----
+	listTesting["Priority"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.TimeZoneRegion(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyPriority(listTesting["Priority"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetPriority(), listTesting["Priority"].ValueString)
+		},
+	}
+
+	// ---- Summary ----
+	listTesting["Summary"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.StreetSuffix(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnySummary(listTesting["Summary"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetSummary(), listTesting["Summary"].ValueString)
+		},
+	}
+
+	// ---- Description ----
+	listTesting["Description"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.BookTitle(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyDescription(listTesting["Description"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetDescription(), listTesting["Description"].ValueString)
+		},
+	}
+
+	// ---- RenderedDescription ----
+	listTesting["RenderedDescription"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.AnimalType(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyRenderedDescription(listTesting["RenderedDescription"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetRenderedDescription(), listTesting["RenderedDescription"].ValueString)
+		},
+	}
+
+	// ---- Status ----
+	listTesting["Status"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.SafeColor(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyStatus(listTesting["Status"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetStatus(), listTesting["Status"].ValueString)
+		},
+	}
+
+	// ---- StatusDescription ----
+	listTesting["StatusDescription"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.SafeColor(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyStatusDescription(listTesting["StatusDescription"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetStatusDescription(), listTesting["StatusDescription"].ValueString)
+		},
+	}
+
+	// ---- ReporterDisplayName ----
+	listTesting["ReporterDisplayName"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.NamePrefix(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyReporterDisplayName(listTesting["ReporterDisplayName"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetReporterDisplayName(), listTesting["ReporterDisplayName"].ValueString)
+		},
+	}
+
+	// ---- ReporterEmailAddress ----
+	listTesting["ReporterEmailAddress"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.Email(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyReporterEmailAddress(listTesting["ReporterEmailAddress"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetReporterEmailAddress(), listTesting["ReporterEmailAddress"].ValueString)
+		},
+	}
+
+	// ---- PrimaryCategory ----
+	listTesting["PrimaryCategory"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.CarTransmissionType(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyPrimaryCategory(listTesting["PrimaryCategory"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetPrimaryCategory(), listTesting["PrimaryCategory"].ValueString)
+		},
+	}
+
+	// ---- Updated ----
+	listTesting["Updated"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.AdverbTimeDefinite(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyUpdated(listTesting["Updated"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetUpdated(), listTesting["Updated"].ValueString)
+		},
+	}
+
+	// ---- Timestamp ----
+	listTesting["Timestamp"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.TimeZoneRegion(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyTimestamp(listTesting["Timestamp"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetTimestamp(), listTesting["Timestamp"].ValueString)
+		},
+	}
+
+	// ---- ResolutionDetailed ----
+	listTesting["ResolutionDetailed"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.Gamertag(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyResolutionDetailed(listTesting["ResolutionDetailed"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetResolutionDetailed(), listTesting["ResolutionDetailed"].ValueString)
+		},
+	}
+
+	// ---- PlatformURL ----
+	listTesting["PlatformURL"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.URL(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyPlatformURL(listTesting["PlatformURL"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetPlatformURL(), listTesting["PlatformURL"].ValueString)
+		},
+	}
+
+	// ---- CustomerStarRatingComment ----
+	listTesting["CustomerStarRatingComment"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.AirlineRecordLocator(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyCustomerStarRatingComment(listTesting["CustomerStarRatingComment"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetCustomerStarRatingComment(), listTesting["CustomerStarRatingComment"].ValueString)
+		},
+	}
+
+	// ---- Recommendations ----
+	listTesting["Recommendations"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.TimeZoneRegion(),
+		SetFunc: func() {
+			biZoneIRPCase.SetRecommendations(listTesting["Recommendations"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetRecommendations(), listTesting["Recommendations"].ValueString)
+		},
+	}
+
+	// ---- ParsedActivityDetected ----
+	listTesting["ParsedActivityDetected"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.VerbAction(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyParsedActivityDetected(listTesting["ParsedActivityDetected"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetParsedActivityDetected(), listTesting["ParsedActivityDetected"].ValueString)
+		},
+	}
+
+	// ---- AffectedService ----
+	listTesting["AffectedService"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.StreetNumber(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyAffectedService(listTesting["AffectedService"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetAffectedService(), listTesting["AffectedService"].ValueString)
+		},
+	}
+
+	// ---- FakeAsPath ----
+	listTesting["FakeAsPath"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.Paragraph(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyFakeAsPath(listTesting["FakeAsPath"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetFakeAsPath(), listTesting["FakeAsPath"].ValueString)
+		},
+	}
+
+	// ---- FakePrefix ----
+	listTesting["FakePrefix"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.NamePrefix(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyFakePrefix(listTesting["FakePrefix"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetFakePrefix(), listTesting["FakePrefix"].ValueString)
+		},
+	}
+
+	// ---- FpType ----
+	listTesting["FpType"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.TimeZoneRegion(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyFpType(listTesting["FpType"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetFpType(), listTesting["FpType"].ValueString)
+		},
+	}
+
+	// ---- LookingGlass ----
+	listTesting["LookingGlass"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.TimeZoneRegion(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyLookingGlass(listTesting["LookingGlass"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetLookingGlass(), listTesting["LookingGlass"].ValueString)
+		},
+	}
+
+	// ---- SpamRecipients ----
+	listTesting["SpamRecipients"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.BitcoinPrivateKey(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnySpamRecipients(listTesting["SpamRecipients"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetSpamRecipients(), listTesting["SpamRecipients"].ValueString)
+		},
+	}
+
+	// ---- TLP ----
+	listTesting["TLP"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.AdverbFrequencyDefinite(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyTLP(listTesting["TLP"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetTLP(), listTesting["TLP"].ValueString)
+		},
+	}
+
+	// ---- UsualPrefix ----
+	listTesting["UsualPrefix"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.NamePrefix(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyUsualPrefix(listTesting["UsualPrefix"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetUsualPrefix(), listTesting["UsualPrefix"].ValueString)
+		},
+	}
+
+	// ---- UsualAsPath ----
+	listTesting["UsualAsPath"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.ProductUseCase(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyUsualAsPath(listTesting["UsualAsPath"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetUsualAsPath(), listTesting["UsualAsPath"].ValueString)
+		},
+	}
+
+	// ---- Source ----
+	listTesting[""] = datamodelstest.TestOptions{
+		ValueString: gofakeit.State(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnySource(listTesting["Source"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetSource(), listTesting["Source"].ValueString)
+		},
+	}
+	// ---- ExternalId ----
+	listTesting["ExternalId"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.ID(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyExternalId(listTesting["ExternalId"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetExternalId(), listTesting["ExternalId"].ValueString)
+		},
+	}
+
+	// ---- UnderliningSource ----
+	listTesting["UnderliningSource"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.EmojiAlias(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyUnderliningSource(listTesting["UnderliningSource"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetUnderliningSource(), listTesting[""].ValueString)
+		},
+	}
+
+	// ---- UpdatedAll ----
+	listTesting["UpdatedAll"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.Unit(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyUpdatedAll(listTesting["UpdatedAll"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetUpdatedAll(), listTesting["UpdatedAll"].ValueString)
+		},
+	}
+
+	// ---- GossopkaKey ----
+	listTesting["GossopkaKey"] = datamodelstest.TestOptions{
+		ValueString: gofakeit.ID(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyGossopkaKey(listTesting["GossopkaKey"].ValueString)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetGossopkaKey(), listTesting["GossopkaKey"].ValueString)
+		},
+	}
+
+	// ---- ID ----
+	listTesting["ID"] = datamodelstest.TestOptions{
+		ValueUint64: gofakeit.Uint64(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyID(listTesting["ID"].ValueUint64)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetID(), listTesting["ID"].ValueUint64)
+		},
+	}
+
+	// ---- System ----
+	listTesting["System"] = datamodelstest.TestOptions{
+		ValueUint64: gofakeit.Uint64(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnySystem(listTesting["System"].ValueUint64)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetSystem(), listTesting["System"].ValueUint64)
+		},
+	}
+
+	// ---- CancelGossopkaSendButton ----
+	listTesting["CancelGossopkaSendButton"] = datamodelstest.TestOptions{
+		ValueBool: gofakeit.Bool(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyCancelGossopkaSendButton(listTesting["CancelGossopkaSendButton"].ValueBool)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetCancelGossopkaSendButton(), listTesting["CancelGossopkaSendButton"].ValueBool)
+		},
+	}
+
+	// ---- IsVisibleForCustomer ----
+	listTesting["IsVisibleForCustomer"] = datamodelstest.TestOptions{
+		ValueBool: gofakeit.Bool(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyIsVisibleForCustomer(listTesting["IsVisibleForCustomer"].ValueBool)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetIsVisibleForCustomer(), listTesting["IsVisibleForCustomer"].ValueBool)
+		},
+	}
+	// ---- ShowGossopkaButton ----
+	listTesting["ShowGossopkaButton"] = datamodelstest.TestOptions{
+		ValueBool: gofakeit.Bool(),
+		SetFunc: func() {
+			biZoneIRPCase.SetShowGossopkaButton(listTesting["ShowGossopkaButton"].ValueBool)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetShowGossopkaButton(), listTesting["ShowGossopkaButton"].ValueBool)
+		},
+	}
+	// ---- ShowGtiButton ----
+	listTesting["ShowGtiButton"] = datamodelstest.TestOptions{
+		ValueBool: gofakeit.Bool(),
+		SetFunc: func() {
+			biZoneIRPCase.SetAnyShowGtiButton(listTesting["ShowGtiButton"].ValueBool)
+		},
+		GetFunc: func() {
+			assert.Equal(t, biZoneIRPCase.GetShowGtiButton(), listTesting["ShowGtiButton"].ValueBool)
+		},
+	}
+
 	/*
+		// ----  ----
+		listTesting[""] = datamodelstest.TestOptions{
+			ValueAny: gofakeit.TimeZoneRegion(),
+			SetFunc: func() {
+				biZoneIRPCase.SetAny(listTesting[""].ValueAny)
+			},
+			GetFunc: func() {
+				assert.Equal(t, biZoneIRPCase.Get(), listTesting[""].ValueAny)
+			},
+		}
+
+
 		listTesting[""] = datamodelstest.TestOptions{
 			ValueString: ,
 			SetFunc: func() {

@@ -950,8 +950,8 @@ func (vc *VerifiedIRPBiZoneCase) SetAffectedService(v string) {
 	vc.AffectedService = v
 }
 
-// GetAnyAffectedService затронутый сервис
-func (vc *VerifiedIRPBiZoneCase) GetAnyAffectedService(a any) {
+// SetAnyAffectedService затронутый сервис
+func (vc *VerifiedIRPBiZoneCase) SetAnyAffectedService(a any) {
 	vc.SetAffectedService(fmt.Sprint(vc.AffectedService))
 }
 
