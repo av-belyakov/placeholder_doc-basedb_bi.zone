@@ -1,5 +1,7 @@
 package datamodels
 
+import "time"
+
 type TestOptions struct {
 	ValueMapAny      map[string]any
 	ValueSliceAny    []any
@@ -7,6 +9,7 @@ type TestOptions struct {
 	ValueSliceUint64 []uint64
 	ValueSliceInt    []int
 	ValueSliceBool   []bool
+	ValueTime        time.Time
 	ValueAny         any
 	ValueString      string
 	ValueUint64      uint64

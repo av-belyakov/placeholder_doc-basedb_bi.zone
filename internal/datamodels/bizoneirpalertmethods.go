@@ -207,12 +207,12 @@ func (va *VerifiedBiZoneIRPAlert) SetCreatedTime(createdTime string) {
 	va.CreatedTime = createdTime
 }
 
-// SetAnyCreatedTime для поля CreatedTime (формат RFC3339)
+// SetAnyCreatedTime для поля CreatedTime
 func (va *VerifiedBiZoneIRPAlert) SetAnyCreatedTime(a any) {
 	//это только когда время в типе unixtime
 	//tmp := supportingfunctions.ConversionAnyToInt(a)
 	//va.CreatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	va.CreatedTime = fmt.Sprint(a)
+	va.SetCreatedTime(fmt.Sprint(a))
 }
 
 // GetUpdatedTime для поля UpdatedTime (формат RFC3339)

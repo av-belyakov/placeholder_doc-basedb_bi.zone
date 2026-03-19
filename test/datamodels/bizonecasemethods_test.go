@@ -6,6 +6,7 @@ import (
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/brianvoe/gofakeit/v7"
 	"github.com/stretchr/testify/assert"
@@ -346,7 +347,7 @@ func TestBiZoneCaseMethods(t *testing.T) {
 			biZoneIRPCase.SetDetectionRules(detectionRulesExp)
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetDetectionRules(), listTesting["DetectionRules"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetDetectionRules(), listTesting["DetectionRules"].ValueSliceString)
 		},
 	}
 
@@ -363,7 +364,7 @@ func TestBiZoneCaseMethods(t *testing.T) {
 			biZoneIRPCase.SetSecondaryCategories(secondaryCategoryExp)
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetSecondaryCategory(), listTesting["SecondaryCategory"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetSecondaryCategory(), listTesting["SecondaryCategory"].ValueSliceString)
 		},
 	}
 
@@ -380,7 +381,7 @@ func TestBiZoneCaseMethods(t *testing.T) {
 			biZoneIRPCase.SetPlatformHostname(platformHostnameExp)
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetPlatformHostname(), listTesting["PlatformHostname"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetPlatformHostname(), listTesting["PlatformHostname"].ValueSliceString)
 		},
 	}
 
@@ -583,7 +584,7 @@ func TestBiZoneCaseMethods(t *testing.T) {
 			biZoneIRPCase.SetPrimaryCategoryRef(primaryCategoryRef)
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetIssueTypeRef(), listTesting["PrimaryCategoryRef"].ValueAny)
+			assert.Equal(t, biZoneIRPCase.GetPrimaryCategoryRef(), listTesting["PrimaryCategoryRef"].ValueAny)
 		},
 	}
 
@@ -600,12 +601,12 @@ func TestBiZoneCaseMethods(t *testing.T) {
 
 	// ---- Created ----
 	listTesting["Created"] = datamodelstest.TestOptions{
-		ValueString: gofakeit.ConnectiveTime(),
+		ValueTime: gofakeit.Date(),
 		SetFunc: func() {
-			biZoneIRPCase.SetAnyCreated(listTesting["Created"].ValueString)
+			assert.NoError(t, biZoneIRPCase.SetAnyCreated(listTesting["Created"].ValueTime.String()))
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetCreated(), listTesting["Created"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetCreated(), listTesting["Created"].ValueTime.Format(time.RFC3339))
 		},
 	}
 
@@ -621,16 +622,13 @@ func TestBiZoneCaseMethods(t *testing.T) {
 	}
 
 	// ---- DetectionDate ----
-	//	dt := gofakeit.Date().String()
-	//	fmt.Println("___ Date:", dt)
 	listTesting["DetectionDate"] = datamodelstest.TestOptions{
-		ValueString: "2026-02-19T16:33:03.108913+03:00",
+		ValueTime: gofakeit.Date(),
 		SetFunc: func() {
-			err := biZoneIRPCase.SetAnyDetectionDate(listTesting["DetectionDate"].ValueString)
-			fmt.Println("Date Parse error:", err)
+			assert.NoError(t, biZoneIRPCase.SetAnyDetectionDate(listTesting["DetectionDate"].ValueTime.String()))
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetDetectionDate(), listTesting["DetectionDate"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetDetectionDate(), listTesting["DetectionDate"].ValueTime.Format(time.RFC3339))
 		},
 	}
 
@@ -757,23 +755,23 @@ func TestBiZoneCaseMethods(t *testing.T) {
 
 	// ---- Updated ----
 	listTesting["Updated"] = datamodelstest.TestOptions{
-		ValueString: gofakeit.AdverbTimeDefinite(),
+		ValueTime: gofakeit.Date(),
 		SetFunc: func() {
-			biZoneIRPCase.SetAnyUpdated(listTesting["Updated"].ValueString)
+			assert.NoError(t, biZoneIRPCase.SetAnyUpdated(listTesting["Updated"].ValueTime.Format(time.UnixDate)))
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetUpdated(), listTesting["Updated"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetUpdated(), listTesting["Updated"].ValueTime.Format(time.RFC3339))
 		},
 	}
 
 	// ---- Timestamp ----
 	listTesting["Timestamp"] = datamodelstest.TestOptions{
-		ValueString: gofakeit.TimeZoneRegion(),
+		ValueTime: gofakeit.Date(),
 		SetFunc: func() {
-			biZoneIRPCase.SetAnyTimestamp(listTesting["Timestamp"].ValueString)
+			assert.NoError(t, biZoneIRPCase.SetAnyTimestamp(listTesting["Timestamp"].ValueTime.Format(time.RFC1123Z)))
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetTimestamp(), listTesting["Timestamp"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetTimestamp(), listTesting["Timestamp"].ValueTime.Format(time.RFC3339))
 		},
 	}
 
@@ -932,7 +930,7 @@ func TestBiZoneCaseMethods(t *testing.T) {
 	}
 
 	// ---- Source ----
-	listTesting[""] = datamodelstest.TestOptions{
+	listTesting["Source"] = datamodelstest.TestOptions{
 		ValueString: gofakeit.State(),
 		SetFunc: func() {
 			biZoneIRPCase.SetAnySource(listTesting["Source"].ValueString)
@@ -959,18 +957,18 @@ func TestBiZoneCaseMethods(t *testing.T) {
 			biZoneIRPCase.SetAnyUnderliningSource(listTesting["UnderliningSource"].ValueString)
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetUnderliningSource(), listTesting[""].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetUnderliningSource(), listTesting["UnderliningSource"].ValueString)
 		},
 	}
 
 	// ---- UpdatedAll ----
 	listTesting["UpdatedAll"] = datamodelstest.TestOptions{
-		ValueString: gofakeit.Unit(),
+		ValueTime: gofakeit.Date(),
 		SetFunc: func() {
-			biZoneIRPCase.SetAnyUpdatedAll(listTesting["UpdatedAll"].ValueString)
+			assert.NoError(t, biZoneIRPCase.SetAnyUpdatedAll(listTesting["UpdatedAll"].ValueTime.String()))
 		},
 		GetFunc: func() {
-			assert.Equal(t, biZoneIRPCase.GetUpdatedAll(), listTesting["UpdatedAll"].ValueString)
+			assert.Equal(t, biZoneIRPCase.GetUpdatedAll(), listTesting["UpdatedAll"].ValueTime.Format(time.RFC3339))
 		},
 	}
 
@@ -1081,6 +1079,23 @@ func TestBiZoneCaseMethods(t *testing.T) {
 			v.GetFunc()
 		})
 	}
+
+	/*
+		t.Run("Test Any", func(t *testing.T) {
+			timeStr := gofakeit.Date().Format(time.RFC3339)
+			tt, err := time.Parse(time.RFC3339, timeStr) //"2026-02-19T16:33:03.108913+03:00")
+			assert.NoError(t, err)
+			assert.Equal(t, timeStr, tt.Format(time.RFC3339))
+
+			fmt.Printf("Any time: '%+v', RFC3339 string: '%s'\n", tt, tt.Format(time.RFC3339))
+
+			timeStr = "2026-02-19T16:33:03.108913+03:00"
+			tt, err = time.Parse(time.RFC3339Nano, timeStr)
+			assert.NoError(t, err)
+			assert.Equal(t, timeStr, tt.Format(time.RFC3339))
+
+		})
+	*/
 }
 
 type DataStorage[T comparable] struct {

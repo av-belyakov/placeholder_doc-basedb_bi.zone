@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"slices"
 	"strings"
-	"time"
 
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
@@ -586,14 +585,14 @@ func (vc *VerifiedIRPBiZoneCase) GetCreated() string {
 	return vc.Created
 }
 
-// SetCreated время создания (формат времени RFC3339)
+// SetCreated время создания (преобразует в формат времени RFC3339)
 func (vc *VerifiedIRPBiZoneCase) SetCreated(v string) error {
-	t, err := time.Parse(time.RFC3339, v)
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
 	if err != nil {
 		return err
 	}
 
-	vc.Created = t.String()
+	vc.Created = timeStr
 
 	return nil
 }
@@ -627,14 +626,14 @@ func (vc *VerifiedIRPBiZoneCase) GetDetectionDate() string {
 	return vc.DetectionDate
 }
 
-// SetDetectionDate дата обнаружения (формат времени RFC3339)
+// SetDetectionDate дата обнаружения (преобразует в формат времени RFC3339)
 func (vc *VerifiedIRPBiZoneCase) SetDetectionDate(v string) error {
-	t, err := time.Parse(time.RFC3339, v)
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
 	if err != nil {
 		return err
 	}
 
-	vc.DetectionDate = t.String()
+	vc.DetectionDate = timeStr
 
 	return nil
 }
@@ -818,14 +817,14 @@ func (vc *VerifiedIRPBiZoneCase) GetUpdated() string {
 	return vc.Updated
 }
 
-// SetUpdated время обновления (формат времени RFC3339)
+// SetUpdated время обновления (преобразует в формат времени RFC3339)
 func (vc *VerifiedIRPBiZoneCase) SetUpdated(v string) error {
-	t, err := time.Parse(time.RFC3339, v)
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
 	if err != nil {
 		return err
 	}
 
-	vc.Updated = t.String()
+	vc.Updated = timeStr
 
 	return nil
 }
@@ -844,14 +843,14 @@ func (vc *VerifiedIRPBiZoneCase) GetTimestamp() string {
 	return vc.Timestamp
 }
 
-// SetTimestamp временная метка (формат времени RFC3339)
+// SetTimestamp временная метка (преобразует в формат времени RFC3339)
 func (vc *VerifiedIRPBiZoneCase) SetTimestamp(v string) error {
-	t, err := time.Parse(time.RFC3339, v)
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
 	if err != nil {
 		return err
 	}
 
-	vc.Timestamp = t.String()
+	vc.Timestamp = timeStr
 
 	return nil
 }
@@ -952,7 +951,7 @@ func (vc *VerifiedIRPBiZoneCase) SetAffectedService(v string) {
 
 // SetAnyAffectedService затронутый сервис
 func (vc *VerifiedIRPBiZoneCase) SetAnyAffectedService(a any) {
-	vc.SetAffectedService(fmt.Sprint(vc.AffectedService))
+	vc.SetAffectedService(fmt.Sprint(a))
 }
 
 // GetFakeAsPath подделка как путь
@@ -1125,14 +1124,14 @@ func (vc *VerifiedIRPBiZoneCase) GetUpdatedAll() string {
 	return vc.UpdatedAll
 }
 
-// SetUpdatedAll время обновления всего (формат времени RFC3339)
+// SetUpdatedAll время обновления всего (преобразует в формат времени RFC3339)
 func (vc *VerifiedIRPBiZoneCase) SetUpdatedAll(v string) error {
-	t, err := time.Parse(time.RFC3339, v)
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
 	if err != nil {
 		return err
 	}
 
-	vc.UpdatedAll = t.String()
+	vc.UpdatedAll = timeStr
 
 	return nil
 }
