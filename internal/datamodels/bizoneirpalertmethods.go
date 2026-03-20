@@ -1,6 +1,7 @@
 package datamodels
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -34,44 +35,43 @@ func (va *VerifiedBiZoneIRPAlert) Get() *VerifiedBiZoneIRPAlert {
 	return va
 }
 
-// GetSpecialUUID униакальное значение поля SpecialUUID
+// GetSpecialUUID уникальный идентификатор типа UUID
 func (va *VerifiedBiZoneIRPAlert) GetSpecialUUID() string {
 	return va.SpecialUUID
 }
 
-// GetIDNum для поля IDNum
+// GetIDNum
 func (va *VerifiedBiZoneIRPAlert) GetIDNum() uint64 {
 	return va.IDNum
 }
 
 // SetIDNum для поля IDNum
-func (va *VerifiedBiZoneIRPAlert) SetIDNum(idNum uint64) {
+func (va *VerifiedBiZoneIRPAlert) SetIDNum(idNum uint64) error {
 	va.IDNum = idNum
+
+	return nil
 }
 
 // SetAnyIDNum для поля IDNum
-func (va *VerifiedBiZoneIRPAlert) SetAnyIDNum(a any) {
-	if v, ok := a.(int); ok {
-		va.IDNum = uint64(v)
+func (va *VerifiedBiZoneIRPAlert) SetAnyIDNum(a any) error {
+	switch v := a.(type) {
+	case int:
+		return va.SetIDNum(uint64(v))
 
-		return
+	case int32:
+		return va.SetIDNum(uint64(v))
+
+	case int64:
+		return va.SetIDNum(uint64(v))
+
+	case float32:
+		return va.SetIDNum(uint64(v))
+
+	case float64:
+		return va.SetIDNum(uint64(v))
 	}
 
-	if v, ok := a.(float32); ok {
-		va.IDNum = uint64(v)
-
-		return
-	}
-
-	if v, ok := a.(float64); ok {
-		va.IDNum = uint64(v)
-
-		return
-	}
-
-	if v, ok := a.(uint64); ok {
-		va.IDNum = v
-	}
+	return errors.New("type conversion error")
 }
 
 // GetUUID для поля UUID
@@ -80,13 +80,15 @@ func (va *VerifiedBiZoneIRPAlert) GetUUID() string {
 }
 
 // SetUUID для поля UUID
-func (va *VerifiedBiZoneIRPAlert) SetUUID(UUID string) {
+func (va *VerifiedBiZoneIRPAlert) SetUUID(UUID string) error {
 	va.UUID = UUID
+
+	return nil
 }
 
 // SetAnyUUID для поля UUID
-func (va *VerifiedBiZoneIRPAlert) SetAnyUUID(a any) {
-	va.UUID = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyUUID(a any) error {
+	return va.SetUUID(fmt.Sprint(a))
 }
 
 // GetExternalID для поля ExternalID
@@ -95,13 +97,15 @@ func (va *VerifiedBiZoneIRPAlert) GetExternalID() string {
 }
 
 // SetExternalID для поля ExternalID
-func (va *VerifiedBiZoneIRPAlert) SetExternalID(externalID string) {
+func (va *VerifiedBiZoneIRPAlert) SetExternalID(externalID string) error {
 	va.ExternalID = externalID
+
+	return nil
 }
 
 // SetAnyExternalID для поля ExternalID
-func (va *VerifiedBiZoneIRPAlert) SetAnyExternalID(a any) {
-	va.ExternalID = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyExternalID(a any) error {
+	return va.SetExternalID(fmt.Sprint(a))
 }
 
 // GetCustomerSystem для поля CustomerSystem
@@ -110,13 +114,15 @@ func (va *VerifiedBiZoneIRPAlert) GetCustomerSystem() string {
 }
 
 // SetCustomerSystem для поля CustomerSystem
-func (va *VerifiedBiZoneIRPAlert) SetCustomerSystem(customerSystem string) {
+func (va *VerifiedBiZoneIRPAlert) SetCustomerSystem(customerSystem string) error {
 	va.CustomerSystem = customerSystem
+
+	return nil
 }
 
 // SetAnyCustomerSystem для поля CustomerSystem
-func (va *VerifiedBiZoneIRPAlert) SetAnyCustomerSystem(a any) {
-	va.CustomerSystem = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyCustomerSystem(a any) error {
+	return va.SetCustomerSystem(fmt.Sprint(a))
 }
 
 // GetPlatformType для поля PlatformType
@@ -125,13 +131,15 @@ func (va *VerifiedBiZoneIRPAlert) GetPlatformType() string {
 }
 
 // SetPlatformType для поля PlatformType
-func (va *VerifiedBiZoneIRPAlert) SetPlatformType(platformType string) {
+func (va *VerifiedBiZoneIRPAlert) SetPlatformType(platformType string) error {
 	va.PlatformType = platformType
+
+	return nil
 }
 
 // SetAnyPlatformType для поля PlatformType
-func (va *VerifiedBiZoneIRPAlert) SetAnyPlatformType(a any) {
-	va.PlatformType = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyPlatformType(a any) error {
+	return va.SetPlatformType(fmt.Sprint(a))
 }
 
 // GetAffectedLogSources для поля AffectedLogSources
@@ -140,13 +148,15 @@ func (va *VerifiedBiZoneIRPAlert) GetAffectedLogSources() string {
 }
 
 // SetAffectedLogSources для поля AffectedLogSources
-func (va *VerifiedBiZoneIRPAlert) SetAffectedLogSources(affectedLogSources string) {
+func (va *VerifiedBiZoneIRPAlert) SetAffectedLogSources(affectedLogSources string) error {
 	va.AffectedLogSources = affectedLogSources
+
+	return nil
 }
 
 // SetAnyAffectedLogSources для поля AffectedLogSources
-func (va *VerifiedBiZoneIRPAlert) SetAnyAffectedLogSources(a any) {
-	va.AffectedLogSources = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyAffectedLogSources(a any) error {
+	return va.SetAffectedLogSources(fmt.Sprint(a))
 }
 
 // GetConfidence для поля Confidence
@@ -155,13 +165,15 @@ func (va *VerifiedBiZoneIRPAlert) GetConfidence() string {
 }
 
 // SetConfidence для поля Confidence
-func (va *VerifiedBiZoneIRPAlert) SetConfidence(confidence string) {
+func (va *VerifiedBiZoneIRPAlert) SetConfidence(confidence string) error {
 	va.Confidence = confidence
+
+	return nil
 }
 
 // SetAnyConfidence для поля Confidence
-func (va *VerifiedBiZoneIRPAlert) SetAnyConfidence(a any) {
-	va.Confidence = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyConfidence(a any) error {
+	return va.SetConfidence(fmt.Sprint(a))
 }
 
 // GetDescription для поля Description
@@ -170,16 +182,18 @@ func (va *VerifiedBiZoneIRPAlert) GetDescription() string {
 }
 
 // SetDescription для поля Description
-func (va *VerifiedBiZoneIRPAlert) SetDescription(description string) {
+func (va *VerifiedBiZoneIRPAlert) SetDescription(description string) error {
 	description = strings.ReplaceAll(description, "\t", "")
 	description = strings.ReplaceAll(description, "\n", "")
 
 	va.Description = description
+
+	return nil
 }
 
 // SetAnyDescription для поля Description
-func (va *VerifiedBiZoneIRPAlert) SetAnyDescription(a any) {
-	va.SetDescription(fmt.Sprint(a))
+func (va *VerifiedBiZoneIRPAlert) SetAnyDescription(a any) error {
+	return va.SetDescription(fmt.Sprint(a))
 }
 
 // GetDetectionRule для поля DetectionRule
@@ -188,13 +202,15 @@ func (va *VerifiedBiZoneIRPAlert) GetDetectionRule() string {
 }
 
 // SetDetectionRule для поля DetectionRule
-func (va *VerifiedBiZoneIRPAlert) SetDetectionRule(detectionRule string) {
+func (va *VerifiedBiZoneIRPAlert) SetDetectionRule(detectionRule string) error {
 	va.DetectionRule = detectionRule
+
+	return nil
 }
 
 // SetAnyDetectionRule для поля DetectionRule
-func (va *VerifiedBiZoneIRPAlert) SetAnyDetectionRule(a any) {
-	va.DetectionRule = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyDetectionRule(a any) error {
+	return va.SetDetectionRule(fmt.Sprint(a))
 }
 
 // GetCreatedTime для поля CreatedTime (формат RFC3339)
@@ -202,17 +218,25 @@ func (va *VerifiedBiZoneIRPAlert) GetCreatedTime() string {
 	return va.CreatedTime
 }
 
-// SetCreatedTime для поля CreatedTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetCreatedTime(createdTime string) {
-	va.CreatedTime = createdTime
+// SetCreatedTime для поля CreatedTime (преобразует в формат времени RFC3339)
+func (va *VerifiedBiZoneIRPAlert) SetCreatedTime(v string) error {
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
+	if err != nil {
+		return err
+	}
+
+	va.CreatedTime = timeStr
+
+	return nil
 }
 
 // SetAnyCreatedTime для поля CreatedTime
-func (va *VerifiedBiZoneIRPAlert) SetAnyCreatedTime(a any) {
-	//это только когда время в типе unixtime
-	//tmp := supportingfunctions.ConversionAnyToInt(a)
-	//va.CreatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	va.SetCreatedTime(fmt.Sprint(a))
+func (va *VerifiedBiZoneIRPAlert) SetAnyCreatedTime(a any) error {
+	if v, ok := a.(string); ok {
+		return va.SetCreatedTime(v)
+	}
+
+	return errors.New("type conversion error")
 }
 
 // GetUpdatedTime для поля UpdatedTime (формат RFC3339)
@@ -220,17 +244,25 @@ func (va *VerifiedBiZoneIRPAlert) GetUpdatedTime() string {
 	return va.UpdatedTime
 }
 
-// SetUpdatedTime для поля UpdatedTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetUpdatedTime(updatedTime string) {
-	va.UpdatedTime = updatedTime
+// SetUpdatedTime для поля UpdatedTime (преобразует в формат времени RFC3339)
+func (va *VerifiedBiZoneIRPAlert) SetUpdatedTime(v string) error {
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
+	if err != nil {
+		return err
+	}
+
+	va.UpdatedTime = timeStr
+
+	return nil
 }
 
-// SetAnyUpdatedTime для поля UpdatedTime (строка)
-func (va *VerifiedBiZoneIRPAlert) SetAnyUpdatedTime(a any) {
-	//это только когда время в типе unixtime
-	//tmp := supportingfunctions.ConversionAnyToInt(a)
-	//va.UpdatedTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	va.UpdatedTime = fmt.Sprint(a)
+// SetAnyUpdatedTime для поля UpdatedTime
+func (va *VerifiedBiZoneIRPAlert) SetAnyUpdatedTime(a any) error {
+	if v, ok := a.(string); ok {
+		return va.SetUpdatedTime(v)
+	}
+
+	return errors.New("type conversion error")
 }
 
 // GetEventStartTime для поля EventStartTime (формат RFC3339)
@@ -238,17 +270,25 @@ func (va *VerifiedBiZoneIRPAlert) GetEventStartTime() string {
 	return va.EventStartTime
 }
 
-// SetEventStartTime для поля EventStartTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetEventStartTime(eventStartTime string) {
-	va.EventStartTime = eventStartTime
+// SetEventStartTime для поля EventStartTime (преобразует в формат времени RFC3339)
+func (va *VerifiedBiZoneIRPAlert) SetEventStartTime(v string) error {
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
+	if err != nil {
+		return err
+	}
+
+	va.EventStartTime = timeStr
+
+	return nil
 }
 
-// SetAnyEventStartTime для поля EventStartTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetAnyEventStartTime(a any) {
-	//это только когда время в типе unixtime
-	//tmp := supportingfunctions.ConversionAnyToInt(a)
-	//va.EventStartTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	va.EventStartTime = fmt.Sprint(a)
+// SetAnyEventStartTime для поля EventStartTime
+func (va *VerifiedBiZoneIRPAlert) SetAnyEventStartTime(a any) error {
+	if v, ok := a.(string); ok {
+		return va.SetEventStartTime(v)
+	}
+
+	return errors.New("type conversion error")
 }
 
 // GetVerifiedBiZoneIRPAlertEndTime для поля EventEndTime (формат RFC3339)
@@ -256,17 +296,25 @@ func (va *VerifiedBiZoneIRPAlert) GetEventEndTime() string {
 	return va.EventEndTime
 }
 
-// SetEventEndTime для поля EventEndTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetEventEndTime(eventEndTime string) {
-	va.EventEndTime = eventEndTime
+// SetEventEndTime для поля EventEndTime (преобразует в формат времени RFC3339)
+func (va *VerifiedBiZoneIRPAlert) SetEventEndTime(v string) error {
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
+	if err != nil {
+		return err
+	}
+
+	va.EventEndTime = timeStr
+
+	return nil
 }
 
-// SetAnyEventEndTime для поля EventEndTime (строка)
-func (va *VerifiedBiZoneIRPAlert) SetAnyEventEndTime(a any) {
-	//это только когда время в типе unixtime
-	//tmp := supportingfunctions.ConversionAnyToInt(a)
-	//va.EventEndTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	va.EventEndTime = fmt.Sprint(a)
+// SetAnyEventEndTime для поля EventEndTime
+func (va *VerifiedBiZoneIRPAlert) SetAnyEventEndTime(a any) error {
+	if v, ok := a.(string); ok {
+		return va.SetEventEndTime(v)
+	}
+
+	return errors.New("type conversion error")
 }
 
 // GetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
@@ -274,17 +322,25 @@ func (va *VerifiedBiZoneIRPAlert) GetFirstDetectionTime() string {
 	return va.FirstDetectionTime
 }
 
-// SetFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetFirstDetectionTime(firstDetectionTime string) {
-	va.FirstDetectionTime = firstDetectionTime
+// SetFirstDetectionTime для поля FirstDetectionTime (преобразует в формат времени RFC3339)
+func (va *VerifiedBiZoneIRPAlert) SetFirstDetectionTime(v string) error {
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
+	if err != nil {
+		return err
+	}
+
+	va.FirstDetectionTime = timeStr
+
+	return nil
 }
 
-// SetAnyFirstDetectionTime для поля FirstDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetAnyFirstDetectionTime(a any) {
-	//это только когда время в типе unixtime
-	//tmp := supportingfunctions.ConversionAnyToInt(a)
-	//va.FirstDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	va.FirstDetectionTime = fmt.Sprint(a)
+// SetAnyFirstDetectionTime для поля FirstDetectionTime
+func (va *VerifiedBiZoneIRPAlert) SetAnyFirstDetectionTime(a any) error {
+	if v, ok := a.(string); ok {
+		return va.SetFirstDetectionTime(v)
+	}
+
+	return errors.New("type conversion error")
 }
 
 // GetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
@@ -292,17 +348,26 @@ func (va *VerifiedBiZoneIRPAlert) GetLastDetectionTime() string {
 	return va.LastDetectionTime
 }
 
-// SetLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetLastDetectionTime(lastDetectionTime string) {
-	va.LastDetectionTime = lastDetectionTime
+// SetLastDetectionTime для поля LastDetectionTime (преобразует в формат времени RFC3339)
+func (va *VerifiedBiZoneIRPAlert) SetLastDetectionTime(v string) error {
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
+	if err != nil {
+		return err
+	}
+
+	va.LastDetectionTime = timeStr
+
+	return nil
+
 }
 
-// SetAnyLastDetectionTime для поля LastDetectionTime (формат RFC3339)
-func (va *VerifiedBiZoneIRPAlert) SetAnyLastDetectionTime(a any) {
-	//это только когда время в типе unixtime
-	//tmp := supportingfunctions.ConversionAnyToInt(a)
-	//va.LastDetectionTime = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	va.LastDetectionTime = fmt.Sprint(a)
+// SetAnyLastDetectionTime для поля LastDetectionTime
+func (va *VerifiedBiZoneIRPAlert) SetAnyLastDetectionTime(a any) error {
+	if v, ok := a.(string); ok {
+		return va.SetLastDetectionTime(v)
+	}
+
+	return errors.New("type conversion error")
 }
 
 // GetPlatformHostname для поля PlatformHostname
@@ -311,13 +376,15 @@ func (va *VerifiedBiZoneIRPAlert) GetPlatformHostname() string {
 }
 
 // SetPlatformHostname для поля PlatformHostname
-func (va *VerifiedBiZoneIRPAlert) SetPlatformHostname(platformHostname string) {
+func (va *VerifiedBiZoneIRPAlert) SetPlatformHostname(platformHostname string) error {
 	va.PlatformHostname = platformHostname
+
+	return nil
 }
 
 // SetAnyPlatformHostname для поля PlatformHostname
-func (va *VerifiedBiZoneIRPAlert) SetAnyPlatformHostname(a any) {
-	va.PlatformHostname = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyPlatformHostname(a any) error {
+	return va.SetPlatformHostname(fmt.Sprint(a))
 }
 
 // GetTitle для поля Title
@@ -326,13 +393,15 @@ func (va *VerifiedBiZoneIRPAlert) GetTitle() string {
 }
 
 // SetTitle для поля Title
-func (va *VerifiedBiZoneIRPAlert) SetTitle(title string) {
+func (va *VerifiedBiZoneIRPAlert) SetTitle(title string) error {
 	va.Title = title
+
+	return nil
 }
 
 // SetAnyTitle для поля Title
-func (va *VerifiedBiZoneIRPAlert) SetAnyTitle(a any) {
-	va.Title = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyTitle(a any) error {
+	return va.SetTitle(fmt.Sprint(a))
 }
 
 // GetSeverity для поля Severity
@@ -341,13 +410,15 @@ func (va *VerifiedBiZoneIRPAlert) GetSeverity() string {
 }
 
 // SetSeverity для поля Severity
-func (va *VerifiedBiZoneIRPAlert) SetSeverity(severity string) {
+func (va *VerifiedBiZoneIRPAlert) SetSeverity(severity string) error {
 	va.Severity = severity
+
+	return nil
 }
 
 // SetAnySeverity для поля Severity
-func (va *VerifiedBiZoneIRPAlert) SetAnySeverity(a any) {
-	va.Severity = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnySeverity(a any) error {
+	return va.SetSeverity(fmt.Sprint(a))
 }
 
 // GetRecommendations для поля Recommendations
@@ -356,13 +427,15 @@ func (va *VerifiedBiZoneIRPAlert) GetRecommendations() string {
 }
 
 // SetRecommendations для поля Recommendations
-func (va *VerifiedBiZoneIRPAlert) SetRecommendations(recommendations string) {
+func (va *VerifiedBiZoneIRPAlert) SetRecommendations(recommendations string) error {
 	va.Recommendations = recommendations
+
+	return nil
 }
 
 // SetAnyRecommendations для поля Recommendations
-func (va *VerifiedBiZoneIRPAlert) SetAnyRecommendations(a any) {
-	va.Recommendations = fmt.Sprint(a)
+func (va *VerifiedBiZoneIRPAlert) SetAnyRecommendations(a any) error {
+	return va.SetRecommendations(fmt.Sprint(a))
 }
 
 // GetData для поля Data
@@ -371,8 +444,10 @@ func (va *VerifiedBiZoneIRPAlert) GetData() *BiZoneIRPData {
 }
 
 // SetData для поля Data
-func (va *VerifiedBiZoneIRPAlert) SetData(data BiZoneIRPData) {
+func (va *VerifiedBiZoneIRPAlert) SetData(data BiZoneIRPData) error {
 	va.Data = data
+
+	return nil
 }
 
 // GetSnapshots для поля Snapshots
@@ -381,8 +456,10 @@ func (va *VerifiedBiZoneIRPAlert) GetSnapshots() []BiZoneIRPSnapshot {
 }
 
 // SetSnapshots для поля Snapshots
-func (va *VerifiedBiZoneIRPAlert) SetSnapshots(snapshots []BiZoneIRPSnapshot) {
+func (va *VerifiedBiZoneIRPAlert) SetSnapshots(snapshots []BiZoneIRPSnapshot) error {
 	va.Snapshots = snapshots
+
+	return nil
 }
 
 // GetTags для поля Tags
@@ -391,8 +468,10 @@ func (va *VerifiedBiZoneIRPAlert) GetTags() []BiZoneIRPTag {
 }
 
 // SetTags для поля Tags
-func (va *VerifiedBiZoneIRPAlert) SetTags(tags []BiZoneIRPTag) {
+func (va *VerifiedBiZoneIRPAlert) SetTags(tags []BiZoneIRPTag) error {
 	va.Tags = tags
+
+	return nil
 }
 
 // GetAdditionalInformation для поля AdditionalInformation
@@ -401,8 +480,10 @@ func (va *VerifiedBiZoneIRPAlert) GetAdditionalInformation() *AdditionalInformat
 }
 
 // SetAdditionalInformation для поля AdditionalInformation
-func (va *VerifiedBiZoneIRPAlert) SetAdditionalInformation(ai AdditionalInformation) {
+func (va *VerifiedBiZoneIRPAlert) SetAdditionalInformation(ai AdditionalInformation) error {
 	va.AdditionalInformation = ai
+
+	return nil
 }
 
 // ToStringBeautiful форматированный вывод
