@@ -8,10 +8,6 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
-// ************* Структура Data ************
-// *****************************************
-
-// NewBiZoneIRPData новый объект
 func NewBiZoneIRPData() *BiZoneIRPData {
 	return &BiZoneIRPData{
 		SnortSid:   []uint64(nil),

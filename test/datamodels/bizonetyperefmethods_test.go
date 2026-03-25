@@ -26,7 +26,7 @@ func TestBiZoneTypeRefMethods(t *testing.T) {
 	}{
 		Value: gofakeit.ID(),
 		SetFunc: func() {
-			typeRef.SetAnyID(listTesting["ID"].Value)
+			typeRef.SetAnyId(listTesting["ID"].Value)
 		},
 		GetFunc: func() {
 			assert.Equal(t, typeRef.GetId(), listTesting["ID"].Value)

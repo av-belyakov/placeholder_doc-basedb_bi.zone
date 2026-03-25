@@ -152,16 +152,16 @@ func (vc *VerifiedIRPBiZoneCase) AddAttachments(v any) {
 }
 
 // GetBadges значки
-func (vc *VerifiedIRPBiZoneCase) GetBadges() []interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetBadges() []any {
 	if vc.Badges == nil {
-		vc.Badges = make([]interface{}, 0)
+		vc.Badges = make([]any, 0)
 	}
 
 	return vc.Badges
 }
 
 // SetBadges значки
-func (vc *VerifiedIRPBiZoneCase) SetBadges(list []interface{}) {
+func (vc *VerifiedIRPBiZoneCase) SetBadges(list []any) {
 	vc.Badges = list
 }
 
@@ -173,16 +173,16 @@ func (vc *VerifiedIRPBiZoneCase) AddBadges(v any) {
 }
 
 // GetEmls
-func (vc *VerifiedIRPBiZoneCase) GetEmls() []interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetEmls() []any {
 	if vc.Emls == nil {
-		vc.Emls = make([]interface{}, 0)
+		vc.Emls = make([]any, 0)
 	}
 
 	return vc.Emls
 }
 
 // SetEmls
-func (vc *VerifiedIRPBiZoneCase) SetEmls(list []interface{}) {
+func (vc *VerifiedIRPBiZoneCase) SetEmls(list []any) {
 	vc.Emls = list
 }
 
@@ -194,16 +194,16 @@ func (vc *VerifiedIRPBiZoneCase) AddEmls(a any) {
 }
 
 // GetSlas
-func (vc *VerifiedIRPBiZoneCase) GetSlas() []interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetSlas() []any {
 	if vc.Slas == nil {
-		vc.Slas = make([]interface{}, 0)
+		vc.Slas = make([]any, 0)
 	}
 
 	return vc.Slas
 }
 
 // SetSlas
-func (vc *VerifiedIRPBiZoneCase) SetSlas(list []interface{}) {
+func (vc *VerifiedIRPBiZoneCase) SetSlas(list []any) {
 	vc.Slas = list
 }
 
@@ -215,16 +215,16 @@ func (vc *VerifiedIRPBiZoneCase) AddSlas(a any) {
 }
 
 // GetTags теги
-func (vc *VerifiedIRPBiZoneCase) GetTags() []interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetTags() []any {
 	if vc.Tags == nil {
-		vc.Tags = make([]interface{}, 0)
+		vc.Tags = make([]any, 0)
 	}
 
 	return vc.Tags
 }
 
 // SetTags теги
-func (vc *VerifiedIRPBiZoneCase) SetTags(list []interface{}) {
+func (vc *VerifiedIRPBiZoneCase) SetTags(list []any) {
 	vc.Tags = list
 }
 
@@ -236,16 +236,16 @@ func (vc *VerifiedIRPBiZoneCase) AddTags(a any) {
 }
 
 // GetKeyField ключевые поля
-func (vc *VerifiedIRPBiZoneCase) GetKeyField() []interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetKeyField() []any {
 	if vc.KeyField == nil {
-		vc.KeyField = make([]interface{}, 0)
+		vc.KeyField = make([]any, 0)
 	}
 
 	return vc.KeyField
 }
 
 // SetKeyField ключевые поля
-func (vc *VerifiedIRPBiZoneCase) SetKeyField(list []interface{}) {
+func (vc *VerifiedIRPBiZoneCase) SetKeyField(list []any) {
 	vc.KeyField = list
 }
 
@@ -406,7 +406,7 @@ func (vc *VerifiedIRPBiZoneCase) AddAnyWatchersId(a any) {
 }
 
 // GetAssignee правоприемник
-func (vc *VerifiedIRPBiZoneCase) GetAssignee() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetAssignee() any {
 	return vc.Assignee
 }
 
@@ -416,7 +416,7 @@ func (vc *VerifiedIRPBiZoneCase) SetAssignee(a any) {
 }
 
 // GetAssigneeDisplayName отображаемое имя правопреемника
-func (vc *VerifiedIRPBiZoneCase) GetAssigneeDisplayName() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetAssigneeDisplayName() any {
 	return vc.AssigneeDisplayName
 }
 
@@ -426,7 +426,7 @@ func (vc *VerifiedIRPBiZoneCase) SetAssigneeDisplayName(a any) {
 }
 
 // GetService сервис
-func (vc *VerifiedIRPBiZoneCase) GetService() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetService() any {
 	return vc.Service
 }
 
@@ -436,7 +436,7 @@ func (vc *VerifiedIRPBiZoneCase) SetService(a any) {
 }
 
 // GetResolutionDate дата разрешения
-func (vc *VerifiedIRPBiZoneCase) GetResolutionDate() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetResolutionDate() any {
 	return vc.ResolutionDate
 }
 
@@ -446,7 +446,7 @@ func (vc *VerifiedIRPBiZoneCase) SetResolutionDate(a any) {
 }
 
 // GetResolutionName имя разрешения
-func (vc *VerifiedIRPBiZoneCase) GetResolutionName() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetResolutionName() any {
 	return vc.ResolutionName
 }
 
@@ -456,7 +456,7 @@ func (vc *VerifiedIRPBiZoneCase) SetResolutionName(a any) {
 }
 
 // GetResolutionNameRef ссылка на имя разрешения
-func (vc *VerifiedIRPBiZoneCase) GetResolutionNameRef() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetResolutionNameRef() any {
 	return vc.ResolutionNameRef
 }
 
@@ -466,7 +466,7 @@ func (vc *VerifiedIRPBiZoneCase) SetResolutionNameRef(a any) {
 }
 
 // GetGossopkaId идентификатор
-func (vc *VerifiedIRPBiZoneCase) GetGossopkaId() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetGossopkaId() any {
 	return vc.GossopkaId
 }
 
@@ -476,7 +476,7 @@ func (vc *VerifiedIRPBiZoneCase) SetGossopkaId(a any) {
 }
 
 // GetGossopkaSendTime установленное время (возможно типа string или time)
-func (vc *VerifiedIRPBiZoneCase) GetGossopkaSendTime() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetGossopkaSendTime() any {
 	return vc.GossopkaSendTime
 }
 
@@ -486,7 +486,7 @@ func (vc *VerifiedIRPBiZoneCase) SetGossopkaSendTime(a any) {
 }
 
 // GetGtiId идентификатор
-func (vc *VerifiedIRPBiZoneCase) GetGtiId() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetGtiId() any {
 	return vc.GtiId
 }
 
@@ -496,7 +496,7 @@ func (vc *VerifiedIRPBiZoneCase) SetGtiId(a any) {
 }
 
 // GetGtiSendTime некое время
-func (vc *VerifiedIRPBiZoneCase) GetGtiSendTime() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetGtiSendTime() any {
 	return vc.GtiSendTime
 }
 
@@ -506,7 +506,7 @@ func (vc *VerifiedIRPBiZoneCase) SetGtiSendTime(a any) {
 }
 
 // GetCustomerStarRating звёздный рейтинг потребителей
-func (vc *VerifiedIRPBiZoneCase) GetCustomerStarRating() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetCustomerStarRating() any {
 	return vc.CustomerStarRating
 }
 
@@ -516,7 +516,7 @@ func (vc *VerifiedIRPBiZoneCase) SetCustomerStarRating(a any) {
 }
 
 // GetFirstSentNotificationTime время первого сообщения
-func (vc *VerifiedIRPBiZoneCase) GetFirstSentNotificationTime() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetFirstSentNotificationTime() any {
 	return vc.FirstSentNotificationTime
 }
 
@@ -526,7 +526,7 @@ func (vc *VerifiedIRPBiZoneCase) SetFirstSentNotificationTime(a any) {
 }
 
 // GetResponseTeam группа ответа
-func (vc *VerifiedIRPBiZoneCase) GetResponseTeam() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetResponseTeam() any {
 	return vc.ResponseTeam
 }
 
@@ -536,7 +536,7 @@ func (vc *VerifiedIRPBiZoneCase) SetResponseTeam(a any) {
 }
 
 // GetGossopkaKeyLink ссылка на ключ
-func (vc *VerifiedIRPBiZoneCase) GetGossopkaKeyLink() interface{} {
+func (vc *VerifiedIRPBiZoneCase) GetGossopkaKeyLink() any {
 	return vc.GossopkaKeyLink
 }
 

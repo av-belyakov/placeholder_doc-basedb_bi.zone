@@ -94,7 +94,7 @@ func (stags *SupportingStructureForTags) isExistFieldBranch(v string) bool {
 func NewSupportingStructureForSnapshots() *SupportingStructureForSnapshots {
 	return &SupportingStructureForSnapshots{
 		listAcceptedFields: []string(nil),
-		snapshotTmp:        *NewBiZneSnapshot(),
+		snapshotTmp:        *NewBiZoneIRPSnapshot(),
 		snapshots:          []BiZoneIRPSnapshot(nil),
 	}
 }
@@ -126,7 +126,7 @@ func (ssnap *SupportingStructureForSnapshots) HandlerValue(fieldBranch string, a
 	if !isExist && ssnap.isExistFieldBranch(fieldBranch) {
 		ssnap.listAcceptedFields = []string(nil)
 		ssnap.snapshots = append(ssnap.snapshots, ssnap.snapshotTmp)
-		ssnap.snapshotTmp = *NewBiZneSnapshot()
+		ssnap.snapshotTmp = *NewBiZoneIRPSnapshot()
 	}
 
 	ssnap.listAcceptedFields = append(ssnap.listAcceptedFields, fieldBranch)

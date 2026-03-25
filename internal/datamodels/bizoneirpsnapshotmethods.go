@@ -8,11 +8,7 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
-// ********** Структура Snapshot ***********
-// *****************************************
-
-// NewBiZneSnapshot новый объект
-func NewBiZneSnapshot() *BiZoneIRPSnapshot {
+func NewBiZoneIRPSnapshot() *BiZoneIRPSnapshot {
 	return &BiZoneIRPSnapshot{}
 }
 

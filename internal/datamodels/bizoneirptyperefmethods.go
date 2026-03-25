@@ -21,8 +21,8 @@ func (b *BiZoneIRPTypeRef) SetId(id string) {
 	b.ID = id
 }
 
-// SetAnyID уникальный идентификатор
-func (b *BiZoneIRPTypeRef) SetAnyID(a any) {
+// SetAnyId уникальный идентификатор
+func (b *BiZoneIRPTypeRef) SetAnyId(a any) {
 	b.ID = fmt.Sprint(a)
 }
 

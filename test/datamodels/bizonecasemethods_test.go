@@ -15,7 +15,7 @@ import (
 	datamodelstest "github.com/av-belyakov/placeholder_doc-basedb_bi.zone/test/datamodels"
 )
 
-func TestBiZoneCaseMethods(t *testing.T) {
+func TestBiZoneIRPCaseMethods(t *testing.T) {
 	var (
 		size      int
 		keyString string
@@ -107,9 +107,9 @@ func TestBiZoneCaseMethods(t *testing.T) {
 	secondaryCategoryRefExample := make([]datamodels.BiZoneIRPTypeRef, 0, size)
 	for range size {
 		secondaryCategoryRef := datamodels.NewBiZoneIRPTypeRef()
-		secondaryCategoryRef.ID = gofakeit.ID()
-		secondaryCategoryRef.Title = gofakeit.JobTitle()
-		secondaryCategoryRef.Description = gofakeit.JobDescriptor()
+		secondaryCategoryRef.SetAnyId(gofakeit.ID())
+		secondaryCategoryRef.SetTitle(gofakeit.JobTitle())
+		secondaryCategoryRef.SetDescription(gofakeit.JobDescriptor())
 
 		secondaryCategoryRefExample = append(secondaryCategoryRefExample, *secondaryCategoryRef)
 	}
@@ -145,13 +145,13 @@ func TestBiZoneCaseMethods(t *testing.T) {
 	watchersExample := make([]datamodels.BiZoneIRPWatcher, 0, size)
 	for range size {
 		watcherExample := datamodels.NewBiZoneIRPWatcher()
-		watcherExample.ID = gofakeit.ID()
-		watcherExample.Username = gofakeit.Name()
-		watcherExample.FirstName = gofakeit.FirstName()
-		watcherExample.LastName = gofakeit.LastName()
-		watcherExample.Email = gofakeit.Email()
-		watcherExample.Patronimic = gofakeit.HipsterParagraph()
-		watcherExample.IsActive = gofakeit.Bool()
+		watcherExample.SetAnyId(gofakeit.ID())
+		watcherExample.SetUsername(gofakeit.Name())
+		watcherExample.SetFirstName(gofakeit.FirstName())
+		watcherExample.SetLastName(gofakeit.LastName())
+		watcherExample.SetEmail(gofakeit.Email())
+		watcherExample.SetPatronimic(gofakeit.HipsterParagraph())
+		watcherExample.SetIsActive(gofakeit.Bool())
 
 		watchersExample = append(watchersExample, *watcherExample)
 	}
@@ -557,15 +557,15 @@ func TestBiZoneCaseMethods(t *testing.T) {
 	}
 
 	// ---- IssueTypeRef ----
-	typeRefExp := datamodels.BiZoneIRPTypeRef{
-		ID:          gofakeit.ID(),
-		Title:       gofakeit.BookTitle(),
-		Description: gofakeit.BookGenre(),
-	}
+	IssueTypeRef := datamodels.NewBiZoneIRPTypeRef()
+	IssueTypeRef.SetAnyId(gofakeit.ID())
+	IssueTypeRef.SetAnyTitle(gofakeit.BookTitle())
+	IssueTypeRef.SetAnyDescription(gofakeit.BookGenre())
+
 	listTesting["IssueTypeRef"] = datamodelstest.TestOptions{
-		ValueAny: typeRefExp,
+		ValueAny: *IssueTypeRef,
 		SetFunc: func() {
-			biZoneIRPCase.SetIssueTypeRef(typeRefExp)
+			biZoneIRPCase.SetIssueTypeRef(*IssueTypeRef)
 		},
 		GetFunc: func() {
 			assert.Equal(t, biZoneIRPCase.GetIssueTypeRef(), listTesting["IssueTypeRef"].ValueAny)
@@ -573,15 +573,15 @@ func TestBiZoneCaseMethods(t *testing.T) {
 	}
 
 	// ---- PrimaryCategoryRef ----
-	primaryCategoryRef := datamodels.BiZoneIRPTypeRef{
-		ID:          gofakeit.ID(),
-		Title:       gofakeit.BookTitle(),
-		Description: gofakeit.BookGenre(),
-	}
+	primaryCategoryRef := datamodels.NewBiZoneIRPTypeRef()
+	primaryCategoryRef.SetAnyId(gofakeit.ID())
+	primaryCategoryRef.SetAnyTitle(gofakeit.BookTitle())
+	primaryCategoryRef.SetAnyDescription(gofakeit.BookGenre())
+
 	listTesting["PrimaryCategoryRef"] = datamodelstest.TestOptions{
-		ValueAny: primaryCategoryRef,
+		ValueAny: *primaryCategoryRef,
 		SetFunc: func() {
-			biZoneIRPCase.SetPrimaryCategoryRef(primaryCategoryRef)
+			biZoneIRPCase.SetPrimaryCategoryRef(*primaryCategoryRef)
 		},
 		GetFunc: func() {
 			assert.Equal(t, biZoneIRPCase.GetPrimaryCategoryRef(), listTesting["PrimaryCategoryRef"].ValueAny)
@@ -1046,30 +1046,6 @@ func TestBiZoneCaseMethods(t *testing.T) {
 			assert.Equal(t, biZoneIRPCase.GetShowGtiButton(), listTesting["ShowGtiButton"].ValueBool)
 		},
 	}
-
-	/*
-		// ----  ----
-		listTesting[""] = datamodelstest.TestOptions{
-			ValueAny: gofakeit.TimeZoneRegion(),
-			SetFunc: func() {
-				biZoneIRPCase.SetAny(listTesting[""].ValueAny)
-			},
-			GetFunc: func() {
-				assert.Equal(t, biZoneIRPCase.Get(), listTesting[""].ValueAny)
-			},
-		}
-
-
-		listTesting[""] = datamodelstest.TestOptions{
-			ValueString: ,
-			SetFunc: func() {
-				biZoneIRPCase.(listTesting[""].ValueString)
-			},
-			GetFunc: func() {
-				assert.Equal(t, biZoneIRPCase.(), listTesting[""].ValueString)
-			},
-		}
-	*/
 
 	var num int
 	for k, v := range listTesting {

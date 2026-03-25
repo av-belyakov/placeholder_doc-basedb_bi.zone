@@ -1,6 +1,7 @@
 package datamodels_test
 
 import (
+	"fmt"
 	"slices"
 	"testing"
 
@@ -151,6 +152,96 @@ func TestBiZoneIRPAlertMethods(t *testing.T) {
 					return a.GetUserCMDBName() == b.GetUserCMDBName()
 				}))
 		},
+	}
+
+	// ---- Data ----
+	size = 11
+	allIPHomes := make([]string, 0, size)
+	for range size {
+		allIPHomes = append(allIPHomes, gofakeit.IPv4Address())
+	}
+
+	snortIds := make([]uint64, 0, size+2)
+	for range size {
+		snortIds = append(snortIds, gofakeit.Uint64())
+	}
+
+	allSensors := make([]uint64, 0, size+1)
+	for range size {
+		allSensors = append(allSensors, gofakeit.Uint64())
+	}
+
+	dataExample := datamodels.NewBiZoneIRPData()
+	dataExample.SetAnyIPHome(allIPHomes)
+	dataExample.SetAnySnortSid(snortIds)
+	dataExample.SetAnyAllSensor(allSensors)
+	dataExample.SetAnyID(gofakeit.ID())
+	dataExample.SetAnyTitle(gofakeit.BookTitle())
+	dataExample.SetAnyIPHome(gofakeit.IPv4Address())
+	dataExample.SetAnyURLFTP(gofakeit.URL())
+	dataExample.SetAnyIPExter(gofakeit.IPv4Address())
+	dataExample.SetAnyURLHTTP(gofakeit.URL())
+	dataExample.SetAnyEventType(gofakeit.BankType())
+	dataExample.SetAnyURLArkime(gofakeit.URL())
+	dataExample.SetAnySensor(gofakeit.Uint64())
+	dataExample.SetAnyAllIPExt(gofakeit.Uint64())
+	dataExample.SetAnyResponseTeam(gofakeit.Uint64())
+
+	listTesting["Data"] = datamodelstest.TestOptions{
+		ValueAny: *dataExample,
+		SetFunc: func() {
+			biZoneIRPAlert.SetData(*dataExample)
+		},
+		GetFunc: func() {
+			data, ok := listTesting["Data"].ValueAny.(datamodels.BiZoneIRPData)
+			assert.True(t, ok)
+
+			assert.True(t, slices.EqualFunc(
+				data,
+				biZoneIRPAlert.GetData(),
+				func(a, b datamodels.BiZoneIRPData) bool {
+					if !slices.Equal(a.IPAddresses, b.IPAddresses) {
+						return false
+					}
+
+					if !slices.Equal(a.MACAddresses, b.MACAddresses) {
+						return false
+					}
+
+					if a.GetOS() != b.GetOS() {
+						return false
+					}
+
+					if a.GetOSType() != b.GetOSType() {
+						return false
+					}
+
+					if a.GetFqdn() != b.GetFqdn() {
+						return false
+					}
+
+					if a.GetDomain() != b.GetDomain() {
+						return false
+					}
+
+					if a.GetCMDBID() != b.GetCMDBID() {
+						return false
+					}
+					if a.GetHostname() != b.GetHostname() {
+						return false
+					}
+					return a.GetUserCMDBName() == b.GetUserCMDBName()
+				}))
+		},
+	}
+
+	var num int
+	for k, v := range listTesting {
+		num++
+		t.Run(fmt.Sprintf("Test %d. Field %s", num, k), func(t *testing.T) {
+			v.SetFunc()
+			v.GetFunc()
+		})
 	}
 
 	/*

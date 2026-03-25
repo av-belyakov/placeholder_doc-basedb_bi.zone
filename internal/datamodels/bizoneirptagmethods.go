@@ -1,6 +1,7 @@
 package datamodels
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -8,10 +9,6 @@ import (
 	"github.com/av-belyakov/placeholder_doc-basedb_bi.zone/internal/supportingfunctions"
 )
 
-// ************* Структура BiZoneIRPTag *************
-// ***********************************************
-
-// NewBiZoneIRPTag новый объект
 func NewBiZoneIRPTag() *BiZoneIRPTag {
 	return &BiZoneIRPTag{
 		Created: time.Now().Format(time.RFC3339),
@@ -23,16 +20,25 @@ func (t *BiZoneIRPTag) GetCreated() string {
 	return t.Created
 }
 
-// SetCreated для поля Created (формат RFC3339)
-func (t *BiZoneIRPTag) SetCreated(created string) {
-	t.Created = created
+// SetCreated для поля Created (преобразует в формат времени RFC3339)
+func (t *BiZoneIRPTag) SetCreated(v string) error {
+	timeStr, err := supportingfunctions.SmartConvertToRFC3339(v)
+	if err != nil {
+		return err
+	}
+
+	t.Created = timeStr
+
+	return nil
 }
 
-// SetAnyCreated для поля Created (формат RFC3339)
-func (t *BiZoneIRPTag) SetAnyCreated(a any) {
-	//tmp := supportingfunctions.ConversionAnyToInt(a)
-	//t.Created = supportingfunctions.GetDateTimeFormatRFC3339(int64(tmp))
-	t.Created = fmt.Sprint(a)
+// SetAnyCreated для поля Created
+func (t *BiZoneIRPTag) SetAnyCreated(a any) error {
+	if v, ok := a.(string); ok {
+		return t.SetCreated(v)
+	}
+
+	return errors.New("type conversion error")
 }
 
 // GetName для поля Name
