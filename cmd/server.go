@@ -24,15 +24,6 @@ import (
 )
 
 func server(ctx context.Context) {
-	var nameRegionalObject string
-	if os.Getenv("GO_PHDOCBASEDB_MAIN") == "development" {
-		nameRegionalObject = "gcm-dev"
-	} else if os.Getenv("GO_PHDOCBASEDB_MAIN") == "test" {
-		nameRegionalObject = "gcm-test"
-	} else {
-		nameRegionalObject = "gcm"
-	}
-
 	rootPath, err := supportingfunctions.GetRootPath(constants.Root_Dir)
 	if err != nil {
 		log.Fatalf("error, it is impossible to form root path (%s)", err.Error())
@@ -40,15 +31,15 @@ func server(ctx context.Context) {
 
 	// ****************************************************************************
 	// *********** инициализируем модуль чтения конфигурационного файла ***********
-	conf, err := confighandler.New(rootPath)
+	cfg, err := confighandler.New(rootPath)
 	if err != nil {
-		log.Fatalf("error module 'confighandler': %v", err)
+		log.Fatalf("error module 'cfgighandler': %v", err)
 	}
 
 	// ****************************************************************************
 	// ********************* инициализация модуля логирования *********************
 	var listLog []simplelogger.OptionsManager
-	for _, v := range conf.GetListLogs() {
+	for _, v := range cfg.GetListLogs() {
 		listLog = append(listLog, v)
 	}
 	opts := simplelogger.CreateOptions(listLog...)
@@ -59,14 +50,14 @@ func server(ctx context.Context) {
 
 	//*********************************************************************************
 	//********** инициализация модуля взаимодействия с БД для передачи логов **********
-	confDB := conf.GetLogDB()
+	cfgDB := cfg.GetLogDB()
 	if esc, err := elasticsearchapi.NewElasticsearchConnect(elasticsearchapi.Settings{
-		Port:               confDB.Port,
-		Host:               confDB.Host,
-		User:               confDB.User,
-		Passwd:             confDB.Passwd,
-		IndexDB:            confDB.StorageNameDB,
-		NameRegionalObject: nameRegionalObject,
+		Port:               cfgDB.Port,
+		Host:               cfgDB.Host,
+		User:               cfgDB.User,
+		Passwd:             cfgDB.Passwd,
+		IndexDB:            cfgDB.StorageNameDB,
+		NameRegionalObject: cfg.Common.RegionalObject,
 	}); err != nil {
 		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
 	} else {
@@ -77,14 +68,14 @@ func server(ctx context.Context) {
 	// ************************************************************************
 	// ************* инициализация модуля взаимодействия с Zabbix *************
 	chZabbix := make(chan interfaces.Messager)
-	confZabbix := conf.GetZabbix()
+	cfgZabbix := cfg.GetZabbix()
 	wziSettings := wrappers.WrappersZabbixInteractionSettings{
-		NetworkPort: confZabbix.NetworkPort,
-		NetworkHost: confZabbix.NetworkHost,
-		ZabbixHost:  confZabbix.ZabbixHost,
+		NetworkPort: cfgZabbix.NetworkPort,
+		NetworkHost: cfgZabbix.NetworkHost,
+		ZabbixHost:  cfgZabbix.ZabbixHost,
 	}
 	eventTypes := []wrappers.EventType(nil)
-	for _, v := range confZabbix.EventTypes {
+	for _, v := range cfgZabbix.EventTypes {
 		eventTypes = append(eventTypes, wrappers.EventType{
 			IsTransmit: v.IsTransmit,
 			EventType:  v.EventType,
@@ -112,15 +103,15 @@ func server(ctx context.Context) {
 	// **********************************************************************
 	// ************ инициализация модуля взаимодействия с Kafka *************
 	// в данном случае это основной источник получения информации о КА/КИ
-	confKafka := conf.Kafka
+	cfgKafka := cfg.Kafka
 	apiKafka, err := kafkaapi.New(
 		counting,
 		logging,
-		kafkaapi.WithNameRegionalObject(conf.Common.RegionalObject),
-		kafkaapi.WithHost(confKafka.Host),
-		kafkaapi.WithPort(confKafka.Port),
-		kafkaapi.WithCacheTTL(confKafka.CacheTTL),
-		kafkaapi.WithTopicsSubscription(confKafka.Topics),
+		kafkaapi.WithNameRegionalObject(cfg.Common.RegionalObject),
+		kafkaapi.WithHost(cfgKafka.Host),
+		kafkaapi.WithPort(cfgKafka.Port),
+		kafkaapi.WithCacheTTL(cfgKafka.CacheTTL),
+		kafkaapi.WithTopicsSubscription(cfgKafka.Topics),
 	)
 	if err != nil {
 		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
@@ -139,15 +130,15 @@ func server(ctx context.Context) {
 	// в данном случае брокер сообщений NATS нужен для взаимодействия с модулями:
 	// - enricher_geoip (обогащение информаций о местоположении ip адресов)
 	// - enricher_sensor_information (обогащение информаций о сенсорах)
-	confNats := conf.NATS
+	cfgNats := cfg.NATS
 	apiNats, err := natsapi.New(
 		counting,
 		logging,
-		natsapi.WithHost(confNats.Host),
-		natsapi.WithPort(confNats.Port),
-		natsapi.WithCacheTTL(confNats.CacheTTL),
-		natsapi.WithRequests(confNats.EnrichingQueries),
-		natsapi.WithSubscriptions(confNats.Subscriptions))
+		natsapi.WithHost(cfgNats.Host),
+		natsapi.WithPort(cfgNats.Port),
+		natsapi.WithCacheTTL(cfgNats.CacheTTL),
+		natsapi.WithRequests(cfgNats.EnrichingQueries),
+		natsapi.WithSubscriptions(cfgNats.Subscriptions))
 	if err != nil {
 		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
 
@@ -162,16 +153,16 @@ func server(ctx context.Context) {
 
 	// *********************************************************************
 	// ************** инициализация модуля взаимодействия с БД *************
-	confStorageDB := conf.GetStorageDB()
+	cfgStorageDB := cfg.GetStorageDB()
 	apiDBS, err := databasestorageapi.New(
 		counting,
 		logging,
-		databasestorageapi.WithHost(confStorageDB.Host),
-		databasestorageapi.WithPort(confStorageDB.Port),
-		databasestorageapi.WithNameDB(confStorageDB.NameDB),
-		databasestorageapi.WithUser(confStorageDB.User),
-		databasestorageapi.WithPasswd(confStorageDB.Passwd),
-		databasestorageapi.WithStorage(confStorageDB.Storage),
+		databasestorageapi.WithHost(cfgStorageDB.Host),
+		databasestorageapi.WithPort(cfgStorageDB.Port),
+		databasestorageapi.WithNameDB(cfgStorageDB.NameDB),
+		databasestorageapi.WithUser(cfgStorageDB.User),
+		databasestorageapi.WithPasswd(cfgStorageDB.Passwd),
+		databasestorageapi.WithStorage(cfgStorageDB.Storage),
 		databasestorageapi.WithMaxGetDocumentSize(15))
 	if err != nil {
 		_ = simpleLogger.Write("error", supportingfunctions.CustomError(err).Error())
@@ -201,18 +192,18 @@ func server(ctx context.Context) {
 	r.Router(ctx)
 
 	//информационное сообщение
-	infoMsg := getInformationMessage(conf)
+	infoMsg := getInformationMessage(cfg)
 	_ = simpleLogger.Write("info", infoMsg)
 
 	//для отладки через pprof (только для теста)
-	//http://conf.Common.Profiling.Host:conf.Common.Profiling.Port/debug/pprof/
+	//http://cfg.Common.Profiling.Host:cfg.Common.Profiling.Port/debug/pprof/
 	//go tool pprof http://host:port/debug/pprof/heap
 	//go tool pprof http://host:port/debug/pprof/allocs
 	//go tool pprof http://host:port/debug/pprof/goroutine
 	if os.Getenv("GO_PHDOCBASEDBBZ_MAIN") == "test" || os.Getenv("GO_PHDOCBASEDBBZ_MAIN") == "development" {
-		if conf.Common.Profiling.Port > 0 {
+		if cfg.Common.Profiling.Port > 0 {
 			go func() {
-				log.Println(http.ListenAndServe(fmt.Sprintf("%s:%d", conf.Common.Profiling.Host, conf.Common.Profiling.Port), nil))
+				log.Println(http.ListenAndServe(fmt.Sprintf("%s:%d", cfg.Common.Profiling.Host, cfg.Common.Profiling.Port), nil))
 			}()
 		}
 	}

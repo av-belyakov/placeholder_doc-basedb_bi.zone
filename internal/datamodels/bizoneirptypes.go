@@ -52,6 +52,11 @@ type VerifiedIRPBiZoneCase struct {
 	ObservedIocs              []BiZoneIRPObservedIocs `json:"observed_iocs"`
 	SecondaryCategoryRef      []BiZoneIRPTypeRef      `json:"secondary_category_ref"`
 	Watchers                  []BiZoneIRPWatcher      `json:"watchers"`
+	MITRECOV                  BiZoneIRPMITRECOV       `json:"mitre_cov"`
+	DetectionRules            []string                `json:"detection_rules"`
+	SecondaryCategory         []string                `json:"secondary_category"`
+	PlatformHostname          []string                `json:"platform_hostname"`
+	WatchersId                []uint64                `json:"watchers_id"`
 	ActivityDetected          []any                   `json:"activity_detected,omitzero"` // пока тип в срезе не ясен
 	Attachments               []any                   `json:"attachments,omitzero"`       // пока тип в срезе не ясен
 	Badges                    []any                   `json:"badges,omitzero"`            // пока тип в срезе не ясен
@@ -59,12 +64,7 @@ type VerifiedIRPBiZoneCase struct {
 	Slas                      []any                   `json:"slas,omitzero"`              // пока тип в срезе не ясен
 	Tags                      []any                   `json:"tags,omitzero"`              // пока тип в срезе не ясен
 	KeyField                  []any                   `json:"keyfield,omitzero"`          // пока тип в срезе не ясен
-	MITRECOV                  BiZoneIRPMITRECOV       `json:"mitre_cov"`
-	DetectionRules            []string                `json:"detection_rules"`
-	SecondaryCategory         []string                `json:"secondary_category"`
-	PlatformHostname          []string                `json:"platform_hostname"`
-	WatchersId                []uint64                `json:"watchers_id"`
-	Assignee                  any                     `json:"assignee,omitzero"` // пока тип не ясен
+	Assignee                  any                     `json:"assignee,omitzero"`          // пока тип не ясен
 	AssigneeDisplayName       any                     `json:"assignee_displayName,omitzero"`
 	Service                   any                     `json:"service,omitzero"`                      // пока тип не ясен
 	ResolutionDate            any                     `json:"resolutiondate,omitzero"`               // пока тип не ясен

@@ -1,4 +1,4 @@
-# Placeholder_doc_basedb-bi-zone
+# Placeholder_doc-basedb_bi.zone
 
 [![Go Version](https://img.shields.io/badge/Go-1.24.5+-00ADD8?style=flat&logo=go)](https://golang.org/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat&logo=docker)](https://www.docker.com/)
