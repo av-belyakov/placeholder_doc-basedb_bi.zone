@@ -54,24 +54,12 @@ func (va *VerifiedBiZoneIRPAlert) SetIDNum(idNum uint64) error {
 
 // SetAnyIDNum для поля IDNum
 func (va *VerifiedBiZoneIRPAlert) SetAnyIDNum(a any) error {
-	switch v := a.(type) {
-	case int:
-		return va.SetIDNum(uint64(v))
-
-	case int32:
-		return va.SetIDNum(uint64(v))
-
-	case int64:
-		return va.SetIDNum(uint64(v))
-
-	case float32:
-		return va.SetIDNum(uint64(v))
-
-	case float64:
-		return va.SetIDNum(uint64(v))
+	v, err := supportingfunctions.GetUint64(a)
+	if err != nil {
+		return err
 	}
 
-	return errors.New("type conversion error")
+	return va.SetIDNum(v)
 }
 
 // GetUUID для поля UUID

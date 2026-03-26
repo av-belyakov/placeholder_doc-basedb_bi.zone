@@ -15,14 +15,14 @@ type VerifiedBiZoneIRPAlert struct {
 	CreatedTime        string              `json:"created_time"` //дата создания (формат RFC3339)
 	UpdatedTime        string              `json:"updated_time"` //дата обновления (формат RFC3339)
 	PlatformType       string              `json:"platform_type"`
-	EventEndTime       string              `json:"event_end_time"` //дата конца события (формат RFC3339)
+	EventStartTime     string              `json:"event_start_time"` //дата начала события (формат RFC3339)
+	EventEndTime       string              `json:"event_end_time"`   //дата конца события (формат RFC3339)
 	DetectionRule      string              `json:"detection_rule"`
 	CustomerSystem     string              `json:"customer_system"`
-	EventStartTime     string              `json:"event_start_time"` //дата начала события (формат RFC3339)
 	Recommendations    string              `json:"recommendations"`
 	PlatformHostname   string              `json:"platform_hostname"`
-	LastDetectionTime  string              `json:"last_detection_time"`  //дата последнего обнаружения (формат RFC3339)
 	FirstDetectionTime string              `json:"first_detection_time"` //дата первого обнаружения (формат RFC3339)
+	LastDetectionTime  string              `json:"last_detection_time"`  //дата последнего обнаружения (формат RFC3339)
 	AffectedLogSources string              `json:"affected_log_sources"`
 	IDNum              uint64              `json:"id"`
 	Data               BiZoneIRPData       `json:"data"`
